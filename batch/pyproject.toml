@@ -6,6 +6,10 @@ authors = ["yuya-okada527 <yuya.okada527@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
+typer = "^0.3.2"
+pydantic = "^1.7.3"
+requests = "^2.25.1"
+python-dotenv = "^0.15.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
