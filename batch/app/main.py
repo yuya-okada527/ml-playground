@@ -3,8 +3,8 @@ from pprint import pprint
 import requests
 import typer
 
-from app.core.config import settings
-from app.infra.client.tmdb.query import PopularMovieQuery
+from core.config import settings
+from infra.client.tmdb.query import PopularMovieQuery
 
 app = typer.Typer()
 
