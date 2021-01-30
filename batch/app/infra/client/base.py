@@ -8,7 +8,7 @@ from pydantic import BaseModel
 WAIT_TIME_BASE = 30
 
 
-def retry_exec(max_retry_num: int = 3):
+def retry_exec(max_retry_num: int):
     def _retry_exec(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
@@ -22,7 +22,7 @@ def retry_exec(max_retry_num: int = 3):
     return _retry_exec
 
 
-# @retry_exec
+@retry_exec(max_retry_num=3)
 def call_get_api(url: str, query: BaseModel):
     # API実行
     response = requests.get(url, query.dict())
