@@ -12,3 +12,6 @@ class PopularMovieQuery(TmdbQuery):
     page: Optional[int] = None
     region: Optional[str] = None
 
+
+class MovieGenre(TmdbQuery):
+    pass

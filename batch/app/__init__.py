@@ -9,6 +9,4 @@ app_path = os.path.join(
     "app"
 )
 
-print(app_path)
-
 sys.path.append(app_path)
