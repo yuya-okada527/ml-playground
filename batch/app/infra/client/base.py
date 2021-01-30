@@ -22,7 +22,7 @@ def retry_exec(max_retry_num: int = 3):
     return _retry_exec
 
 
-@retry_exec
+# @retry_exec
 def call_get_api(url: str, query: BaseModel):
     # API実行
     response = requests.get(url, query.dict())

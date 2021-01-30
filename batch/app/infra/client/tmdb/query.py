@@ -13,5 +13,5 @@ class PopularMovieQuery(TmdbQuery):
     region: Optional[str] = None
 
 
-class MovieGenre(TmdbQuery):
+class MovieGenreQuery(TmdbQuery):
     pass

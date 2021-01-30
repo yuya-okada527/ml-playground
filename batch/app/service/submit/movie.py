@@ -1,4 +1,6 @@
+from infra.client.tmdb.api import fetch_genres
 
 
 def update_genre_master():
-    print("hoge")
+    res = fetch_genres("ja")
+    print(res.json())
