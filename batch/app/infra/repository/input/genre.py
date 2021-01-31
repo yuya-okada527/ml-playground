@@ -2,7 +2,7 @@ from typing import Protocol
 
 from tortoise import Tortoise, run_async
 from tortoise.exceptions import OperationalError
-from tortoise.transactions import atomic, in_transaction
+from tortoise.transactions import in_transaction
 
 from core.config import InputDbSettings
 from domain.models.internal.movie import Genre
@@ -61,4 +61,3 @@ class GenreRepository:
             print(saved_genre)
         
         run_async(run_save())
-

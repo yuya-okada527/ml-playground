@@ -33,5 +33,3 @@ def update_genre_master(genre_repository: AbstractGenreRepository):
 
     # モデルの永続化
     genre_repository.save(genre_list)
-
-    
