@@ -12,3 +12,10 @@ Movie Recommender App 用のコア API を提供します。
   - requests
   - pydantic
   - redis-py
+
+## 起動方法
+
+```bash
+# ローカル起動
+$ uvicorn app.main:app --reload
+```
