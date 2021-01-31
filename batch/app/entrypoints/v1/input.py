@@ -35,7 +35,5 @@ def submit_movies(page: int = 1):
     update_movies(page=page, tmdb_client=tmdb_client, movie_repository=movie_repository)
 
 
-
-
 if __name__ == "__main__":
     app()
