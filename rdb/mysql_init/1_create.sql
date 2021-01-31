@@ -5,6 +5,7 @@ use submit_db;
 CREATE TABLE IF NOT EXISTS `movies` (
   `movie_id`        INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `tmdb_id`         VARCHAR(64) NOT NULL,
+  `imdb_id`         VARCHAR(64),
   `original_title`  VARCHAR(256),
   `japanese_title`  VARCHAR(256),
   `overview`        TEXT,
