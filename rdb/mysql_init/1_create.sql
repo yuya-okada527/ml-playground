@@ -1,5 +1,5 @@
-CREATE DATABASE submit_db;
-use submit_db;
+CREATE DATABASE input_db;
+use input_db;
 
 -- 映画テーブル
 CREATE TABLE IF NOT EXISTS `movies` (
