@@ -1,8 +1,9 @@
-from typing import Protocol
+from typing import Protocol, Optional
+
 from core.config import TmdbSettings
-from domain.models.rest.tmdb import TmdbMovieGenreList
+from domain.models.rest.tmdb import TmdbMovieGenreList, TmdbPopularMovieList
 from infra.client.tmdb.query import (
-    MovieGenreQuery
+    MovieGenreQuery, PopularMovieQuery
 )
 from util.http import call_get_api
 
@@ -16,6 +17,14 @@ class AbstractTmdbClient(Protocol):
     
     def fetch_genres(self, language: str) -> TmdbMovieGenreList:
         ...
+    
+    def fetch_popular_movies(
+        self, 
+        page: int, 
+        region: Optional[str], 
+        language: Optional[str] = None
+    ) -> TmdbPopularMovieList:
+        pass
 
 
 class TmdbClient:
@@ -25,13 +34,36 @@ class TmdbClient:
         self.api_key = settings.tmdb_api_key
 
     def fetch_genres(self, language: str) -> TmdbMovieGenreList:
+
+        # リクエスト条件を構築
         url = self.base_url + MOVIE_GENRE_LIST_PATH
         query = MovieGenreQuery(
             api_key=self.api_key,
             language=language
         )
 
-        # TODO リポジトリパターンで実装するように変更する？
+        # GETメソッドでAPIを実行
         response = call_get_api(url, query)
 
         return TmdbMovieGenreList(**response.json())
+
+    def fetch_popular_movies(
+        self, 
+        page: int, 
+        region: Optional[str] = None,
+        language: Optional[str] = None
+    ) -> TmdbPopularMovieList:
+        
+        # リクエスト条件を構築
+        url = self.base_url + POPULAR_MOVIE_PATH
+        query = PopularMovieQuery(
+            api_key=self.api_key,
+            language=language,
+            page=page,
+            region=region
+        )
+
+        # GETメソッドでAPIを実行
+        response = call_get_api(url, query)
+
+        return TmdbPopularMovieList(**response.json())

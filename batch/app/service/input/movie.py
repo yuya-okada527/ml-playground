@@ -32,3 +32,11 @@ def update_genre_master(genre_repository: AbstractGenreRepository, tmdb_client: 
 
     # モデルの永続化
     genre_repository.save(genre_list)
+
+
+def update_movies(page: int, tmdb_client: AbstractTmdbClient):
+    
+    # 人気映画のリストを取得
+    popular_movies = tmdb_client.fetch_popular_movies(page)
+
+    print(popular_movies)
