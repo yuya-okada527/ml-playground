@@ -1,4 +1,4 @@
-from domain.models.internal.movie import Genre
+from domain.models.internal.movie import Genre, Movie
 from infra.client.tmdb.api import AbstractTmdbClient
 from infra.repository.input.genre import AbstractGenreRepository
 
@@ -48,3 +48,22 @@ def update_movies(page: int, tmdb_client: AbstractTmdbClient):
         movie_id_list=movie_id_list,
         language="ja"
     )
+
+    # 映画モデルリストに変換
+    movie_list = [
+        Movie(
+            tmdb_id=movie.id,
+            imdb_id=movie.imdb_id,
+            original_title=movie.original_title,
+            japanese_title=movie.title,
+            overview=movie.overview,
+            tagline=movie.tagline,
+            poster_path=movie.poster_path,
+            backdrop_path=movie.backdrop_path,
+            popularity=movie.popularity,
+            vote_average=movie.vote_average,
+            vote_count=movie.vote_count,
+            genres=[Genre(genre_id=genre.id) for genre in movie.genres]
+        )
+        for movie in movie_detail_list
+    ]

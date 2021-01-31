@@ -9,7 +9,7 @@ from domain.exceptions.http_exception import ServerSideError, ClientSideError
 
 
 WAIT_TIME_BASE = 10
-TIMEOUT = 3.5
+TIMEOUT = 1
 
 
 def retry_exec(max_retry_num: int):

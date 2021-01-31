@@ -1,10 +1,11 @@
+from typing import Optional
 from pydantic import BaseModel
 
 
 class Genre(BaseModel):
     genre_id: int
-    name: str
-    japanese_name: str
+    name: Optional[str]
+    japanese_name: Optional[str]
 
 
 class Review(BaseModel):
@@ -19,7 +20,7 @@ class Keyword(BaseModel):
 
 
 class Movie(BaseModel):
-    movie_id: int
+    movie_id: Optional[int] = None
     tmdb_id: str
     imdb_id: str
     original_title: str

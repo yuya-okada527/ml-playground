@@ -119,5 +119,7 @@ class TmdbClient:
                 language=language,
                 append_to_response=append_to_response
             ))
+
+            print(movie_id)
         
         return movie_detail_list

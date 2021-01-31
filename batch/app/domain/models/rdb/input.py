@@ -12,8 +12,9 @@ class GenreRdbModel(Model):
 
 
 class MovieGenreRdbModel(Model):
-    movie_id = fields.IntField(pk=True)
-    genre_id = fields.IntField(pk=True)
+    movie_genre_id = fields.IntField(pk=True, generated=True)
+    movie_id = fields.IntField(index=True)
+    genre_id = fields.IntField()
 
     class Meta:
         table = "movie_genres"
