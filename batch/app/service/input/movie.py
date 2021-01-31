@@ -1,19 +1,18 @@
 from domain.models.internal.movie import Genre
-from domain.models.rdb.input import GenreRdbModel
-from infra.client.tmdb.api import fetch_genres
+from infra.client.tmdb.api import AbstractTmdbClient
 from infra.repository.input.genre import AbstractGenreRepository
 
 
-def update_genre_master(genre_repository: AbstractGenreRepository):
+def update_genre_master(genre_repository: AbstractGenreRepository, tmdb_client: AbstractTmdbClient):
     
     # 英語表記のジャンルを取得
-    english_genres = fetch_genres("en-US")
+    english_genres = tmdb_client.fetch_genres("en-US")
 
     # ジャンルIDで集計
     genre_id_dict = {genre.id : genre for genre in english_genres.genres}
 
     # 日本語表記のジャンルを取得
-    japanese_genres = fetch_genres("ja")
+    japanese_genres = tmdb_client.fetch_genres("ja")
 
     # RDBモデルに詰め替える
     genre_list = []
