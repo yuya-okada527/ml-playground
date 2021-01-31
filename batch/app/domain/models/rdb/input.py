@@ -1,4 +1,3 @@
-from enum import unique
 from tortoise import fields
 from tortoise.models import Model
 
