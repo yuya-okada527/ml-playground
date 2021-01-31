@@ -3,6 +3,7 @@ import typer
 from core.config import InputDbSettings, TmdbSettings
 from infra.client.tmdb.api import TmdbClient
 from infra.repository.input.genre import GenreRepository
+from infra.repository.input.movie import MovieRepository
 from service.input.movie import update_genre_master, update_movies
 
 
@@ -27,8 +28,11 @@ def submit_movies(page: int = 1):
     # クライアントの初期化
     tmdb_client = TmdbClient(TmdbSettings())
 
+    # リポジトリの初期化
+    movie_repository = MovieRepository(InputDbSettings())
+
     # サービスの実行
-    update_movies(page=page, tmdb_client=tmdb_client)
+    update_movies(page=page, tmdb_client=tmdb_client, movie_repository=movie_repository)
 
 
 

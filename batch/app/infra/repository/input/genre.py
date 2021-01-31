@@ -7,6 +7,7 @@ from tortoise.transactions import in_transaction
 from core.config import InputDbSettings
 from domain.models.internal.movie import Genre
 from domain.models.rdb.input import GenreRdbModel
+from infra.repository.input.base import INPUT_APPS
 
 
 class AbstractGenreRepository(Protocol):
@@ -18,19 +19,7 @@ class AbstractGenreRepository(Protocol):
 class GenreRepository:
 
     def __init__(self, settings: InputDbSettings) -> None:
-        self.connections = {
-            "default": {
-                "engine": settings.engine,
-                "credentials": {
-                    "host": settings.host,
-                    "port": settings.port,
-                    "user": settings.db_user,
-                    "password": settings.password,
-                    "database": settings.database,
-                    "echo": settings.echo
-                }
-            }
-        }
+        self.connections = settings.get_connection_config()
     
     def save(self, genre_list: list[Genre]):
         async def run_save():
@@ -38,12 +27,7 @@ class GenreRepository:
             await Tortoise.init(
                 config={
                     "connections": self.connections,
-                    "apps": {
-                        "input": {
-                            "models": ["domain.models.rdb.input"],
-                            "default_connection": "default"
-                        }
-                    }
+                    "apps": INPUT_APPS
                 }
             )
 
@@ -73,6 +57,7 @@ class GenreRepository:
                             await genre_rdb.save(using_db=connection)
             except OperationalError as e:
                 raise e
+            # TODO ロガー
             print(f"登録数={insert_count}, 更新数={update_count}")
         
         run_async(run_save())

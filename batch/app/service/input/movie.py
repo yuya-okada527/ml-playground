@@ -1,6 +1,7 @@
 from domain.models.internal.movie import Genre, Movie
 from infra.client.tmdb.api import AbstractTmdbClient
 from infra.repository.input.genre import AbstractGenreRepository
+from infra.repository.input.movie import AbstractMovieRepository
 
 
 def update_genre_master(genre_repository: AbstractGenreRepository, tmdb_client: AbstractTmdbClient):
@@ -35,7 +36,11 @@ def update_genre_master(genre_repository: AbstractGenreRepository, tmdb_client: 
     genre_repository.save(genre_list)
 
 
-def update_movies(page: int, tmdb_client: AbstractTmdbClient):
+def update_movies(
+    page: int, 
+    tmdb_client: AbstractTmdbClient, 
+    movie_repository: AbstractMovieRepository
+):
     
     # 人気映画のリストを取得
     popular_movies = tmdb_client.fetch_popular_movies(page)
@@ -67,3 +72,6 @@ def update_movies(page: int, tmdb_client: AbstractTmdbClient):
         )
         for movie in movie_detail_list
     ]
+
+    # モデルの永続化
+    movie_repository.save_movie_list(movie_list)

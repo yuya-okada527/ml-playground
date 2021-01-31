@@ -1,3 +1,4 @@
+from enum import unique
 from tortoise import fields
 from tortoise.models import Model
 
@@ -22,9 +23,8 @@ class MovieGenreRdbModel(Model):
 
 class MovieRdbModel(Model):
     movie_id = fields.IntField(pk=True, generated=True)
-    tmdb_id = fields.CharField(max_length=64)
-    # TODO スキーマに誤りがあったため一時コメントアウト
-    # imdb_id = fields.CharField(max_length=64, null=True)
+    tmdb_id = fields.CharField(max_length=64, unique=True)
+    imdb_id = fields.CharField(max_length=64, null=True)
     original_title = fields.CharField(max_length=256, null=True)
     japanese_title = fields.CharField(max_length=256, null=True)
     overview = fields.TextField()
