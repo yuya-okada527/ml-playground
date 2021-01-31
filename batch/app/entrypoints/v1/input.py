@@ -1,6 +1,6 @@
 import typer
 
-from service.submit.movie import update_genre_master
+from service.input.movie import update_genre_master
 
 
 app = typer.Typer()

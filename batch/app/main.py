@@ -1,9 +1,9 @@
 import typer
 
-from entrypoints.v1 import submit
+from entrypoints.v1 import input
 
 app = typer.Typer()
-app.add_typer(submit.app, name="submit")
+app.add_typer(input.app, name="input")
 
 
 if __name__ == "__main__":
