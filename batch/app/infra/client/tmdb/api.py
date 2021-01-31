@@ -1,4 +1,5 @@
 from core.config import settings
+from domain.models.rest.tmdb import MovieGenreList
 from infra.client.tmdb.query import (
     MovieGenreQuery
 )
@@ -17,5 +18,7 @@ def fetch_genres(language: str):
         language=language
     )
 
-    return call_get_api(url, query)
+    response = call_get_api(url, query)
+
+    return MovieGenreList(**response.json())
 
