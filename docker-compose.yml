@@ -2,6 +2,7 @@ version: "3.7"
 services:
   api:
     build: ./api
+    image: movie-recommender-api
     ports:
       - "8000:8000"
   db:
