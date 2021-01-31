@@ -1,8 +1,8 @@
 from core.config import settings
-from infra.client.base import call_get_api
 from infra.client.tmdb.query import (
     MovieGenreQuery
 )
+from util.http import call_get_api
 
 
 # TMDb APIパス定義

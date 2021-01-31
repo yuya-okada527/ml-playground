@@ -4,6 +4,8 @@ from functools import wraps
 import requests
 from pydantic import BaseModel
 
+from domain.exceptions.http_exception import ServerSideError, ClientSideError
+
 
 WAIT_TIME_BASE = 30
 
@@ -36,9 +38,7 @@ def call_get_api(url: str, query: BaseModel):
     return response
 
 
-class ClientSideError(Exception):
-    pass
 
 
-class ServerSideError(Exception):
-    pass
+
+
