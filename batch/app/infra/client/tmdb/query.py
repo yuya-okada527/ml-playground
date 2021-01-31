@@ -15,3 +15,7 @@ class PopularMovieQuery(TmdbQuery):
 
 class MovieGenreQuery(TmdbQuery):
     pass
+
+
+class MovieDetailQuery(TmdbQuery):
+    append_to_response: Optional[str]

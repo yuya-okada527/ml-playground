@@ -12,6 +12,7 @@ def update_genre_master(genre_repository: AbstractGenreRepository, tmdb_client: 
     genre_id_dict = {genre.id : genre for genre in english_genres.genres}
 
     # 日本語表記のジャンルを取得
+    # TODO languageをenumを切る
     japanese_genres = tmdb_client.fetch_genres("ja")
 
     # RDBモデルに詰め替える
@@ -39,4 +40,11 @@ def update_movies(page: int, tmdb_client: AbstractTmdbClient):
     # 人気映画のリストを取得
     popular_movies = tmdb_client.fetch_popular_movies(page)
 
-    print(popular_movies)
+    # 映画IDリストを取得
+    movie_id_list = [movie.id for movie in popular_movies.results]
+
+    # 映画詳細リストを取得
+    movie_detail_list = tmdb_client.fetch_movie_detail_list(
+        movie_id_list=movie_id_list,
+        language="ja"
+    )
