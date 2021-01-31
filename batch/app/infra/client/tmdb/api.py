@@ -1,5 +1,5 @@
-from core.config import settings
-from domain.models.rest.tmdb import MovieGenreList
+from core.config import TmdbSettings
+from domain.models.rest.tmdb import TmdbMovieGenreList
 from infra.client.tmdb.query import (
     MovieGenreQuery
 )
@@ -12,13 +12,15 @@ MOVIE_GENRE_LIST_PATH = "/genre/movie/list"
 
 
 def fetch_genres(language: str):
+    settings = TmdbSettings()
     url = settings.tmdb_url + MOVIE_GENRE_LIST_PATH
     query = MovieGenreQuery(
         api_key=settings.tmdb_api_key,
         language=language
     )
 
+    # TODO リポジトリパターンで実装するように変更する？
     response = call_get_api(url, query)
 
-    return MovieGenreList(**response.json())
+    return TmdbMovieGenreList(**response.json())
 

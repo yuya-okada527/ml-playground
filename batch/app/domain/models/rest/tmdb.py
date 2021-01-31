@@ -1,12 +1,12 @@
 from pydantic import BaseModel
 
 
-class MovieGenre(BaseModel):
+class TmdbMovieGenre(BaseModel):
     id: int
     name: str
 
 
-class MovieGenreList(BaseModel):
-    genres: list[MovieGenre]
+class TmdbMovieGenreList(BaseModel):
+    genres: list[TmdbMovieGenre]
 
 
