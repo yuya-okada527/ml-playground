@@ -54,7 +54,15 @@ class GenreRepository:
                             name=genre.name, 
                             japanese_name=genre.japanese_name
                         )
-                        await genre_rdb.save(using_db=connection, update_fields=["name", "japanese_name"])
+
+                        # 更新対象が存在するかで分岐
+                        target = await GenreRdbModel.filter(genre_id=genre.genre_id)
+                        if target:
+                            # 更新
+                            await genre_rdb.save(using_db=connection, update_fields=["name", "japanese_name"])
+                        else:
+                            # 作成
+                            await genre_rdb.save(using_db=connection)
             except OperationalError as e:
                 raise e
             saved_genre = await GenreRdbModel.all()

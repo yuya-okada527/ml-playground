@@ -8,8 +8,8 @@ from pydantic import BaseModel
 from domain.exceptions.http_exception import ServerSideError, ClientSideError
 
 
-WAIT_TIME_BASE = 10
-TIMEOUT = 1
+WAIT_TIME_BASE = 5
+TIMEOUT = 2
 
 
 def retry_exec(max_retry_num: int):
