@@ -4,7 +4,7 @@ use submit_db;
 -- 映画テーブル
 CREATE TABLE IF NOT EXISTS `movies` (
   `movie_id`        INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `tmdb_id`         VARCHAR(64),
+  `tmdb_id`         VARCHAR(64) NOT NULL,
   `original_title`  VARCHAR(256),
   `japanese_title`  VARCHAR(256),
   `overview`        TEXT,
