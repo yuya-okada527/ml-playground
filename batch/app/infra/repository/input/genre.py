@@ -46,6 +46,11 @@ class GenreRepository:
                     }
                 }
             )
+
+            # 登録・更新数を記録
+            update_count = 0
+            insert_count = 0
+
             try:
                 async with in_transaction() as connection:
                     for genre in genre_list:
@@ -59,13 +64,15 @@ class GenreRepository:
                         target = await GenreRdbModel.filter(genre_id=genre.genre_id)
                         if target:
                             # 更新
+                            # TODO ハッシュを比較して、更新処理を制御
+                            update_count += 1
                             await genre_rdb.save(using_db=connection, update_fields=["name", "japanese_name"])
                         else:
-                            # 作成
+                            # 登録
+                            insert_count += 1
                             await genre_rdb.save(using_db=connection)
             except OperationalError as e:
                 raise e
-            saved_genre = await GenreRdbModel.all()
-            print(saved_genre)
+            print(f"登録数={insert_count}, 更新数={update_count}")
         
         run_async(run_save())
