@@ -11,3 +11,10 @@ Movie Recommender App 用のバッチ処理を提供します。
 - 主要ライブラリ:
   - requests
   - pydantic
+
+## 起動方法
+
+```bash
+# ローカル起動(Help)
+$ python app/main.py --help
+```
