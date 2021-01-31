@@ -9,4 +9,6 @@ Movie Recommender App 用のコア API を提供します。
 - サーバ: uvicorn
 - ミドルウェア: Apache Solr, Redis
 - 主要ライブラリ
+  - requests
   - pydantic
+  - redis-py
