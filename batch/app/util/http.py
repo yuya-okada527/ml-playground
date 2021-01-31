@@ -2,12 +2,14 @@ import time
 from functools import wraps
 
 import requests
+from requests.exceptions import Timeout
 from pydantic import BaseModel
 
 from domain.exceptions.http_exception import ServerSideError, ClientSideError
 
 
 WAIT_TIME_BASE = 10
+TIMEOUT = 3.5
 
 
 def retry_exec(max_retry_num: int):
@@ -27,7 +29,10 @@ def retry_exec(max_retry_num: int):
 @retry_exec(max_retry_num=3)
 def call_get_api(url: str, query: BaseModel):
     # API実行
-    response = requests.get(url, query.dict())
+    try:
+        response = requests.get(url, query.dict(), timeout=TIMEOUT)
+    except Timeout:
+        raise ServerSideError()
 
     # ステータスコードをチェック
     if response.status_code >= 500:
