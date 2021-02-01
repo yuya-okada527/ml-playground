@@ -5,6 +5,16 @@ services:
     image: movie-recommender-api
     ports:
       - "8000:8000"
+  solr:
+    image: solr:8.7.0
+    ports:
+      - "8983:8983"
+    volumes:
+      - ./solr/configs:/opt/solr/server/solr/movies
+    entrypoint:
+      - docker-entrypoint.sh
+      - solr-precreate
+      - movies
   db:
     image: mysql:8.0
     ports:
