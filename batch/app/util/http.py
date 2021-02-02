@@ -1,5 +1,6 @@
 import time
 from functools import wraps
+from typing import Union
 
 import requests
 from requests.exceptions import Timeout
@@ -35,15 +36,33 @@ def call_get_api(url: str, query: BaseModel):
         raise ServerSideError()
 
     # ステータスコードをチェック
-    if response.status_code >= 500:
-        raise ServerSideError()
-    elif response.status_code >= 400:
-        raise ClientSideError()
+    __check_status_code(response.status_code)
 
     return response
 
 
+def call_post_api(url: str, data: Union[str, BaseModel]):
+
+    # POSTデータを文字列に変換
+    data_str = data.json() if isinstance(data, BaseModel) else data
+    assert type(data_str) == str
+
+    # API実行
+    try:
+        response = requests.post(url=url, data=data, timeout=Timeout)
+    except Timeout:
+        raise ServerSideError()
+    
+    # ステータスコードをチェック
+    __check_status_code(response.status_code)
+
+    return response
 
 
-
-
+def __check_status_code(status_code: int) -> None:
+    # ステータスコードをチェック
+    if status_code >= 500:
+        raise ServerSideError()
+    elif status_code >= 400:
+        raise ClientSideError()
+    
