@@ -2,7 +2,7 @@ from typing import Protocol
 
 from core.config import SolrSettings
 from util.http import call_post_api
-from 
+
 
 # APIパス
 SCHEMA_PATH = "/solr/{collection}/schema"

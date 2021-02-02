@@ -11,7 +11,7 @@ app = typer.Typer()
 
 
 @app.command("genre")
-def submit_genre():
+def input_genre():
 
     # リポジトリの初期化
     genre_repository = GenreRepository(InputDbSettings())
@@ -23,7 +23,7 @@ def submit_genre():
 
 
 @app.command("movies")
-def submit_movies(page: int = 1):
+def input_movies(page: int = 1):
 
     # クライアントの初期化
     tmdb_client = TmdbClient(TmdbSettings())

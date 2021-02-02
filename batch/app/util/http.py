@@ -49,20 +49,21 @@ def call_post_api(url: str, data: Union[str, BaseModel]):
 
     # API実行
     try:
-        response = requests.post(url=url, data=data, timeout=Timeout)
+        response = requests.post(url=url, data=data, timeout=TIMEOUT)
     except Timeout:
         raise ServerSideError()
     
     # ステータスコードをチェック
-    __check_status_code(response.status_code)
+    __check_status_code(response)
 
     return response
 
 
-def __check_status_code(status_code: int) -> None:
+def __check_status_code(response) -> None:
     # ステータスコードをチェック
-    if status_code >= 500:
+    if response.status_code >= 500:
         raise ServerSideError()
-    elif status_code >= 400:
+    elif response.status_code >= 400:
+        print(response.json())
         raise ClientSideError()
     
