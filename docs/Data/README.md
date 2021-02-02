@@ -16,3 +16,7 @@
 - JapaneseTitle
 - GenreLabels をスペース区切り
 - KeywordLabels をスペース区切り
+
+### schema
+
+参照: https://github.com/yuya-okada527/movie-recommender/blob/main/batch/resources/solr/schema.json
