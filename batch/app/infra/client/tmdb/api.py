@@ -3,7 +3,9 @@ from typing import Protocol, Optional
 from core.config import TmdbSettings
 from domain.models.rest.tmdb import TmdbMovieDetail, TmdbMovieGenreList, TmdbPopularMovieList
 from infra.client.tmdb.query import (
-    MovieDetailQuery, MovieGenreQuery, PopularMovieQuery
+    MovieDetailQuery, 
+    MovieGenreQuery, 
+    PopularMovieQuery
 )
 from util.http import call_get_api
 

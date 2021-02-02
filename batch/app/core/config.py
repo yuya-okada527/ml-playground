@@ -36,3 +36,15 @@ class InputDbSettings(BaseSettings):
     class Config:
         env_file = "env/input_db.env"
 
+
+class SolrSettings(BaseSettings):
+    protocol: str = "http"
+    host: str
+    port: int
+    collection: str
+
+    def get_url(self):
+        return f"{self.protocol}://{self.host}:{self.port}"
+
+    class Config:
+        env_file = "env/solr.env"
