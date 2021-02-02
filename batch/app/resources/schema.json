@@ -1,0 +1,102 @@
+{
+  "add-field": [
+    {
+      "name": "movie_id",
+      "type": "int",
+      "indexed": true,
+      "stored": true,
+      "multiValued": false
+    },
+    {
+      "name": "free_word",
+      "type": "text_ja",
+      "indexed": true,
+      "stored": false,
+      "multiValued": false
+    },
+    {
+      "name": "original_title",
+      "type": "string",
+      "indexed": false,
+      "stored": true,
+      "multiValued": false
+    },
+    {
+      "name": "japanese_title",
+      "type": "string",
+      "indexed": false,
+      "stored": true,
+      "multiValued": false
+    },
+    {
+      "name": "overview",
+      "type": "string",
+      "indexed": false,
+      "stored": true,
+      "multiValued": false
+    },
+    {
+      "name": "tagline",
+      "type": "string",
+      "indexed": false,
+      "stored": true,
+      "multiValued": false
+    },
+    {
+      "name": "poster_path",
+      "type": "string",
+      "indexed": false,
+      "stored": true,
+      "multiValued": false
+    },
+    {
+      "name": "backdrop_path",
+      "type": "string",
+      "indexed": false,
+      "stored": true,
+      "multiValued": false
+    },
+    {
+      "name": "popularity",
+      "type": "float",
+      "indexed": true,
+      "stored": true,
+      "multiValued": false
+    },
+    {
+      "name": "vote_average",
+      "type": "float",
+      "indexed": true,
+      "stored": true,
+      "multiValued": false
+    },
+    {
+      "name": "genres",
+      "type": "int",
+      "indexed": true,
+      "stored": false,
+      "multiValued": true
+    },
+    {
+      "name": "genre_labels",
+      "type": "string",
+      "indexed": false,
+      "stored": true,
+      "multiValued": true
+    },
+    {
+      "name": "keywords",
+      "type": "int",
+      "indexed": true,
+      "stored": false,
+      "multiValued": true
+    },
+    {
+      "name": "keywords_labels",
+      "type": "int",
+      "indexed": false,
+      "stored": true,
+      "multiValued": true
+    }
+  ]
+}
