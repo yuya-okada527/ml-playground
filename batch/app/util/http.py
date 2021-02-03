@@ -64,6 +64,7 @@ def __check_status_code(response) -> None:
     if response.status_code >= 500:
         raise ServerSideError()
     elif response.status_code >= 400:
+        # TODO schema更新エラー
         print(response.json())
         raise ClientSideError()
     

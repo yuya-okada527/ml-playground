@@ -1,15 +1,36 @@
 {
+  "add-field-type": {
+    "name": "text_bigram",
+    "class": "solr.TextField",
+    "positionIncrementGap": 100,
+    "autoGeneratePhraseQueries": true,
+    "analyzer": {
+      "tokenizer": {
+        "class": "solr.NGramTokenizerFactory",
+        "minGramSize": 1,
+        "maxGramSize": 2
+      },
+      "filters": [
+        {
+          "class": "solr.CJKWidthFilterFactory"
+        },
+        {
+          "class": "solr.LowerCaseFilterFactory"
+        }
+      ]
+    }
+  },
   "add-field": [
     {
       "name": "movie_id",
-      "type": "int",
+      "type": "pint",
       "indexed": true,
       "stored": true,
       "multiValued": false
     },
     {
       "name": "free_word",
-      "type": "text_ja",
+      "type": "text_bigram",
       "indexed": true,
       "stored": false,
       "multiValued": false
@@ -58,42 +79,42 @@
     },
     {
       "name": "popularity",
-      "type": "float",
+      "type": "pfloat",
       "indexed": true,
       "stored": true,
       "multiValued": false
     },
     {
       "name": "vote_average",
-      "type": "float",
+      "type": "pfloat",
       "indexed": true,
       "stored": true,
       "multiValued": false
     },
     {
       "name": "genres",
-      "type": "int",
+      "type": "pints",
       "indexed": true,
       "stored": false,
       "multiValued": true
     },
     {
       "name": "genre_labels",
-      "type": "string",
+      "type": "strings",
       "indexed": false,
       "stored": true,
       "multiValued": true
     },
     {
       "name": "keywords",
-      "type": "int",
+      "type": "pints",
       "indexed": true,
       "stored": false,
       "multiValued": true
     },
     {
       "name": "keywords_labels",
-      "type": "int",
+      "type": "strings",
       "indexed": false,
       "stored": true,
       "multiValued": true
