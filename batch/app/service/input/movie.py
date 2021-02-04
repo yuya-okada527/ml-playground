@@ -58,7 +58,7 @@ def update_movies(
     # 映画モデルリストに変換
     movie_list = [
         Movie(
-            tmdb_id=movie.id,
+            movie_id=movie.id,
             imdb_id=movie.imdb_id,
             original_title=movie.original_title,
             japanese_title=movie.title,

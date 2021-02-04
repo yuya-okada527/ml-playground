@@ -20,8 +20,7 @@ class Keyword(BaseModel):
 
 
 class Movie(BaseModel):
-    movie_id: Optional[int] = None
-    tmdb_id: str
+    movie_id: str
     imdb_id: str
     original_title: str
     japanese_title: str

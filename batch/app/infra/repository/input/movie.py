@@ -1,13 +1,56 @@
 from typing import Protocol
+import logging
 
-from tortoise import Tortoise, run_async
-from tortoise.exceptions import OperationalError
-from tortoise.transactions import in_transaction
+from sqlalchemy.exc import IntegrityError
 
 from core.config import InputDbSettings
 from domain.models.internal.movie import Movie
-from domain.models.rdb.input import MovieGenreRdbModel, MovieRdbModel
-from infra.repository.input.base import INPUT_APPS
+from infra.repository.input.base import INPUT_APPS, create_input_engine
+
+# TODO ロギング制御
+logging.basicConfig()
+logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
+
+
+UPSERT_MOVIE_STATEMENT = """\
+INSERT INTO
+    movies
+VALUES
+    (
+        %(movie_id)s,
+        %(imdb_id)s,
+        %(original_title)s,
+        %(japanese_title)s,
+        %(overview)s,
+        %(tagline)s,
+        %(poster_path)s,
+        %(backdrop_path)s,
+        %(popularity)s,
+        %(vote_average)s,
+        %(vote_count)s
+    )
+ON DUPLICATE KEY UPDATE
+    imdb_id = %(imdb_id)s,
+    original_title = %(original_title)s,
+    japanese_title = %(japanese_title)s,
+    overview = %(overview)s,
+    tagline = %(tagline)s,
+    poster_path = %(poster_path)s,
+    backdrop_path = %(backdrop_path)s,
+    popularity = %(popularity)s,
+    vote_average = %(vote_average)s,
+    vote_count = %(vote_count)s
+"""
+
+INSERT_MOVIE_GENRE_STATEMENT = """\
+INSERT INTO
+    movie_genres
+VALUES
+    (
+        %(movie_id)s,
+        %(genre_id)s
+    )
+"""
 
 
 class AbstractMovieRepository(Protocol):
@@ -19,57 +62,34 @@ class AbstractMovieRepository(Protocol):
 class MovieRepository:
     
     def __init__(self, settings: InputDbSettings) -> None:
-        self.connections = settings.get_connection_config()
+        self.engine = create_input_engine(settings)
     
     def save_movie_list(self, movie_list: list[Movie]):
-        async def run_save_movie_list():
-            # DBをセットアップ
-            await Tortoise.init(
-                config={
-                    "connections": self.connections,
-                    "apps": INPUT_APPS
-                }
-            )
 
-            # 登録・更新数を記録
-            update_count = 0
-            insert_count = 0
+        movie_count = 0
+        genre_count = 0
+        for movie in movie_list:
+            movie_count += self.engine.execute(UPSERT_MOVIE_STATEMENT, {
+                "movie_id": movie.movie_id,
+                "imdb_id": movie.imdb_id,
+                "original_title": movie.original_title,
+                "japanese_title": movie.japanese_title,
+                "overview": movie.overview,
+                "tagline": movie.tagline,
+                "poster_path": movie.poster_path,
+                "backdrop_path": movie.backdrop_path,
+                "popularity": movie.popularity,
+                "vote_average": movie.vote_average,
+                "vote_count": movie.vote_count
+            }).rowcount
 
-            for movie in movie_list:
+            for genre in movie.genres:
                 try:
-                    async with in_transaction() as connection:
-                        movie_rdb = MovieRdbModel(
-                            tmdb_id=movie.tmdb_id,
-                            imdb_id=movie.imdb_id,
-                            original_title=movie.original_title,
-                            japanese_title=movie.japanese_title,
-                            overview=movie.overview,
-                            tagline=movie.tagline,
-                            poster_path=movie.poster_path,
-                            backdrop_path=movie.backdrop_path,
-                            popularity=movie.popularity,
-                            vote_average=movie.vote_average,
-                            vote_count=movie.vote_count
-                        )
-
-                        # 更新対象が存在するかで分岐
-                        target_movie = await MovieRdbModel.filter(tmdb_id=movie.tmdb_id)
-                        if target_movie:
-                            # 存在する場合はスキップ
-                            update_count += 1
-                            continue
-                        else:
-                            # 登録
-                            await movie_rdb.save(using_db=connection)
-                            for genre in movie.genres:
-                                movie_genre_rdb = MovieGenreRdbModel(
-                                    movie_id=movie_rdb.movie_id,
-                                    genre_id=genre.genre_id
-                                )
-                                await movie_genre_rdb.save(using_db=connection)
-                            insert_count += 1
-                except OperationalError as e:
-                    raise e
-            print(f"登録数={insert_count}, 更新数={update_count}")
-        run_async(run_save_movie_list())
+                    genre_count += self.engine.execute(INSERT_MOVIE_GENRE_STATEMENT, {
+                        "movie_id": movie.movie_id,
+                        "genre_id": genre.genre_id
+                    }).rowcount
+                except IntegrityError:
+                    pass
+                
 

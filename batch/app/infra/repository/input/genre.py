@@ -2,7 +2,6 @@ from typing import Protocol
 
 from core.config import InputDbSettings
 from domain.models.internal.movie import Genre
-from domain.models.rdb.input import GenreRdbModel
 from infra.repository.input.base import create_input_engine
 
 
@@ -12,17 +11,17 @@ INSERT INTO
 VALUES
     (%(genre_id)s, %(name)s, %(japanese_name)s)
 ON DUPLICATE KEY UPDATE
-    `name` = %(name)s
-  , `japanese_name` = %(japanese_name)s
+    name = %(name)s,
+    japanese_name = %(japanese_name)s
 """
 
 
 class AbstractGenreRepository(Protocol):
     
-    def save(self, genre_list: list[GenreRdbModel]) -> None:
+    def save(self, genre_list: list[Genre]) -> None:
         ...
     
-    def fetch_all(self) -> list[GenreRdbModel]:
+    def fetch_all(self) -> list[Genre]:
         ...
 
 
@@ -43,5 +42,5 @@ class GenreRepository:
         
         return count
     
-    def fetch_all(self) -> list[GenreRdbModel]:
+    def fetch_all(self) -> list[Genre]:
         ...
