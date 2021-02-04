@@ -10,7 +10,7 @@ class TmdbSettings(BaseSettings):
 
 
 class InputDbSettings(BaseSettings):
-    engine: str = "tortoise.backends.mysql"
+    engine: str
     host: str
     port: int
     db_user: str

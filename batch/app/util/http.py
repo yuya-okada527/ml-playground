@@ -36,7 +36,7 @@ def call_get_api(url: str, query: BaseModel):
         raise ServerSideError()
 
     # ステータスコードをチェック
-    __check_status_code(response.status_code)
+    __check_status_code(response)
 
     return response
 

@@ -17,3 +17,9 @@ def output_schema():
     # サービスの実行
     update_schema(solr_client)
 
+
+@app.command("index")
+def output_index():
+
+    # クライアントの初期化
+    solr_client = SolrClient(SolrSettings())

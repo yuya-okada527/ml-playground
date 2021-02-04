@@ -16,7 +16,7 @@ def update_genre_master(genre_repository: AbstractGenreRepository, tmdb_client: 
     # TODO languageをenumを切る
     japanese_genres = tmdb_client.fetch_genres("ja")
 
-    # RDBモデルに詰め替える
+    # ジャンルモデルに詰め替える
     genre_list = []
     for jp_genre in japanese_genres.genres:
         en_genre = genre_id_dict.get(jp_genre.id)
@@ -33,7 +33,8 @@ def update_genre_master(genre_repository: AbstractGenreRepository, tmdb_client: 
         )
 
     # モデルの永続化
-    genre_repository.save(genre_list)
+    count = genre_repository.save(genre_list)
+    print(count)
 
 
 def update_movies(
