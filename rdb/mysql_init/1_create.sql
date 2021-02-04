@@ -1,10 +1,9 @@
-CREATE DATABASE submit_db;
-use submit_db;
+CREATE DATABASE input_db;
+use input_db;
 
 -- 映画テーブル
 CREATE TABLE IF NOT EXISTS `movies` (
-  `movie_id`        INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `tmdb_id`         VARCHAR(64) NOT NULL UNIQUE,
+  `movie_id`        INT NOT NULL PRIMARY KEY,
   `imdb_id`         VARCHAR(64),
   `original_title`  VARCHAR(256),
   `japanese_title`  VARCHAR(256),
@@ -14,17 +13,14 @@ CREATE TABLE IF NOT EXISTS `movies` (
   `backdrop_path`   VARCHAR(256),
   `popularity`      FLOAT,
   `vote_average`    FLOAT,
-  `vote_count`      INT,
-  INDEX tmdb_id_index(`tmdb_id`)
+  `vote_count`      INT
 );
 
 -- 映画ジャンルテーブル
 CREATE TABLE IF NOT EXISTS `movie_genres` (
-  `movie_genre_id`  INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `movie_id`        INT NOT NULL,
   `genre_id`        INT NOT NULL,
-  INDEX movie_id_index(`movie_id`),
-  INDEX genre_id_index(`genre_id`)
+  PRIMARY KEY(`movie_id`, `genre_id`)
 );
 
 -- ジャンルテーブル
