@@ -15,6 +15,15 @@ ON DUPLICATE KEY UPDATE
     japanese_name = %(japanese_name)s
 """
 
+SELECT_ALL_GENRE_STATEMENT = """\
+SELECT
+    genre_id,
+    name,
+    japanese_name
+FROM
+    genres
+"""
+
 
 class AbstractGenreRepository(Protocol):
     
@@ -43,4 +52,18 @@ class GenreRepository:
         return count
     
     def fetch_all(self) -> list[Genre]:
-        ...
+        
+        # SQL実行
+        result = self.engine.execute(SELECT_ALL_GENRE_STATEMENT)
+
+        # 内部モデルに変換
+        genre_list = []
+        for genre in result:
+            genre_list.append(Genre(
+                genre_id=genre.genre_id,
+                name=genre.name,
+                japanese_name=genre.japanese_name
+            ))
+        
+        return genre_list
+
