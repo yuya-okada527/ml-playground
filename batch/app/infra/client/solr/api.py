@@ -58,7 +58,7 @@ class SolrClient:
         url = self.url + UPDATE_PATH.format(collection=self.collection)
         data = json.dumps({
             "delete": {
-                "query": f"index_time:[0 TO {exec_time}]"
+                "query": f"index_time:[0 TO {exec_time-1}]"
             }
         })
         headers = {CONTENT_TYPE: APPLICATION_JSON}
