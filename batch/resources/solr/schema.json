@@ -118,6 +118,13 @@
       "indexed": false,
       "stored": true,
       "multiValued": true
+    },
+    {
+      "name": "index_time",
+      "type": "string",
+      "indexed": true,
+      "stored": true,
+      "multiValued": false
     }
   ]
 }
