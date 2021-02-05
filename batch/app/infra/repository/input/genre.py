@@ -1,8 +1,7 @@
 from typing import Protocol
 
-from core.config import InputDbSettings
 from domain.models.internal.movie import Genre
-from infra.repository.input.base import create_input_engine
+from infra.repository.input.base import ENGINE
 
 
 UPSERT_GENRE_STATEMENT = """\
@@ -35,15 +34,12 @@ class AbstractGenreRepository(Protocol):
 
 
 class GenreRepository:
-
-    def __init__(self, settings: InputDbSettings) -> None:
-        self.engine = create_input_engine(settings)
     
     def save(self, genre_list: list[Genre]) -> int:
 
         count = 0
         for genre in genre_list:
-            count += self.engine.execute(UPSERT_GENRE_STATEMENT, {
+            count += ENGINE.execute(UPSERT_GENRE_STATEMENT, {
                 "genre_id": genre.genre_id,
                 "name": genre.name,
                 "japanese_name": genre.japanese_name
@@ -54,7 +50,7 @@ class GenreRepository:
     def fetch_all(self) -> list[Genre]:
         
         # SQL実行
-        result = self.engine.execute(SELECT_ALL_GENRE_STATEMENT)
+        result = ENGINE.execute(SELECT_ALL_GENRE_STATEMENT)
 
         # 内部モデルに変換
         genre_list = []

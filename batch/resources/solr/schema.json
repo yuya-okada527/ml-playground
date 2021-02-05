@@ -121,7 +121,7 @@
     },
     {
       "name": "index_time",
-      "type": "string",
+      "type": "plong",
       "indexed": true,
       "stored": true,
       "multiValued": false

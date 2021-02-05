@@ -14,7 +14,7 @@ app = typer.Typer()
 def input_genre():
 
     # リポジトリの初期化
-    genre_repository = GenreRepository(InputDbSettings())
+    genre_repository = GenreRepository()
     # クライアントの初期化
     tmdb_client = TmdbClient(TmdbSettings())
 
@@ -29,7 +29,7 @@ def input_movies(page: int = 1):
     tmdb_client = TmdbClient(TmdbSettings())
 
     # リポジトリの初期化
-    movie_repository = MovieRepository(InputDbSettings())
+    movie_repository = MovieRepository()
 
     # サービスの実行
     update_movies(page=page, tmdb_client=tmdb_client, movie_repository=movie_repository)

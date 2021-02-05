@@ -10,7 +10,11 @@ from domain.exceptions.http_exception import ServerSideError, ClientSideError
 
 
 WAIT_TIME_BASE = 5
-TIMEOUT = 2
+TIMEOUT = 3
+
+# ヘッダー関連定数
+CONTENT_TYPE = "Content-Type"
+APPLICATION_JSON = "application/json"
 
 
 def retry_exec(max_retry_num: int):
@@ -41,7 +45,7 @@ def call_get_api(url: str, query: BaseModel):
     return response
 
 
-def call_post_api(url: str, data: Union[str, BaseModel]):
+def call_post_api(url: str, data: Union[str, BaseModel], headers: dict[str, str] = None):
 
     # POSTデータを文字列に変換
     data_str = data.json() if isinstance(data, BaseModel) else data
@@ -49,7 +53,7 @@ def call_post_api(url: str, data: Union[str, BaseModel]):
 
     # API実行
     try:
-        response = requests.post(url=url, data=data, timeout=TIMEOUT)
+        response = requests.post(url=url, data=data_str, timeout=TIMEOUT, headers=headers)
     except Timeout:
         raise ServerSideError()
     

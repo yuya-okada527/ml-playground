@@ -1,16 +1,28 @@
 from typing import Protocol
+import json
 
 from core.config import SolrSettings
-from util.http import call_post_api
+from domain.models.solr.movie import MovieSolrModel
+from util.http import APPLICATION_JSON, CONTENT_TYPE, call_post_api
 
 
 # APIパス
 SCHEMA_PATH = "/solr/{collection}/schema"
+UPDATE_PATH = "/solr/{collection}/update"
 
 
 class AbstractSolrClient(Protocol):
     
     def update_schema(self, schema_data: str) -> None:
+        ...
+    
+    def index_movies(self, movies: list[MovieSolrModel]) -> None:
+        ...
+
+    def delete_old(self, exec_time) -> None:
+        ...
+    
+    def commit(self) -> None:
         ...
 
 
@@ -30,4 +42,39 @@ class SolrClient:
 
         print(response)
 
+    def index_movies(self, movies: list[MovieSolrModel]) -> None:
+        
+        # リクエスト条件を構築
+        url = self.url + UPDATE_PATH.format(collection=self.collection)
+        data = json.dumps([movie.dict() for movie in movies])
+        headers = {CONTENT_TYPE: APPLICATION_JSON}
+
+        # POSTメソッドでAPIを実行
+        response = call_post_api(url=url, data=data, headers=headers)
+
+    def delete_old(self, exec_time: int) -> None:
+        
+        # リクエスト条件を構築
+        url = self.url + UPDATE_PATH.format(collection=self.collection)
+        data = json.dumps({
+            "delete": {
+                "query": f"index_time:[0 TO {exec_time}]"
+            }
+        })
+        headers = {CONTENT_TYPE: APPLICATION_JSON}
+
+        # POSTメソッドでAPIを実行
+        response = call_post_api(url=url, data=data, headers=headers)
+
+    def commit(self) -> None:
+
+        # リクエスト条件を構築
+        url = self.url + UPDATE_PATH.format(collection=self.collection)
+        data = json.dumps({
+            "commit": {}
+        })
+        headers = {CONTENT_TYPE: APPLICATION_JSON}
+
+        # POSTメソッドでAPIを実行
+        response = call_post_api(url=url, data=data, headers=headers)
 

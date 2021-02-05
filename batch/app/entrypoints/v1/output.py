@@ -2,7 +2,8 @@ import typer
 from core.config import SolrSettings
 
 from infra.client.solr.api import SolrClient
-from service.output.movie import update_schema
+from infra.repository.input.movie import MovieRepository
+from service.output.movie import build_index, update_schema
 
 
 app = typer.Typer()
@@ -23,3 +24,9 @@ def output_index():
 
     # クライアントの初期化
     solr_client = SolrClient(SolrSettings())
+
+    # リポジトリの初期化
+    movie_repository = MovieRepository()
+
+    # サービス実行
+    build_index(solr_client=solr_client, movie_repository=movie_repository)
