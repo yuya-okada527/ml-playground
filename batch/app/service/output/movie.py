@@ -40,6 +40,13 @@ def build_index(
     # 映画リストのインデックスを構築
     solr_client.index_movies(movie_solr_model_list)
 
+    # 古いデータを削除
+    solr_client.delete_old(exec_time)
+
+    # コミット
+    solr_client.commit()
+
+
 
 def _map_to_solr_model(movie: Movie, exec_time: int) -> MovieSolrModel:
     return MovieSolrModel(
