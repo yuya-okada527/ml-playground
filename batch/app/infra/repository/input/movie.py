@@ -96,6 +96,8 @@ class MovieRepository:
         movie_count = 0
         genre_count = 0
         for movie in movie_list:
+            # TODO トランザクション
+            # TODO リトライ
             movie_count += ENGINE.execute(UPSERT_MOVIE_STATEMENT, {
                 "movie_id": movie.movie_id,
                 "imdb_id": movie.imdb_id,

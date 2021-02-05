@@ -17,6 +17,10 @@
 - GenreLabels をスペース区切り
 - KeywordLabels をスペース区切り
 
-### schema
+### schema API
 
 参照: https://github.com/yuya-okada527/movie-recommender/blob/main/batch/resources/solr/schema.json
+
+### index_time
+
+バージョニングに使用
