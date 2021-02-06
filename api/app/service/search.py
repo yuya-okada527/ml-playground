@@ -6,6 +6,7 @@ from domain.enums.movies import MovieField
 from infra.client.solr.api import AbstractSolrClient
 from infra.client.solr.query import SolrFilterQuery, SolrQuery, SolrSortQuery, SortDirection
 
+
 DEFAULT_MOVIE_FLS = [
     MovieField.MOVIE_ID,
     MovieField.ORIGINAL_TITLE,
@@ -40,8 +41,6 @@ def exec_search_service(
     search_result = solr_client.search_movies(solr_query)
 
     return _map_response(search_result)
-
-
 
 
 def _build_query(
