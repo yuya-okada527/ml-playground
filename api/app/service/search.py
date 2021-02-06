@@ -1,6 +1,6 @@
 from typing import List
 
-from domain.models.solr.movies import SolrResultModel
+from domain.models.solr.movies import MovieSolrModel, SolrResultModel
 from entrypoints.v1.movie.messages.search_messages import MovieResponse, SearchMovieResponse
 from domain.enums.movies import MovieField
 from infra.client.solr.api import AbstractSolrClient
@@ -26,6 +26,8 @@ DEFAULT_MOVIE_FLS = [
 DEFAULT_SORT = [
     SolrSortQuery(field=MovieField.POPULARITY, direction=SortDirection.DESC)
 ]
+
+IMAGE_URL_BASE = "https://image.tmdb.org/t/p/w500"
 
 def exec_search_service(
     q: List[str],
@@ -73,5 +75,21 @@ def _map_response(search_result: SolrResultModel) -> SearchMovieResponse:
         start=search_result.response.start,
         returned_num=len(search_result.response.docs),
         available_num=search_result.response.numFound,
-        results=[MovieResponse(**movie.dict()) for movie in search_result.response.docs]
+        results=[_map_movie(movie) for movie in search_result.response.docs]
+    )
+
+
+def _map_movie(movie: MovieSolrModel) -> MovieResponse:
+    return MovieResponse(
+        movie_id=movie.movie_id,
+        original_title=movie.original_title,
+        japanese_title=movie.japanese_title,
+        overview=movie.overview,
+        tagline=movie.tagline,
+        poster_url=IMAGE_URL_BASE+movie.poster_path if movie.poster_path else None,
+        backdrop_url=IMAGE_URL_BASE+movie.backdrop_path if movie.backdrop_path else None,
+        popularity=movie.popularity,
+        vote_average=movie.vote_average,
+        genre_labels=movie.genre_labels,
+        genres=movie.genres
     )
