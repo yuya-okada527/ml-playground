@@ -1,5 +1,5 @@
 import re
-from typing import Any, Callable, Optional
+from typing import List, Any, Callable, Optional
 
 
 # クエリパラメータ分割パターン(半角・全角スペース・カンマ)
@@ -9,7 +9,7 @@ SPLIT_PATTERN = re.compile(r"[ 　,]")
 def split_query_params(
     value: Optional[str], 
     func: Callable[[str], Any] = str
-) -> list[Any]:
+) -> List[Any]:
 
     # 空の値は空リストで返す
     if not value:

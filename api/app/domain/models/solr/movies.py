@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import List, Dict, Optional
 
 from pydantic import BaseModel
 
@@ -6,7 +6,7 @@ from pydantic import BaseModel
 class SolrResponseHeaderModel(BaseModel):
     status: int
     QTime: int
-    params: dict[str, str]
+    params: Dict[str, str]
 
 
 class MovieSolrModel(BaseModel):
@@ -19,17 +19,17 @@ class MovieSolrModel(BaseModel):
     backdrop_path: Optional[str] = None
     popularity: float
     vote_average: float
-    genres: list[int] = []
-    genre_labels: list[str] = []
-    keywords: list[int] = []
-    keyword_labels: list[str] = []
+    genres: List[int] = []
+    genre_labels: List[str] = []
+    keywords: List[int] = []
+    keyword_labels: List[str] = []
 
 
 class SolrResponseModel(BaseModel):
     numFound: int
     start: int
     numFoundExact: bool
-    docs: list[MovieSolrModel]
+    docs: List[MovieSolrModel]
 
 
 class SolrResultModel(BaseModel):

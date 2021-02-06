@@ -19,7 +19,7 @@ class SolrClient:
 
     def __init__(self, settings: SolrSettings) -> None:
         self.url = settings.get_url()
-        self.collection= settings.collection
+        self.collection= settings.solr_collection
     
     def search_movies(self, query: SolrQuery) -> SolrResultModel:
 
@@ -30,10 +30,8 @@ class SolrClient:
         # API実行
         response = call_get_api(url=url, query_string=query_string)
 
-        print(response.json().keys())
-
         return SolrResultModel(**response.json())
 
 
-async def get_solr_client():
+async def get_solr_client() -> SolrClient:
     return SolrClient(SolrSettings())

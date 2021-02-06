@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Optional
+from typing import List
 
 from pydantic import BaseModel
 
@@ -41,11 +41,11 @@ class SolrSortQuery(BaseModel):
 
 class SolrQuery(BaseModel):
     q: str = SEARCH_ALL
-    fq: list[SolrFilterQuery] = []
-    fl: list[MovieField] = []
+    fq: List[SolrFilterQuery] = []
+    fl: List[MovieField] = []
     start: int
     rows: int
-    sort: list[SolrSortQuery] = []
+    sort: List[SolrSortQuery] = []
 
     def get_query_string(self) -> str:
         # クエリパラメータをリストで保持

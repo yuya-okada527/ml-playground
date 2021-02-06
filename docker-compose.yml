@@ -5,6 +5,8 @@ services:
     image: movie-recommender-api
     ports:
       - "8888:80"
+    env_file:
+      - api/env/solr-docker-compose.env
   solr:
     image: solr:8.7.0
     ports:

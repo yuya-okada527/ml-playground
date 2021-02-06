@@ -1,6 +1,6 @@
 import time
 from functools import wraps
-from typing import Union, Optional
+from typing import Dict, Union, Optional
 
 import requests
 from requests.exceptions import Timeout
@@ -62,7 +62,7 @@ def call_get_api(
     return response
 
 
-def call_post_api(url: str, data: Union[str, BaseModel], headers: dict[str, str] = None):
+def call_post_api(url: str, data: Union[str, BaseModel], headers: Dict[str, str] = None):
 
     # POSTデータを文字列に変換
     data_str = data.json() if isinstance(data, BaseModel) else data

@@ -1,3 +1,5 @@
+from typing import List
+
 from domain.models.solr.movies import SolrResultModel
 from entrypoints.v1.movie.messages.search_messages import MovieResponse, SearchMovieResponse
 from domain.enums.movies import MovieField
@@ -25,7 +27,7 @@ DEFAULT_SORT = [
 ]
 
 def exec_search_service(
-    q: list[str],
+    q: List[str],
     start: int,
     rows: int,
     solr_client: AbstractSolrClient
@@ -43,7 +45,7 @@ def exec_search_service(
 
 
 def _build_query(
-    q: list[str],
+    q: List[str],
     start: int,
     rows: int
 ) -> SolrQuery:
@@ -56,7 +58,7 @@ def _build_query(
     )
 
 
-def _build_free_word_query(q: list[str]) -> list[SolrFilterQuery]:
+def _build_free_word_query(q: List[str]) -> List[SolrFilterQuery]:
     if not q:
         return []
 
