@@ -28,6 +28,15 @@ const useStyles = makeStyles((theme: Theme) =>
     sidebarText: {
       marginTop: theme.spacing(0.5),
     },
+    footer: {
+      width: "100%",
+      position: "absolute",
+      bottom: 0,
+    },
+    footerListItem: {
+      paddingTop: theme.spacing(0.5),
+      paddingBottom: theme.spacing(0),
+    },
   })
 );
 
@@ -87,9 +96,16 @@ const Layout = ({ children, title = "This is the default title" }: Props) => {
         </Grid>
       </Grid>
 
-      <footer>
+      <footer className={classes.footer}>
         <hr />
-        <span>I'm here to stay (Footer)</span>
+        <List>
+          <ListItem className={classes.footerListItem}>
+            Contact: hoge@gmail.com
+          </ListItem>
+          <ListItem className={classes.footerListItem}>
+            Github: https://github.com/hoge
+          </ListItem>
+        </List>
       </footer>
     </div>
   );
