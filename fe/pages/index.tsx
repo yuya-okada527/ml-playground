@@ -1,6 +1,7 @@
 import React, { ChangeEvent } from "react";
 import {
   Button,
+  Card,
   Container,
   createStyles,
   List,
@@ -10,6 +11,7 @@ import {
   Theme,
   Grid,
   Typography,
+  CardContent,
 } from "@material-ui/core";
 import Layout from "../components/Layout";
 import { Movie } from "../interfaces/index";
@@ -26,6 +28,19 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: theme.spacing(1),
       marginLeft: theme.spacing(2),
     },
+    underSearch: {
+      marginBottom: theme.spacing(2),
+    },
+    movieCard: {
+      width: "75%",
+      padding: theme.spacing(0),
+    },
+    movieCardContent: {
+      padding: theme.spacing(0),
+    },
+    movieCardTitle: {
+      margin: theme.spacing(1),
+    },
   })
 );
 
@@ -33,13 +48,26 @@ type SearchResultProps = {
   movies: Movie[];
 };
 
-const SearchResultList = ({ movies }: SearchResultProps) => (
-  <List>
-    {movies.map((movie: Movie) => (
-      <ListItem>{movie.original_title}</ListItem>
-    ))}
-  </List>
-);
+const SearchResultList = ({ movies }: SearchResultProps) => {
+  const classes = useStyles();
+  return (
+    <List>
+      {movies.map((movie: Movie) => (
+        <ListItem>
+          <Card className={classes.movieCard}>
+            <CardContent className={classes.movieCardContent}>
+              <Typography className={classes.movieCardTitle} variant="h6">
+                {movie.japanese_title
+                  ? movie.japanese_title
+                  : movie.original_title}
+              </Typography>
+            </CardContent>
+          </Card>
+        </ListItem>
+      ))}
+    </List>
+  );
+};
 
 const IndexPage = () => {
   const classes = useStyles();
@@ -96,6 +124,7 @@ const IndexPage = () => {
             </Grid>
             {searchResult.length > 0 && (
               <>
+                <div className={classes.underSearch} />
                 <Typography>Results for "{searchedTerm}"</Typography>
                 <SearchResultList movies={searchResult} />
               </>
