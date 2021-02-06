@@ -13,6 +13,8 @@ SOLR_CONFIG_PATH = "solr/schema.json"
 
 def update_schema(solr_client: AbstractSolrClient):
 
+    # TODO スキーマを宣言的に管理できるように変更
+
     # 追加スキーマを取得
     schema = get_resource(SOLR_CONFIG_PATH)
 
