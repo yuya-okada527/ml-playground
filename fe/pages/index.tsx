@@ -1,8 +1,10 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
 import {
   Button,
   Container,
   createStyles,
+  List,
+  ListItem,
   makeStyles,
   TextField,
   Theme,
@@ -10,6 +12,9 @@ import {
   Typography,
 } from "@material-ui/core";
 import Layout from "../components/Layout";
+import { Movie } from "../interfaces/index";
+import { callGetApi } from "../utils/http";
+import config from "../utils/config";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -24,8 +29,41 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+type SearchResultProps = {
+  movies: Movie[];
+};
+
+const SearchResultList = ({ movies }: SearchResultProps) => (
+  <List>
+    {movies.map((movie: Movie) => (
+      <ListItem>{movie.original_title}</ListItem>
+    ))}
+  </List>
+);
+
 const IndexPage = () => {
   const classes = useStyles();
+  const [searchTerm, setSearchTerm] = React.useState("");
+  const [searchedTerm, setSearchedTerm] = React.useState("");
+  const [searchResult, setSearchResult] = React.useState<Array<Movie>>([]);
+
+  const handleSearchTermChange = (
+    event: ChangeEvent<HTMLInputElement>
+  ): void => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleSearchButtonClick = async () => {
+    const url = config.apiEndpoint + "/v1/movie/search";
+    const query = {
+      query: searchTerm,
+      start: 0,
+      rows: 5,
+    };
+    const response = await callGetApi(url, query);
+    setSearchResult(response.results);
+    setSearchedTerm(searchTerm);
+  };
   return (
     <Layout title="Movie Recommeder">
       <Container className={classes.container}>
@@ -41,6 +79,8 @@ const IndexPage = () => {
                   label="Search Movies!!"
                   type="search"
                   fullWidth
+                  value={searchTerm}
+                  onChange={handleSearchTermChange}
                 />
               </Grid>
               <Grid item xs={4}>
@@ -48,11 +88,18 @@ const IndexPage = () => {
                   variant="contained"
                   color="primary"
                   className={classes.searchButton}
+                  onClick={handleSearchButtonClick}
                 >
                   Search
                 </Button>
               </Grid>
             </Grid>
+            {searchResult.length > 0 && (
+              <>
+                <Typography>Results for "{searchedTerm}"</Typography>
+                <SearchResultList movies={searchResult} />
+              </>
+            )}
           </Grid>
         </Grid>
       </Container>
