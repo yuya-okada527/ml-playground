@@ -1,8 +1,11 @@
 from typing import Optional
 
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Query, Depends
 
 from entrypoints.v1.movie.messages.search_messages import SearchMovieResponse
+from infra.client.solr.api import AbstractSolrClient, get_solr_client
+from service.search import exec_search_service
+from util.query import split_query_params
 
 
 router = APIRouter(
@@ -24,7 +27,7 @@ async def search(
         None,
         max_length=100,
         title="検索クエリ",
-        description="フリーワードの検索キーワードを指定してください。半角スペース/全角スペース区切りでOR検索を実行します."
+        description="フリーワードの検索キーワードを指定してください。半角スペース/全角スペース区切りでAND検索を実行します."
     ),
     start: int = Query(
         0,
@@ -39,6 +42,13 @@ async def search(
         le=50,
         title="取得件数",
         description="指定した件数を最大取得件数としてレスポンスを返します."
-    )
+    ),
+    solr_client: AbstractSolrClient = Depends(get_solr_client)
 ):
-    return {}
+    # サービス実行
+    return exec_search_service(
+        q=split_query_params(query),
+        start=start,
+        rows=rows,
+        solr_client=solr_client
+    )
