@@ -8,6 +8,7 @@ Movie Recommender App 用のコア API を提供します。
 - フレームワーク: FastAPI
 - サーバ: uvicorn
 - ミドルウェア: Apache Solr, Redis
+- インフラ: Docker
 - 主要ライブラリ
   - requests
   - pydantic
