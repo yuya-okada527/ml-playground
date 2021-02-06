@@ -30,7 +30,7 @@ const IndexPage = () => {
     <Layout title="Movie Recommeder">
       <Container className={classes.container}>
         <Grid container>
-          <Grid item xs={8}>
+          <Grid item xs={9}>
             <Typography variant="h6" component="h2">
               Search Your Favorite Movies!!
             </Typography>
