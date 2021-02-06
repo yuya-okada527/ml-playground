@@ -1,7 +1,6 @@
 import React, { ChangeEvent } from "react";
 import {
   Button,
-  Card,
   Container,
   createStyles,
   List,
@@ -11,7 +10,6 @@ import {
   Theme,
   Grid,
   Typography,
-  CardContent,
 } from "@material-ui/core";
 import Layout from "../components/Layout";
 import { Movie } from "../interfaces/index";
@@ -25,8 +23,8 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: theme.spacing(2),
     },
     searchButton: {
-      marginTop: theme.spacing(1),
-      marginLeft: theme.spacing(2),
+      marginTop: theme.spacing(1.5),
+      marginLeft: theme.spacing(3),
     },
     underSearch: {
       marginBottom: theme.spacing(2),
@@ -53,17 +51,16 @@ const SearchResultList = ({ movies }: SearchResultProps) => {
   return (
     <List>
       {movies.map((movie: Movie) => (
-        <ListItem>
-          <Card className={classes.movieCard}>
-            <CardContent className={classes.movieCardContent}>
-              <Typography className={classes.movieCardTitle} variant="h6">
-                {movie.japanese_title
-                  ? movie.japanese_title
-                  : movie.original_title}
-              </Typography>
-            </CardContent>
-          </Card>
-        </ListItem>
+        <>
+          <ListItem key={movie.movie_id}>
+            <Typography className={classes.movieCardTitle} variant="h6">
+              {movie.japanese_title
+                ? movie.japanese_title
+                : movie.original_title}
+            </Typography>
+          </ListItem>
+          <hr />
+        </>
       ))}
     </List>
   );
@@ -96,12 +93,12 @@ const IndexPage = () => {
     <Layout title="Movie Recommeder">
       <Container className={classes.container}>
         <Grid container>
-          <Grid item xs={9}>
+          <Grid item xs={8}>
             <Typography variant="h6" component="h2">
               Search Your Favorite Movies!!
             </Typography>
             <Grid container>
-              <Grid item xs={8}>
+              <Grid item xs={10}>
                 <TextField
                   id="search-movie"
                   label="Search Movies!!"
@@ -111,7 +108,7 @@ const IndexPage = () => {
                   onChange={handleSearchTermChange}
                 />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={2}>
                 <Button
                   variant="contained"
                   color="primary"
