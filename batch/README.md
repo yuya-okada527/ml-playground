@@ -7,10 +7,11 @@ Movie Recommender App 用のバッチ処理を提供します。
 - 言語: Python3.9
 - フレームワーク: typer
 - ORM: sqlalchemy(ORM 部分は未使用)
-- ミドルウェア: MySQL, Apache Solr
+- ミドルウェア: MySQL, Apache Solr, Redis
 - 主要ライブラリ:
   - requests
   - pydantic
+  - redis-py
 
 ## 起動方法
 
