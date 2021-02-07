@@ -38,8 +38,6 @@ class RedisRepository:
             return []
         
         return json.loads(response.decode("utf-8"))
-        
-
 
 
 async def get_kvs_repository() -> AbstractKvsRepository:
