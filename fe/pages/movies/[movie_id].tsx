@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Card,
-  Container,
-  createStyles,
-  makeStyles,
-  Theme,
-} from "@material-ui/core";
+import { Container, createStyles, makeStyles, Theme } from "@material-ui/core";
 import { useRouter } from "next/router";
 import Layout from "../../components/Layout";
 import { Movie } from "../../interfaces";
