@@ -1,10 +1,10 @@
 from typing import Optional
 
-from fastapi import APIRouter, Query, Depends
+from fastapi import APIRouter, Path, Query, Depends
 
-from entrypoints.v1.movie.messages.search_messages import SearchMovieResponse
+from entrypoints.v1.movie.messages.search_messages import SearchMovieResponse, MovieResponse
 from infra.client.solr.api import AbstractSolrClient, get_solr_client
-from service.search import exec_search_service
+from service.search import exec_search_by_id_service, exec_search_service
 from util.query import split_query_params
 
 
@@ -44,7 +44,8 @@ async def search(
         description="指定した件数を最大取得件数としてレスポンスを返します."
     ),
     solr_client: AbstractSolrClient = Depends(get_solr_client)
-):
+) -> SearchMovieResponse:
+
     # サービス実行
     return exec_search_service(
         q=split_query_params(query),
@@ -52,3 +53,23 @@ async def search(
         rows=rows,
         solr_client=solr_client
     )
+
+
+@router.get(
+    "/{movie_id}",
+    description="映画IDに紐づく映画情報を取得するAPI.",
+    response_model=MovieResponse,
+    response_description="検索結果"
+)
+async def search_by_id(
+    movie_id: int = Path(
+        ...,
+        ge=0,
+        title="映画ID",
+        description="検索対象映画ID"
+    ),
+    solr_client: AbstractSolrClient = Depends(get_solr_client)
+) -> MovieResponse:
+
+    # サービス実行
+    return exec_search_by_id_service(movie_id, solr_client)

@@ -1,4 +1,5 @@
 from typing import List
+from domain.exceptions.service_exception import NoTargetException
 
 from domain.models.solr.movies import MovieSolrModel, SolrResultModel
 from entrypoints.v1.movie.messages.search_messages import MovieResponse, SearchMovieResponse
@@ -37,7 +38,7 @@ def exec_search_service(
 ) -> SearchMovieResponse:
     
     # クエリの構築
-    solr_query = _build_query(q=q, start=start, rows=rows)
+    solr_query = _build_search_query(q=q, start=start, rows=rows)
 
     # 検索実行
     search_result = solr_client.search_movies(solr_query)
@@ -45,7 +46,22 @@ def exec_search_service(
     return _map_response(search_result)
 
 
-def _build_query(
+def exec_search_by_id_service(movie_id: int, solr_client: AbstractSolrClient) -> MovieResponse:
+    
+    # クエリの構築
+    solr_query = _build_search_by_id_query(movie_id)
+
+    # 検索実行
+    search_result = solr_client.search_movies(solr_query)
+
+    # 取得件数を確認
+    if len(search_result.response.docs) != 1:
+        raise NoTargetException()
+    
+    return _map_movie(search_result.response.docs[0])
+
+
+def _build_search_query(
     q: List[str],
     start: int,
     rows: int
@@ -56,6 +72,18 @@ def _build_query(
         start=start,
         rows=rows,
         sort=DEFAULT_SORT
+    )
+
+
+def _build_search_by_id_query(movie_id: int) -> SolrQuery:
+    return SolrQuery(
+        q=SolrFilterQuery.exact_condition(
+            field=MovieField.MOVIE_ID, 
+            value=str(movie_id)
+        ).get_query_string(),
+        fl=DEFAULT_MOVIE_FLS,
+        start=0,
+        rows=1,
     )
 
 
