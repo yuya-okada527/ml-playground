@@ -2,7 +2,7 @@ from typing import List
 from domain.exceptions.service_exception import NoTargetException
 
 from domain.models.solr.movies import MovieSolrModel, SolrResultModel
-from entrypoints.v1.movie.messages.search_messages import MovieResponse, SearchMovieResponse
+from entrypoints.v1.movie.messages.movie_messages import MovieResponse, SearchMovieResponse
 from domain.enums.movies import MovieField
 from infra.client.solr.api import AbstractSolrClient
 from infra.client.solr.query import SolrFilterQuery, SolrQuery, SolrSortQuery, SortDirection

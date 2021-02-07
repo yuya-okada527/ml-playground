@@ -2,7 +2,7 @@ from typing import Optional
 
 from fastapi import APIRouter, Path, Query, Depends
 
-from entrypoints.v1.movie.messages.search_messages import SearchMovieResponse, MovieResponse
+from entrypoints.v1.movie.messages.movie_messages import SearchMovieResponse, MovieResponse
 from infra.client.solr.api import AbstractSolrClient, get_solr_client
 from service.search import exec_search_by_id_service, exec_search_service
 from util.query import split_query_params
