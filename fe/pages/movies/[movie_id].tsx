@@ -1,5 +1,15 @@
 import React from "react";
-import { Container, createStyles, makeStyles, Theme } from "@material-ui/core";
+import {
+  Card,
+  CardMedia,
+  CardContent,
+  Container,
+  createStyles,
+  Grid,
+  makeStyles,
+  Theme,
+  Typography,
+} from "@material-ui/core";
 import { useRouter } from "next/router";
 import Layout from "../../components/Layout";
 import { Movie } from "../../interfaces";
@@ -16,12 +26,30 @@ const useStyles = makeStyles((theme: Theme) =>
       marginLeft: theme.spacing(2),
       marginRight: theme.spacing(2),
     },
+    cardRoot: {
+      display: "flex",
+    },
+    cardCover: {
+      width: 600,
+    },
   })
 );
 
-const MovieDetail = ({ movie_detail }: MovieDetailProps) => (
-  <h2>{movie_detail.japanese_title}</h2>
-);
+const MovieDetail = ({ movie_detail }: MovieDetailProps) => {
+  const classes = useStyles();
+  return (
+    <Card className={classes.cardRoot}>
+      <CardMedia
+        className={classes.cardCover}
+        image={movie_detail.poster_url}
+      />
+      <CardContent>
+        <Typography>{movie_detail.japanese_title}</Typography>
+        <p>{movie_detail.overview}</p>
+      </CardContent>
+    </Card>
+  );
+};
 
 const DetailPage = () => {
   const classes = useStyles();
@@ -42,7 +70,11 @@ const DetailPage = () => {
   return (
     <Layout title={`Movie_${movie_id}`}>
       <Container className={classes.container}>
-        {movie !== undefined && <MovieDetail movie_detail={movie} />}
+        <Grid container>
+          <Grid item xs={8}>
+            {movie !== undefined && <MovieDetail movie_detail={movie} />}
+          </Grid>
+        </Grid>
       </Container>
     </Layout>
   );
