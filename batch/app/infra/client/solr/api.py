@@ -3,6 +3,7 @@ import json
 
 from core.config import SolrSettings
 from domain.models.solr.movie import MovieSolrModel
+from domain.models.solr.schema import SolrSchema
 from util.http import APPLICATION_JSON, CONTENT_TYPE, call_post_api
 
 
@@ -23,6 +24,9 @@ class AbstractSolrClient(Protocol):
         ...
     
     def commit(self) -> None:
+        ...
+    
+    def get_schema(self) -> SolrSchema:
         ...
 
 
