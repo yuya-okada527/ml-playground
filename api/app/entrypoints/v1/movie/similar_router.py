@@ -4,6 +4,7 @@ from entrypoints.v1.movie.messages.movie_messages import SimilarMovieResponse
 from domain.enums.similarity_enums import SimilarityModelType
 from infra.client.solr.api import AbstractSolrClient, get_solr_client
 from infra.repository.redis_repository import AbstractKvsRepository, get_kvs_repository
+from service.similar_service import exec_search_similar_service
 
 
 router = APIRouter(
@@ -36,4 +37,11 @@ async def search_similar(
     kvs_repository: AbstractKvsRepository = Depends(get_kvs_repository),
     solr_client: AbstractSolrClient = Depends(get_solr_client)
 ) -> SimilarMovieResponse:
-    return None
+
+    # サービス実行
+    return exec_search_similar_service(
+        movie_id=movie_id,
+        model_type=model_type,
+        kvs_repository=kvs_repository,
+        solr_client=solr_client
+    )
