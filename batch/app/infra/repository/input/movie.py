@@ -6,9 +6,6 @@ from sqlalchemy.exc import IntegrityError
 from domain.models.internal.movie import Genre, Movie
 from infra.repository.input.base import ENGINE
 
-# TODO ロギング制御
-logging.basicConfig()
-logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
 
 
 UPSERT_MOVIE_STATEMENT = """\
@@ -79,6 +76,13 @@ FROM
     ON mg.genre_id = g.genre_id
 """
 
+SELECT_ALL_MOVIE_ID_STATEMENT = """\
+SELECT
+    m.movie_id
+FROM
+    movies AS m
+"""
+
 
 class AbstractMovieRepository(Protocol):
     
@@ -86,6 +90,9 @@ class AbstractMovieRepository(Protocol):
         ...
     
     def fetch_all(self) -> list[Movie]:
+        ...
+    
+    def fetch_all_movie_id(self) -> list[int]:
         ...
 
 
@@ -135,7 +142,13 @@ class MovieRepository:
                 movie_map[result.movie_id].genres.append(_map_to_genre(result))
         
         return list(movie_map.values())
-                
+    
+    def fetch_all_movie_id(self) -> list[int]:
+
+        # SQL実行
+        result_proxy = ENGINE.execute(SELECT_ALL_MOVIE_ID_STATEMENT)
+
+        return [int(movie.movie_id) for movie in result_proxy]
 
 
 def _map_to_movie(result) -> Movie:

@@ -11,11 +11,11 @@ class TmdbMovieGenreList(BaseModel):
     genres: list[TmdbMovieGenre]
 
 
-class TmdbPopularMovie(BaseModel):
+class TmdbMovie(BaseModel):
     poster_path: Optional[str]
     adult: bool
     overview: str
-    release_date: str
+    release_date: Optional[str]
     genre_ids: list[int]
     id: int
     original_title: str
@@ -30,7 +30,7 @@ class TmdbPopularMovie(BaseModel):
 
 class TmdbPopularMovieList(BaseModel):
     pages: Optional[int]
-    results: list[TmdbPopularMovie]
+    results: list[TmdbMovie]
     total_results: int
     total_pages: int
 
@@ -78,3 +78,8 @@ class TmdbMovieDetail(BaseModel):
     video: bool
     vote_average: float
     vote_count: int
+
+
+class TmdbSimilarMovieList(BaseModel):
+    page: int
+    results: list[TmdbMovie]

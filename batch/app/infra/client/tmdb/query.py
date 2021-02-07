@@ -19,3 +19,7 @@ class MovieGenreQuery(TmdbQuery):
 
 class MovieDetailQuery(TmdbQuery):
     append_to_response: Optional[str]
+
+
+class SimilarMovieQuery(TmdbQuery):
+    page: Optional[int]

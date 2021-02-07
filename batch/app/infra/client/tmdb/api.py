@@ -1,11 +1,17 @@
 from typing import Protocol, Optional
 
 from core.config import TmdbSettings
-from domain.models.rest.tmdb import TmdbMovieDetail, TmdbMovieGenreList, TmdbPopularMovieList
+from domain.models.rest.tmdb import (
+    TmdbMovieDetail, 
+    TmdbMovieGenreList, 
+    TmdbPopularMovieList, 
+    TmdbSimilarMovieList
+)
 from infra.client.tmdb.query import (
     MovieDetailQuery, 
     MovieGenreQuery, 
-    PopularMovieQuery
+    PopularMovieQuery,
+    SimilarMovieQuery
 )
 from util.http import call_get_api
 
@@ -14,6 +20,7 @@ from util.http import call_get_api
 POPULAR_MOVIE_PATH = "/movie/popular"
 MOVIE_GENRE_LIST_PATH = "/genre/movie/list"
 MOVIE_DETAIL_PATH = "/movie/{movie_id}"
+SIMILAR_MOVIE_PATH = "/movie/{movie_id}/similar"
 
 
 class AbstractTmdbClient(Protocol):
@@ -43,6 +50,14 @@ class AbstractTmdbClient(Protocol):
         language: Optional[str] = None,
         append_to_response: Optional[str] = None
     ) -> list[TmdbMovieDetail]:
+        ...
+    
+    def fetch_similar_movie_list(
+        self,
+        movie_id: int,
+        language: str = "en-US",
+        page: int = 1
+    ) -> TmdbSimilarMovieList:
         ...
 
 
@@ -121,7 +136,25 @@ class TmdbClient:
                 language=language,
                 append_to_response=append_to_response
             ))
-
-            print(movie_id)
         
         return movie_detail_list
+    
+    def fetch_similar_movie_list(
+        self,
+        movie_id: int,
+        language: str = "en-US",
+        page: int = 1
+    ) -> TmdbSimilarMovieList:
+        
+        # リクエスト条件を構築
+        url = self.base_url + SIMILAR_MOVIE_PATH.format(movie_id=movie_id)
+        query = SimilarMovieQuery(
+            api_key=self.api_key,
+            language=language,
+            page=page
+        )
+
+        # GETメソッドでAPIを実行
+        response = call_get_api(url=url, query=query)
+
+        return TmdbSimilarMovieList(**response.json())
