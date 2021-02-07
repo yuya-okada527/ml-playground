@@ -19,6 +19,7 @@ def update_schema(solr_client: AbstractSolrClient):
     # 追加スキーマを取得
     new_schema = get_resource(SOLR_CONFIG_PATH)
 
+    # TODO ここからHOGE
     if True:
         return None
 
