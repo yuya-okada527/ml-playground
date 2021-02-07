@@ -24,3 +24,12 @@
 ### index_time
 
 バージョニングに使用
+
+## 類似性 KVS
+
+### データ構造
+
+下記構造で、映画 ID に紐づく類似映画 ID の上位 5 つをもつ
+
+- Key: {Model 名}\_{movie_id}
+- Value: movie_id の配列(サイズ=5)
