@@ -45,7 +45,7 @@ def call_get_api(url: str, query: BaseModel):
     return response
 
 
-def call_post_api(url: str, data: Union[str, BaseModel], headers: dict[str, str] = None):
+def call_post_api(url: str, data: Union[str, BaseModel] = "", headers: dict[str, str] = None):
 
     # POSTデータを文字列に変換
     data_str = data.json() if isinstance(data, BaseModel) else data

@@ -1,10 +1,10 @@
-from typing import Protocol
+from typing import Collection, Protocol
 import json
 
 from core.config import SolrSettings
 from domain.models.solr.movie import MovieSolrModel
-from domain.models.solr.schema import SolrSchema
-from util.http import APPLICATION_JSON, CONTENT_TYPE, call_post_api
+from domain.models.solr.schema import SolrSchemaResponseModel
+from util.http import APPLICATION_JSON, CONTENT_TYPE, call_get_api, call_post_api
 
 
 # APIパス
@@ -26,7 +26,7 @@ class AbstractSolrClient(Protocol):
     def commit(self) -> None:
         ...
     
-    def get_schema(self) -> SolrSchema:
+    def get_schema(self) -> SolrSchemaResponseModel:
         ...
 
 
@@ -81,4 +81,16 @@ class SolrClient:
 
         # POSTメソッドでAPIを実行
         response = call_post_api(url=url, data=data, headers=headers)
+
+    def get_schema(self) -> SolrSchemaResponseModel:
+        
+        # リクエスト条件を構築
+        url = self.url + SCHEMA_PATH.format(Collection=self.collection)
+
+        # API実行
+        response = call_get_api(url=url)
+
+        print(response.json())
+
+        return response.json()
 

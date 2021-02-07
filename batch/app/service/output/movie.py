@@ -19,6 +19,9 @@ def update_schema(solr_client: AbstractSolrClient):
     # 追加スキーマを取得
     new_schema = get_resource(SOLR_CONFIG_PATH)
 
+    if True:
+        return None
+
     # スキーマの差分を計算
     schema = ...
 
