@@ -15,6 +15,7 @@ import Layout from "../components/Layout";
 import { Movie } from "../interfaces/index";
 import { callGetApi } from "../utils/http";
 import config from "../utils/config";
+import Link from "next/link";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -51,16 +52,18 @@ const SearchResultList = ({ movies }: SearchResultProps) => {
   return (
     <List>
       {movies.map((movie: Movie) => (
-        <>
-          <ListItem key={movie.movie_id}>
-            <Typography className={classes.movieCardTitle} variant="h6">
-              {movie.japanese_title
-                ? movie.japanese_title
-                : movie.original_title}
-            </Typography>
-          </ListItem>
-          <hr />
-        </>
+        <Link href={`/movies/${movie.movie_id}`}>
+          <a>
+            <ListItem key={movie.movie_id}>
+              <Typography className={classes.movieCardTitle} variant="h6">
+                {movie.japanese_title
+                  ? movie.japanese_title
+                  : movie.original_title}
+              </Typography>
+            </ListItem>
+            <hr />
+          </a>
+        </Link>
       ))}
     </List>
   );
