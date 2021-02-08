@@ -1,8 +1,10 @@
+import json
 from time import time_ns
-from core.constants import HALF_SPACE
 
+from core.constants import HALF_SPACE
 from domain.models.internal.movie import Movie
 from domain.models.solr.movie import MovieSolrModel
+from domain.models.solr.schema import SolrSchemaModel
 from infra.client.solr.api import AbstractSolrClient
 from infra.repository.input.movie import AbstractMovieRepository
 from util.resource import get_resource
@@ -14,17 +16,18 @@ SOLR_CONFIG_PATH = "solr/schema.json"
 def update_schema(solr_client: AbstractSolrClient):
 
     # 現時点のスキーマを取得
-    old_schema = solr_client.get_schema()
+    current_schema = solr_client.get_schema()
 
     # 追加スキーマを取得
-    new_schema = get_resource(SOLR_CONFIG_PATH)
-
-    # TODO ここからHOGE
-    if True:
-        return None
+    update_schema = get_resource(SOLR_CONFIG_PATH)
 
     # スキーマの差分を計算
-    schema = ...
+    schema = _calculate_difference(
+        current_schema=current_schema.schema_,
+        update_schema=json.loads(update_schema)
+    )
+
+    print(schema)
 
     # スキーマをアップデート
     solr_client.update_schema(schema)
@@ -90,3 +93,51 @@ def _make_freeword(movie: Movie):
 
     # 半角スペース区切りで返す
     return HALF_SPACE.join(free_word_list)
+
+
+def _calculate_difference(
+    current_schema: SolrSchemaModel, 
+    update_schema: dict
+):
+    """差分スキーマ計算関数
+
+    現在のschemaと更新対象のスキーマの差分を計算する
+    """
+
+    # 現在のスキーマのフィールドタイプ名をセットに変換
+    current_field_type_set = {field_type["name"] for field_type in current_schema.fieldTypes}
+
+    # フィールドタイプの差分を検知
+    add_field_type = []
+    replace_field_type = []
+    for field_type in update_schema.get("fieldTypes", []):
+        # 同名のフィールドタイプがある場合、replace
+        if field_type["name"] in current_field_type_set:
+            replace_field_type.append(field_type)
+        # 新規のフィールドタイプの場合、add
+        else:
+            add_field_type.append(field_type)
+
+    # 現在のスキーマのフィールド名をセットに変換
+    current_field_set = {field["name"] for field in current_schema.fields_}
+
+    # フィールドの差分を検知
+    add_field = []
+    replace_field = []
+    for field in update_schema.get("fields", []):
+        # 同名のフィールドタイプがある場合、replace
+        if field["name"] in current_field_set:
+            replace_field.append(field)
+        # 新規のフィールドタイプの場合、add
+        else:
+            add_field.append(field)
+    
+    # TODO スキーマクラスを実装
+    return {
+        "add-field-type": add_field_type,
+        "replace-field-type": replace_field_type,
+        "add-field": add_field,
+        "replace-field": replace_field
+    }
+
+

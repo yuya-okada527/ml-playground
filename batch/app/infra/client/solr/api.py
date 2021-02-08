@@ -1,4 +1,4 @@
-from typing import Collection, Protocol
+from typing import Protocol
 import json
 
 from core.config import SolrSettings
@@ -85,12 +85,12 @@ class SolrClient:
     def get_schema(self) -> SolrSchemaResponseModel:
         
         # リクエスト条件を構築
-        url = self.url + SCHEMA_PATH.format(Collection=self.collection)
+        url = self.url + SCHEMA_PATH.format(collection=self.collection)
 
         # API実行
-        response = call_get_api(url=url)
+        response = call_get_api(url=url, query=None)
 
         print(response.json())
 
-        return response.json()
+        return SolrSchemaResponseModel(**response.json())
 

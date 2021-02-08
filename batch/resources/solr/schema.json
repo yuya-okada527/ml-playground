@@ -1,26 +1,28 @@
 {
-  "add-field-type": {
-    "name": "text_bigram",
-    "class": "solr.TextField",
-    "positionIncrementGap": 100,
-    "autoGeneratePhraseQueries": true,
-    "analyzer": {
-      "tokenizer": {
-        "class": "solr.NGramTokenizerFactory",
-        "minGramSize": 1,
-        "maxGramSize": 2
-      },
-      "filters": [
-        {
-          "class": "solr.CJKWidthFilterFactory"
+  "fieldTypes": [
+    {
+      "name": "text_bigram",
+      "class": "solr.TextField",
+      "positionIncrementGap": 100,
+      "autoGeneratePhraseQueries": true,
+      "analyzer": {
+        "tokenizer": {
+          "class": "solr.NGramTokenizerFactory",
+          "minGramSize": 2,
+          "maxGramSize": 2
         },
-        {
-          "class": "solr.LowerCaseFilterFactory"
-        }
-      ]
+        "filters": [
+          {
+            "class": "solr.CJKWidthFilterFactory"
+          },
+          {
+            "class": "solr.LowerCaseFilterFactory"
+          }
+        ]
+      }
     }
-  },
-  "add-field": [
+  ],
+  "fields": [
     {
       "name": "movie_id",
       "type": "pint",

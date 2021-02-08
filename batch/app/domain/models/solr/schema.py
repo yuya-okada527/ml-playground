@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class SolrResponseHeader(BaseModel):
@@ -11,11 +11,11 @@ class SolrSchemaModel(BaseModel):
     version: float
     uniqueKey: str
     fieldTypes: list[dict]
-    fields: list[dict]
+    fields_: list[dict] = Field(alias="fields")
     dynamicFields: list[dict]
     copyFields: list[dict]
 
 
 class SolrSchemaResponseModel(BaseModel):
     responseHeader: SolrResponseHeader
-    schema: SolrSchemaModel
+    schema_: SolrSchemaModel = Field(alias="schema")

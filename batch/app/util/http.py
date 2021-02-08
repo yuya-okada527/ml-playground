@@ -1,6 +1,7 @@
 import time
+import json
 from functools import wraps
-from typing import Union
+from typing import Optional, Union
 
 import requests
 from requests.exceptions import Timeout
@@ -32,10 +33,13 @@ def retry_exec(max_retry_num: int):
 
 
 @retry_exec(max_retry_num=3)
-def call_get_api(url: str, query: BaseModel):
+def call_get_api(url: str, query: Optional[BaseModel]):
+
+    query = query.dict() if query is not None else {}
+
     # API実行
     try:
-        response = requests.get(url, query.dict(), timeout=TIMEOUT)
+        response = requests.get(url, query, timeout=TIMEOUT)
     except Timeout:
         raise ServerSideError()
 
@@ -45,10 +49,10 @@ def call_get_api(url: str, query: BaseModel):
     return response
 
 
-def call_post_api(url: str, data: Union[str, BaseModel] = "", headers: dict[str, str] = None):
+def call_post_api(url: str, data: Union[str, dict, BaseModel] = "", headers: dict[str, str] = None):
 
     # POSTデータを文字列に変換
-    data_str = data.json() if isinstance(data, BaseModel) else data
+    data_str = _to_string(data)
     assert type(data_str) == str
 
     # API実行
@@ -61,6 +65,18 @@ def call_post_api(url: str, data: Union[str, BaseModel] = "", headers: dict[str,
     __check_status_code(response)
 
     return response
+
+
+def _to_string(data: Union[str, dict, BaseModel]):
+    if isinstance(data, str):
+        return data
+    elif isinstance(data, dict):
+        return json.dumps(data)
+    elif isinstance(data, BaseModel):
+        return data.json()
+    
+    # TODO 例外
+    return None
 
 
 def __check_status_code(response) -> None:
