@@ -1,6 +1,7 @@
 from typing import Protocol, Optional
 
 from core.config import TmdbSettings
+from domain.enums.movie_enums import MovieLanguage
 from domain.models.rest.tmdb import (
     TmdbMovieDetail, 
     TmdbMovieGenreList, 
@@ -25,21 +26,21 @@ SIMILAR_MOVIE_PATH = "/movie/{movie_id}/similar"
 
 class AbstractTmdbClient(Protocol):
     
-    def fetch_genres(self, language: str) -> TmdbMovieGenreList:
+    def fetch_genres(self, language: MovieLanguage) -> TmdbMovieGenreList:
         ...
     
     def fetch_popular_movies(
         self, 
         page: int, 
         region: Optional[str], 
-        language: Optional[str] = None
+        language: Optional[MovieLanguage] = None
     ) -> TmdbPopularMovieList:
         ...
     
     def fetch_movie_detail(
         self, 
         movie_id: int, 
-        language: Optional[str] = None, 
+        language: Optional[MovieLanguage] = None, 
         append_to_response: Optional[str] = None
     ) -> TmdbMovieDetail:
         ...
@@ -47,7 +48,7 @@ class AbstractTmdbClient(Protocol):
     def fetch_movie_detail_list(
         self,
         movie_id_list: list[int],
-        language: Optional[str] = None,
+        language: Optional[MovieLanguage] = None,
         append_to_response: Optional[str] = None
     ) -> list[TmdbMovieDetail]:
         ...
@@ -55,7 +56,7 @@ class AbstractTmdbClient(Protocol):
     def fetch_similar_movie_list(
         self,
         movie_id: int,
-        language: str = "en-US",
+        language: MovieLanguage = MovieLanguage.EN,
         page: int = 1
     ) -> TmdbSimilarMovieList:
         ...
@@ -67,13 +68,13 @@ class TmdbClient:
         self.base_url = settings.tmdb_url
         self.api_key = settings.tmdb_api_key
 
-    def fetch_genres(self, language: str) -> TmdbMovieGenreList:
+    def fetch_genres(self, language: MovieLanguage) -> TmdbMovieGenreList:
 
         # リクエスト条件を構築
         url = self.base_url + MOVIE_GENRE_LIST_PATH
         query = MovieGenreQuery(
             api_key=self.api_key,
-            language=language
+            language=language.value if language else None
         )
 
         # GETメソッドでAPIを実行
@@ -85,14 +86,14 @@ class TmdbClient:
         self, 
         page: int, 
         region: Optional[str] = None,
-        language: Optional[str] = None
+        language: Optional[MovieLanguage] = None
     ) -> TmdbPopularMovieList:
         
         # リクエスト条件を構築
         url = self.base_url + POPULAR_MOVIE_PATH
         query = PopularMovieQuery(
             api_key=self.api_key,
-            language=language,
+            language=language.value if language else None,
             page=page,
             region=region
         )
@@ -105,7 +106,7 @@ class TmdbClient:
     def fetch_movie_detail(
         self, 
         movie_id: int, 
-        language: Optional[str] = None, 
+        language: Optional[MovieLanguage] = None, 
         append_to_response: Optional[str] = None
     ) -> TmdbMovieDetail:
         
@@ -113,7 +114,7 @@ class TmdbClient:
         url = self.base_url + MOVIE_DETAIL_PATH.format(movie_id=movie_id)
         query = MovieDetailQuery(
             api_key=self.api_key,
-            language=language,
+            language=language.value if language else None,
             append_to_response=append_to_response
         )
 
@@ -125,7 +126,7 @@ class TmdbClient:
     def fetch_movie_detail_list(
         self,
         movie_id_list: list[int],
-        language: Optional[str] = None,
+        language: Optional[MovieLanguage] = None,
         append_to_response: Optional[str] = None
     ) -> list[TmdbMovieDetail]:
         
@@ -142,7 +143,7 @@ class TmdbClient:
     def fetch_similar_movie_list(
         self,
         movie_id: int,
-        language: str = "en-US",
+        language: MovieLanguage = MovieLanguage.EN,
         page: int = 1
     ) -> TmdbSimilarMovieList:
         
@@ -150,7 +151,7 @@ class TmdbClient:
         url = self.base_url + SIMILAR_MOVIE_PATH.format(movie_id=movie_id)
         query = SimilarMovieQuery(
             api_key=self.api_key,
-            language=language,
+            language=language.value if language else None,
             page=page
         )
 

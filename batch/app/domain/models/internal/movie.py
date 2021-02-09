@@ -21,13 +21,13 @@ class Keyword(BaseModel):
 
 class Movie(BaseModel):
     movie_id: str
-    imdb_id: str
+    imdb_id: Optional[str] = None
     original_title: str
     japanese_title: str
     overview: str
     tagline: str
     poster_path: str
-    backdrop_path: str
+    backdrop_path: Optional[str] = None
     popularity: float
     vote_average: float
     vote_count: int

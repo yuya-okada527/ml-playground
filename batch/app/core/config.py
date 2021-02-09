@@ -1,5 +1,14 @@
 from pydantic import BaseSettings
 
+from domain.enums.core_enums import LogLevel
+
+
+class CoreSettings(BaseSettings):
+    batch_log_level: LogLevel
+
+    class Config:
+        env_file = "env/core.env"
+
 
 class TmdbSettings(BaseSettings):
     tmdb_api_key: str

@@ -26,7 +26,7 @@ FROM
 
 class AbstractGenreRepository(Protocol):
     
-    def save(self, genre_list: list[Genre]) -> None:
+    def save(self, genre_list: list[Genre]) -> int:
         ...
     
     def fetch_all(self) -> list[Genre]:

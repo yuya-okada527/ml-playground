@@ -1,6 +1,6 @@
 import typer
 
-from core.config import InputDbSettings, TmdbSettings
+from core.config import TmdbSettings
 from infra.client.tmdb.api import TmdbClient
 from infra.repository.input.genre import GenreRepository
 from infra.repository.input.movie import MovieRepository
