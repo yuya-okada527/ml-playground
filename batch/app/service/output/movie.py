@@ -2,6 +2,7 @@ import json
 from time import time_ns
 
 from core.constants import HALF_SPACE
+from core.logging import create_logger
 from domain.models.internal.movie import Movie
 from domain.models.solr.movie import MovieSolrModel
 from domain.models.solr.schema import SolrSchemaModel
@@ -10,10 +11,15 @@ from infra.repository.input.movie import AbstractMovieRepository
 from util.resource import get_resource
 
 
+log = create_logger(__file__)
+
+
 SOLR_CONFIG_PATH = "solr/schema.json"
 
 
 def update_schema(solr_client: AbstractSolrClient):
+
+    log.info("検索スキーマ更新バッチ実行開始.")
 
     # 現時点のスキーマを取得
     current_schema = solr_client.get_schema()
@@ -27,10 +33,10 @@ def update_schema(solr_client: AbstractSolrClient):
         update_schema=json.loads(update_schema)
     )
 
-    print(schema)
-
     # スキーマをアップデート
     solr_client.update_schema(schema)
+
+    log.info(f"検索スキーマ更新バッチ実行終了.")
 
 
 def build_index(
@@ -40,7 +46,7 @@ def build_index(
 
     # 実行時間
     exec_time = time_ns()
-    print(f"実行時間={exec_time}")
+    log.info(f"検索インデックス構築バッチ実行開始. 実行開始時間={exec_time}")
 
     # 映画リストを取得
     # TODO チャンクに分ける
@@ -58,6 +64,8 @@ def build_index(
 
     # コミット
     solr_client.commit()
+
+    log.info("検索インデックス構築バッチ実行終了.")
 
 
 
