@@ -57,6 +57,7 @@ async def search(
 
 @router.get(
     "/{movie_id}",
+    summary="映画取得API",
     description="映画IDに紐づく映画情報を取得するAPI.",
     response_model=MovieResponse,
     response_description="検索結果"
