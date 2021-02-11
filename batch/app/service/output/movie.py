@@ -1,5 +1,6 @@
 import json
 from time import time_ns
+from datetime import date
 
 from core.constants import HALF_SPACE
 from core.logging import create_logger
@@ -17,7 +18,7 @@ log = create_logger(__file__)
 SOLR_CONFIG_PATH = "solr/schema.json"
 
 
-def update_schema(solr_client: AbstractSolrClient):
+def update_schema(solr_client: AbstractSolrClient) -> None:
 
     log.info("検索スキーマ更新バッチ実行開始.")
 
@@ -81,6 +82,8 @@ def _map_to_solr_model(movie: Movie, exec_time: int) -> MovieSolrModel:
         backdrop_path=movie.backdrop_path,
         popularity=movie.popularity,
         vote_average=movie.vote_average,
+        release_date=movie.release_date_str,
+        release_year=movie.release_year,
         genres=[genre.genre_id for genre in movie.genres],
         genre_labels=[genre.japanese_name for genre in movie.genres],
         index_time=exec_time
@@ -106,7 +109,7 @@ def _make_freeword(movie: Movie):
 def _calculate_difference(
     current_schema: SolrSchemaModel, 
     update_schema: dict
-):
+) -> dict:
     """差分スキーマ計算関数
 
     現在のschemaと更新対象のスキーマの差分を計算する
@@ -147,5 +150,3 @@ def _calculate_difference(
         "add-field": add_field,
         "replace-field": replace_field
     }
-
-

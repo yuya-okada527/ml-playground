@@ -1,5 +1,10 @@
 from typing import Optional
+from datetime import date
+
 from pydantic import BaseModel
+
+
+RELEASE_DATE_FMT = "%Y-%m-%d"
 
 
 class Genre(BaseModel):
@@ -31,6 +36,20 @@ class Movie(BaseModel):
     popularity: float
     vote_average: float
     vote_count: int
+    release_date: Optional[date] = None
     reviews: list[Review] = []
     genres: list[Genre] = []
     keywords: list[Keyword] = []
+
+    @property
+    def release_date_str(self) -> Optional[str]:
+        if self.release_date:
+            return date.strftime(self.release_date, RELEASE_DATE_FMT)
+        return None
+    
+    @property
+    def release_year(self) -> Optional[int]:
+        if self.release_date:
+            return self.release_date.year
+        return None
+

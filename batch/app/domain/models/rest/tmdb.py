@@ -1,5 +1,9 @@
 from typing import Optional
+from datetime import datetime
+
 from pydantic import BaseModel
+
+from domain.models.internal.movie import Genre, Movie, RELEASE_DATE_FMT
 
 
 class TmdbMovieGenre(BaseModel):
@@ -78,6 +82,23 @@ class TmdbMovieDetail(BaseModel):
     video: bool
     vote_average: float
     vote_count: int
+
+    def to_internal_movie(self) -> Movie:
+        return Movie(
+            movie_id=self.id,
+            imdb_id=self.imdb_id,
+            original_title=self.original_title,
+            japanese_title=self.title,
+            overview=self.overview,
+            tagline=self.tagline,
+            poster_path=self.poster_path,
+            backdrop_path=self.backdrop_path,
+            popularity=self.popularity,
+            vote_average=self.vote_average,
+            vote_count=self.vote_count,
+            release_date=datetime.strptime(self.release_date, RELEASE_DATE_FMT) if self.release_date else None,
+            genres=[Genre(genre_id=genre.id) for genre in self.genres]
+        )
 
 
 class TmdbSimilarMovieList(BaseModel):

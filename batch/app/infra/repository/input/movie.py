@@ -1,9 +1,9 @@
 from typing import Protocol
-import logging
+from datetime import datetime
 
 from sqlalchemy.exc import IntegrityError
 
-from domain.models.internal.movie import Genre, Movie
+from domain.models.internal.movie import Genre, Movie, RELEASE_DATE_FMT
 from infra.repository.input.base import ENGINE
 
 
@@ -23,7 +23,8 @@ VALUES
         %(backdrop_path)s,
         %(popularity)s,
         %(vote_average)s,
-        %(vote_count)s
+        %(vote_count)s,
+        %(release_date)s
     )
 ON DUPLICATE KEY UPDATE
     imdb_id = %(imdb_id)s,
@@ -35,7 +36,8 @@ ON DUPLICATE KEY UPDATE
     backdrop_path = %(backdrop_path)s,
     popularity = %(popularity)s,
     vote_average = %(vote_average)s,
-    vote_count = %(vote_count)s
+    vote_count = %(vote_count)s,
+    release_date = %(release_date)s
 """
 
 INSERT_MOVIE_GENRE_STATEMENT = """\
@@ -61,6 +63,7 @@ SELECT
     m.popularity,
     m.vote_average,
     m.vote_count,
+    m.release_date,
     mg.movie_id,
     mg.genre_id,
     g.genre_id,
@@ -116,7 +119,8 @@ class MovieRepository:
                 "backdrop_path": movie.backdrop_path,
                 "popularity": movie.popularity,
                 "vote_average": movie.vote_average,
-                "vote_count": movie.vote_count
+                "vote_count": movie.vote_count,
+                "release_date": movie.release_date_str
             }).rowcount
 
             for genre in movie.genres:
@@ -164,6 +168,7 @@ def _map_to_movie(result) -> Movie:
         popularity=result.popularity,
         vote_average=result.vote_average,
         vote_count=result.vote_count,
+        release_date=datetime.strptime(result.release_date, RELEASE_DATE_FMT) if result.release_date else None,
         genres=[_map_to_genre(result)]
     )
 

@@ -78,23 +78,7 @@ def update_movies(
     )
 
     # 映画モデルリストに変換
-    movie_list = [
-        Movie(
-            movie_id=movie.id,
-            imdb_id=movie.imdb_id,
-            original_title=movie.original_title,
-            japanese_title=movie.title,
-            overview=movie.overview,
-            tagline=movie.tagline,
-            poster_path=movie.poster_path,
-            backdrop_path=movie.backdrop_path,
-            popularity=movie.popularity,
-            vote_average=movie.vote_average,
-            vote_count=movie.vote_count,
-            genres=[Genre(genre_id=genre.id) for genre in movie.genres]
-        )
-        for movie in movie_detail_list
-    ]
+    movie_list = [movie.to_internal_movie() for movie in movie_detail_list]
 
     # モデルの永続化
     movie_repository.save_movie_list(movie_list)

@@ -94,6 +94,20 @@
       "multiValued": false
     },
     {
+      "name": "release_date",
+      "type": "string",
+      "indexed": false,
+      "stored": true,
+      "multiValued": false
+    },
+    {
+      "name": "release_year",
+      "type": "pint",
+      "indexed": true,
+      "stored": true,
+      "multiValued": false
+    },
+    {
       "name": "genres",
       "type": "pints",
       "indexed": true,
