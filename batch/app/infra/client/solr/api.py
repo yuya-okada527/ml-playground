@@ -44,8 +44,6 @@ class SolrClient:
         # POSTメソッドでAPIを実行
         response = call_post_api(url=url, data=schema_data)
 
-        print(response)
-
     def index_movies(self, movies: list[MovieSolrModel]) -> None:
         
         # リクエスト条件を構築
@@ -89,8 +87,6 @@ class SolrClient:
 
         # API実行
         response = call_get_api(url=url, query=None)
-
-        print(response.json())
 
         return SolrSchemaResponseModel(**response.json())
 

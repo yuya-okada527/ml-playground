@@ -1,3 +1,5 @@
+from typing import Optional
+
 from pydantic import BaseModel
 
 
@@ -9,7 +11,7 @@ class MovieSolrModel(BaseModel):
     overview: str
     tagline: str
     poster_path: str
-    backdrop_path: str
+    backdrop_path: Optional[str] = None
     popularity: float
     vote_average: float
     genres: list[int] = []
