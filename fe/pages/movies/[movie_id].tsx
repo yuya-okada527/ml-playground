@@ -4,7 +4,15 @@ import {
   createStyles,
   Grid,
   makeStyles,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
   Theme,
+  Typography,
 } from "@material-ui/core";
 import { useRouter } from "next/router";
 import Layout from "../../components/Layout";
@@ -63,6 +71,27 @@ const DetailPage = () => {
               handleSearchButtonClick={handleSearchButtonClick}
             />
             {movie !== undefined && <MovieDetail movie_detail={movie} />}
+          </Grid>
+          <Grid item xs={4}>
+            <Typography variant="h6">Similar Movies</Typography>
+            <TableContainer component={Paper}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Rank</TableCell>
+                    <TableCell>Poster</TableCell>
+                    <TableCell>Title</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  <TableRow>
+                    <TableCell>Rank</TableCell>
+                    <TableCell>Poster</TableCell>
+                    <TableCell>Title</TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </TableContainer>
           </Grid>
         </Grid>
       </Container>
