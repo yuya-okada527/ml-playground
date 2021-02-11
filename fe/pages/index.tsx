@@ -2,19 +2,19 @@ import React, { ChangeEvent } from "react";
 import {
   Container,
   createStyles,
-  List,
-  ListItem,
   makeStyles,
   Theme,
   Grid,
   Typography,
 } from "@material-ui/core";
+import { useRouter } from "next/router";
+
 import Layout from "../components/Layout";
 import SearchBox from "../components/SearchBox";
+import SearchResultList from "../components/SearchResultList";
 import { Movie } from "../interfaces/index";
 import { callGetApi } from "../utils/http";
 import config from "../utils/config";
-import Link from "next/link";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -25,50 +25,23 @@ const useStyles = makeStyles((theme: Theme) =>
     underSearch: {
       marginBottom: theme.spacing(2),
     },
-    movieCard: {
-      width: "75%",
-      padding: theme.spacing(0),
-    },
-    movieCardContent: {
-      padding: theme.spacing(0),
-    },
-    movieCardTitle: {
-      margin: theme.spacing(1),
-    },
   })
 );
 
-type SearchResultProps = {
-  movies: Movie[];
-};
-
-const SearchResultList = ({ movies }: SearchResultProps) => {
-  const classes = useStyles();
-  return (
-    <List>
-      {movies.map((movie: Movie) => (
-        <Link href={`/movies/${movie.movie_id}`}>
-          <a>
-            <ListItem key={movie.movie_id}>
-              <Typography className={classes.movieCardTitle} variant="h6">
-                {movie.japanese_title
-                  ? movie.japanese_title
-                  : movie.original_title}
-              </Typography>
-            </ListItem>
-            <hr />
-          </a>
-        </Link>
-      ))}
-    </List>
-  );
-};
-
 const IndexPage = () => {
   const classes = useStyles();
-  const [searchTerm, setSearchTerm] = React.useState("");
-  const [searchedTerm, setSearchedTerm] = React.useState("");
+  const router = useRouter();
+  const [searchTerm, setSearchTerm] = React.useState<string>(
+    Array.isArray(router.query.searchTerm)
+      ? router.query.searchTerm[0]
+      : router.query.searchTerm
+  );
+  const [searchedTerm, setSearchedTerm] = React.useState(
+    router.query.searchTerm
+  );
   const [searchResult, setSearchResult] = React.useState<Array<Movie>>([]);
+
+  // const [searchResult, dispatchSearchResult] = React.useReducer()
 
   const handleSearchTermChange = (
     event: ChangeEvent<HTMLInputElement>

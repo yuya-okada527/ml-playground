@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
 import {
   Card,
   CardMedia,
@@ -12,6 +12,7 @@ import {
 } from "@material-ui/core";
 import { useRouter } from "next/router";
 import Layout from "../../components/Layout";
+import SearchBox from "../../components/SearchBox";
 import { Movie } from "../../interfaces";
 import config from "../../utils/config";
 import { callGetApi } from "../../utils/http";
@@ -56,13 +57,26 @@ const DetailPage = () => {
   const router = useRouter();
   const { movie_id } = router.query;
   const [movie, setMovie] = React.useState<Movie>();
+  const [searchTerm, setSearchTerm] = React.useState("");
+
+  const handleSearchTermChange = (
+    event: ChangeEvent<HTMLInputElement>
+  ): void => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleSearchButtonClick = async () => {
+    router.push({
+      pathname: "/",
+      query: { searchTerm: searchTerm },
+    });
+  };
 
   React.useEffect(() => {
     const initMovieData = async () => {
       const url = config.apiEndpoint + `/v1/movie/search/${movie_id}`;
       const query = {};
       const response = await callGetApi(url, query);
-      console.log("initMovieData");
       setMovie(response);
     };
     initMovieData();
@@ -72,6 +86,11 @@ const DetailPage = () => {
       <Container className={classes.container}>
         <Grid container>
           <Grid item xs={8}>
+            <SearchBox
+              searchTerm={searchTerm}
+              handleSearchTermChange={handleSearchTermChange}
+              handleSearchButtonClick={handleSearchButtonClick}
+            />
             {movie !== undefined && <MovieDetail movie_detail={movie} />}
           </Grid>
         </Grid>
