@@ -30,7 +30,10 @@ const SimilarMovies = ({ similarMovies }: SimilarMoviesProps) => (
           {similarMovies.map((movie: Movie, index: number) => (
             <TableRow>
               <TableCell>{index + 1}</TableCell>
-              <TableCell>{movie.japanese_title}</TableCell>
+              <TableCell>
+                {movie.japanese_title}{" "}
+                {movie.release_year ? " (" + movie.release_year + ") " : ""}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

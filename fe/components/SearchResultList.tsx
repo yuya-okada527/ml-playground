@@ -28,6 +28,7 @@ type SearchResultProps = {
 
 const SearchResultList = ({ movies, searchedTerm }: SearchResultProps) => {
   const classes = useStyles();
+  console.log(movies);
   return (
     <>
       <div className={classes.underSearch} />
@@ -41,6 +42,7 @@ const SearchResultList = ({ movies, searchedTerm }: SearchResultProps) => {
                   {movie.japanese_title
                     ? movie.japanese_title
                     : movie.original_title}
+                  {movie.release_year ? " (" + movie.release_year + ") " : ""}
                 </Typography>
               </ListItem>
               <hr />
