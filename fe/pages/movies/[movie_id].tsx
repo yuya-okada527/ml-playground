@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
     },
     cardCover: {
-      width: 600,
+      width: 700,
     },
   })
 );

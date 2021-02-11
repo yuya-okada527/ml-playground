@@ -69,6 +69,44 @@ const SearchResultList = ({ movies }: SearchResultProps) => {
   );
 };
 
+type SearchBoxProps = {
+  searchTerm: string;
+  handleSearchTermChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  handleSearchButtonClick: () => void;
+};
+
+const SearchBox = ({
+  searchTerm,
+  handleSearchTermChange,
+  handleSearchButtonClick,
+}: SearchBoxProps) => {
+  const classes = useStyles();
+  return (
+    <Grid container>
+      <Grid item xs={10}>
+        <TextField
+          id="search-movie"
+          label="Search Movies!!"
+          type="search"
+          fullWidth
+          value={searchTerm}
+          onChange={handleSearchTermChange}
+        />
+      </Grid>
+      <Grid item xs={2}>
+        <Button
+          variant="contained"
+          color="primary"
+          className={classes.searchButton}
+          onClick={handleSearchButtonClick}
+        >
+          Search
+        </Button>
+      </Grid>
+    </Grid>
+  );
+};
+
 const IndexPage = () => {
   const classes = useStyles();
   const [searchTerm, setSearchTerm] = React.useState("");
@@ -100,28 +138,11 @@ const IndexPage = () => {
             <Typography variant="h6" component="h2">
               Search Your Favorite Movies!!
             </Typography>
-            <Grid container>
-              <Grid item xs={10}>
-                <TextField
-                  id="search-movie"
-                  label="Search Movies!!"
-                  type="search"
-                  fullWidth
-                  value={searchTerm}
-                  onChange={handleSearchTermChange}
-                />
-              </Grid>
-              <Grid item xs={2}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  className={classes.searchButton}
-                  onClick={handleSearchButtonClick}
-                >
-                  Search
-                </Button>
-              </Grid>
-            </Grid>
+            <SearchBox
+              searchTerm={searchTerm}
+              handleSearchTermChange={handleSearchTermChange}
+              handleSearchButtonClick={handleSearchButtonClick}
+            />
             {searchResult.length > 0 && (
               <>
                 <div className={classes.underSearch} />
