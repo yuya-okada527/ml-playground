@@ -13,7 +13,8 @@ CREATE TABLE IF NOT EXISTS `movies` (
   `backdrop_path`   VARCHAR(256),
   `popularity`      FLOAT,
   `vote_average`    FLOAT,
-  `vote_count`      INT
+  `vote_count`      INT,
+  `release_date`    CHAR(10)
 );
 
 -- 映画ジャンルテーブル
