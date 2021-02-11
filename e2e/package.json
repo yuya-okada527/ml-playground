@@ -1,0 +1,15 @@
+{
+  "name": "e2e",
+  "version": "1.0.0",
+  "description": "e2e test project for movie-recommender",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "No License",
+  "dependencies": {
+    "cypress": "^6.4.0",
+    "cypress-plugin-snapshots": "^1.4.4"
+  }
+}
