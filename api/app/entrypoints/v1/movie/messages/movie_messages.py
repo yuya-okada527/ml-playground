@@ -15,6 +15,8 @@ class MovieResponse(BaseModel):
     backdrop_url: Optional[str] = Field(None, description="背景画像へのパス")
     popularity: float = Field(..., description="人気スコア")
     vote_average: float = Field(..., description="投票平均点")
+    release_date: Optional[str] = Field(None, description="公開日")
+    release_year: Optional[int] = Field(None, description="公開年")
     genre_labels: List[str] = Field(..., description="ジャンル名")
     genres: List[int] = Field(..., description="ジャンルID")
 

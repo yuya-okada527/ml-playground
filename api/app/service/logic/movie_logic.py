@@ -16,6 +16,8 @@ DEFAULT_MOVIE_FLS = [
     MovieField.BACKDROP_PATH,
     MovieField.POPULARITY,
     MovieField.VOTE_AVERAGE,
+    MovieField.RELEASE_DATE,
+    MovieField.RELEASE_YEAR,
     MovieField.GENRES,
     MovieField.GENRE_LABELS,
     MovieField.KEYWORDS,
@@ -66,6 +68,8 @@ def map_movie(movie: MovieSolrModel) -> MovieResponse:
         backdrop_url=IMAGE_URL_BASE+movie.backdrop_path if movie.backdrop_path else None,
         popularity=movie.popularity,
         vote_average=movie.vote_average,
+        release_date=movie.release_date,
+        release_year=movie.release_year,
         genre_labels=movie.genre_labels,
         genres=movie.genres
     )

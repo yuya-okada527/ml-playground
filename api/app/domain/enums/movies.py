@@ -12,6 +12,8 @@ class MovieField(Enum):
     BACKDROP_PATH = "backdroppath"
     POPULARITY = "popularity"
     VOTE_AVERAGE = "vote_average"
+    RELEASE_DATE = "release_date"
+    RELEASE_YEAR = "release_year"
     GENRES = "genres"
     GENRE_LABELS = "genre_labels"
     KEYWORDS = "keywords"

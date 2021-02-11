@@ -19,6 +19,8 @@ class MovieSolrModel(BaseModel):
     backdrop_path: Optional[str] = None
     popularity: float
     vote_average: float
+    release_date: Optional[str] = None
+    release_year: Optional[int] = None
     genres: List[int] = []
     genre_labels: List[str] = []
     keywords: List[int] = []
