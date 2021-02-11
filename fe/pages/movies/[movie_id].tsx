@@ -37,6 +37,7 @@ const DetailPage = () => {
   const { movie_id } = router.query;
   const [movie, setMovie] = React.useState<Movie>();
   const [searchTerm, setSearchTerm] = React.useState("");
+  const [similarMovies, setSimilarMovies] = React.useState<Array<Movie>>([]);
 
   const handleSearchTermChange = (
     event: ChangeEvent<HTMLInputElement>
@@ -58,7 +59,16 @@ const DetailPage = () => {
       const response = await callGetApi(url, query);
       setMovie(response);
     };
+    const initSimilarMovies = async () => {
+      const url = config.apiEndpoint + `/v1/movie/similar/${movie_id}`;
+      const query = {
+        model_type: "tmdb-sim",
+      };
+      const response = await callGetApi(url, query);
+      setSimilarMovies(response.results);
+    };
     initMovieData();
+    initSimilarMovies();
   }, []);
   return (
     <Layout title={`Movie_${movie_id}`}>
@@ -79,16 +89,16 @@ const DetailPage = () => {
                 <TableHead>
                   <TableRow>
                     <TableCell>Rank</TableCell>
-                    <TableCell>Poster</TableCell>
                     <TableCell>Title</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  <TableRow>
-                    <TableCell>Rank</TableCell>
-                    <TableCell>Poster</TableCell>
-                    <TableCell>Title</TableCell>
-                  </TableRow>
+                  {similarMovies.map((movie: Movie, index: number) => (
+                    <TableRow>
+                      <TableCell>{index + 1}</TableCell>
+                      <TableCell>{movie.japanese_title}</TableCell>
+                    </TableRow>
+                  ))}
                 </TableBody>
               </Table>
             </TableContainer>
