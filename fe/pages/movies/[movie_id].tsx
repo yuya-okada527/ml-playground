@@ -17,10 +17,6 @@ import { Movie } from "../../interfaces";
 import config from "../../utils/config";
 import { callGetApi } from "../../utils/http";
 
-type MovieDetailProps = {
-  movie_detail: Movie;
-};
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
@@ -29,12 +25,17 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     cardRoot: {
       display: "flex",
+      marginTop: theme.spacing(5),
     },
     cardCover: {
       width: 700,
     },
   })
 );
+
+type MovieDetailProps = {
+  movie_detail: Movie;
+};
 
 const MovieDetail = ({ movie_detail }: MovieDetailProps) => {
   const classes = useStyles();

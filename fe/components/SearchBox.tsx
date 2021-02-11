@@ -5,6 +5,7 @@ import {
   makeStyles,
   TextField,
   Theme,
+  Typography,
   Grid,
 } from "@material-ui/core";
 
@@ -30,28 +31,33 @@ const SearchBox = ({
 }: SearchBoxProps) => {
   const classes = useStyles();
   return (
-    <Grid container>
-      <Grid item xs={10}>
-        <TextField
-          id="search-movie"
-          label="Search Movies!!"
-          type="search"
-          fullWidth
-          value={searchTerm}
-          onChange={handleSearchTermChange}
-        />
+    <>
+      <Typography variant="h6" component="h2">
+        Search Your Favorite Movies!!
+      </Typography>
+      <Grid container>
+        <Grid item xs={10}>
+          <TextField
+            id="search-movie"
+            label="Search Movies!!"
+            type="search"
+            fullWidth
+            value={searchTerm}
+            onChange={handleSearchTermChange}
+          />
+        </Grid>
+        <Grid item xs={2}>
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.searchButton}
+            onClick={handleSearchButtonClick}
+          >
+            Search
+          </Button>
+        </Grid>
       </Grid>
-      <Grid item xs={2}>
-        <Button
-          variant="contained"
-          color="primary"
-          className={classes.searchButton}
-          onClick={handleSearchButtonClick}
-        >
-          Search
-        </Button>
-      </Grid>
-    </Grid>
+    </>
   );
 };
 

@@ -15,32 +15,40 @@ const useStyles = makeStyles((theme: Theme) =>
     movieCardTitle: {
       margin: theme.spacing(1),
     },
+    underSearch: {
+      marginBottom: theme.spacing(2),
+    },
   })
 );
 
 type SearchResultProps = {
   movies: Movie[];
+  searchedTerm: string;
 };
 
-const SearchResultList = ({ movies }: SearchResultProps) => {
+const SearchResultList = ({ movies, searchedTerm }: SearchResultProps) => {
   const classes = useStyles();
   return (
-    <List>
-      {movies.map((movie: Movie) => (
-        <Link href={`/movies/${movie.movie_id}`} key={movie.movie_id}>
-          <a>
-            <ListItem key={movie.movie_id}>
-              <Typography className={classes.movieCardTitle} variant="h6">
-                {movie.japanese_title
-                  ? movie.japanese_title
-                  : movie.original_title}
-              </Typography>
-            </ListItem>
-            <hr />
-          </a>
-        </Link>
-      ))}
-    </List>
+    <>
+      <div className={classes.underSearch} />
+      <Typography>Results for "{searchedTerm}"</Typography>
+      <List>
+        {movies.map((movie: Movie) => (
+          <Link href={`/movies/${movie.movie_id}`} key={movie.movie_id}>
+            <a>
+              <ListItem key={movie.movie_id}>
+                <Typography className={classes.movieCardTitle} variant="h6">
+                  {movie.japanese_title
+                    ? movie.japanese_title
+                    : movie.original_title}
+                </Typography>
+              </ListItem>
+              <hr />
+            </a>
+          </Link>
+        ))}
+      </List>
+    </>
   );
 };
 
