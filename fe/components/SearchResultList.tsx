@@ -27,7 +27,7 @@ const SearchResultList = ({ movies }: SearchResultProps) => {
   return (
     <List>
       {movies.map((movie: Movie) => (
-        <Link href={`/movies/${movie.movie_id}`}>
+        <Link href={`/movies/${movie.movie_id}`} key={movie.movie_id}>
           <a>
             <ListItem key={movie.movie_id}>
               <Typography className={classes.movieCardTitle} variant="h6">

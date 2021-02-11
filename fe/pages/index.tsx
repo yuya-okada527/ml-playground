@@ -28,6 +28,17 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+const fetchSearchResult = async (searchTerm: string) => {
+  const url = config.apiEndpoint + "/v1/movie/search";
+  const query = {
+    query: searchTerm,
+    start: 0,
+    rows: 5,
+  };
+  const response = await callGetApi(url, query);
+  return response.results;
+};
+
 const IndexPage = () => {
   const classes = useStyles();
   const router = useRouter();
@@ -41,27 +52,25 @@ const IndexPage = () => {
   );
   const [searchResult, setSearchResult] = React.useState<Array<Movie>>([]);
 
-  // const [searchResult, dispatchSearchResult] = React.useReducer()
-
   const handleSearchTermChange = (
     event: ChangeEvent<HTMLInputElement>
   ): void => {
     setSearchTerm(event.target.value);
   };
 
-  const handleSearchButtonClick = async () => {
-    const url = config.apiEndpoint + "/v1/movie/search";
-    const query = {
-      query: searchTerm,
-      start: 0,
-      rows: 5,
-    };
-    const response = await callGetApi(url, query);
-    setSearchResult(response.results);
+  const handleSearchButtonClick = React.useCallback(async () => {
+    const response = await fetchSearchResult(searchTerm);
+    setSearchResult(response);
     setSearchedTerm(searchTerm);
-  };
+  }, [searchTerm]);
+
+  React.useEffect(() => {
+    if (searchTerm !== undefined) {
+      handleSearchButtonClick();
+    }
+  }, []);
   return (
-    <Layout title="Movie Recommeder">
+    <Layout title="Movie Recommender">
       <Container className={classes.container}>
         <Grid container>
           <Grid item xs={8}>

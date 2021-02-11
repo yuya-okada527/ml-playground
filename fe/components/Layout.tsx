@@ -74,7 +74,7 @@ const Layout = ({ children, title = "This is the default title" }: Props) => {
                 <Grid container>
                   <HomeIcon className={classes.sidebarIcon} />
                   <Typography className={classes.sidebarText} variant="h6">
-                    <a>Home</a>
+                    Home
                   </Typography>
                 </Grid>
               </Link>
