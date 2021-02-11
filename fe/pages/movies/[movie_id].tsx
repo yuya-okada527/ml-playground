@@ -1,18 +1,15 @@
 import React, { ChangeEvent } from "react";
 import {
-  Card,
-  CardMedia,
-  CardContent,
   Container,
   createStyles,
   Grid,
   makeStyles,
   Theme,
-  Typography,
 } from "@material-ui/core";
 import { useRouter } from "next/router";
 import Layout from "../../components/Layout";
 import SearchBox from "../../components/SearchBox";
+import MovieDetail from "../../components/MovieDetail";
 import { Movie } from "../../interfaces";
 import config from "../../utils/config";
 import { callGetApi } from "../../utils/http";
@@ -23,35 +20,8 @@ const useStyles = makeStyles((theme: Theme) =>
       marginLeft: theme.spacing(2),
       marginRight: theme.spacing(2),
     },
-    cardRoot: {
-      display: "flex",
-      marginTop: theme.spacing(5),
-    },
-    cardCover: {
-      width: 700,
-    },
   })
 );
-
-type MovieDetailProps = {
-  movie_detail: Movie;
-};
-
-const MovieDetail = ({ movie_detail }: MovieDetailProps) => {
-  const classes = useStyles();
-  return (
-    <Card className={classes.cardRoot}>
-      <CardMedia
-        className={classes.cardCover}
-        image={movie_detail.poster_url}
-      />
-      <CardContent>
-        <Typography>{movie_detail.japanese_title}</Typography>
-        <p>{movie_detail.overview}</p>
-      </CardContent>
-    </Card>
-  );
-};
 
 const DetailPage = () => {
   const classes = useStyles();
