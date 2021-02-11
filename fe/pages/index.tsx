@@ -1,17 +1,16 @@
 import React, { ChangeEvent } from "react";
 import {
-  Button,
   Container,
   createStyles,
   List,
   ListItem,
   makeStyles,
-  TextField,
   Theme,
   Grid,
   Typography,
 } from "@material-ui/core";
 import Layout from "../components/Layout";
+import SearchBox from "../components/SearchBox";
 import { Movie } from "../interfaces/index";
 import { callGetApi } from "../utils/http";
 import config from "../utils/config";
@@ -22,10 +21,6 @@ const useStyles = makeStyles((theme: Theme) =>
     container: {
       marginLeft: theme.spacing(2),
       marginRight: theme.spacing(2),
-    },
-    searchButton: {
-      marginTop: theme.spacing(1.5),
-      marginLeft: theme.spacing(3),
     },
     underSearch: {
       marginBottom: theme.spacing(2),
@@ -66,44 +61,6 @@ const SearchResultList = ({ movies }: SearchResultProps) => {
         </Link>
       ))}
     </List>
-  );
-};
-
-type SearchBoxProps = {
-  searchTerm: string;
-  handleSearchTermChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  handleSearchButtonClick: () => void;
-};
-
-const SearchBox = ({
-  searchTerm,
-  handleSearchTermChange,
-  handleSearchButtonClick,
-}: SearchBoxProps) => {
-  const classes = useStyles();
-  return (
-    <Grid container>
-      <Grid item xs={10}>
-        <TextField
-          id="search-movie"
-          label="Search Movies!!"
-          type="search"
-          fullWidth
-          value={searchTerm}
-          onChange={handleSearchTermChange}
-        />
-      </Grid>
-      <Grid item xs={2}>
-        <Button
-          variant="contained"
-          color="primary"
-          className={classes.searchButton}
-          onClick={handleSearchButtonClick}
-        >
-          Search
-        </Button>
-      </Grid>
-    </Grid>
   );
 };
 
