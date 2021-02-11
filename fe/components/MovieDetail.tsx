@@ -40,7 +40,12 @@ const MovieDetail = ({ movie_detail }: MovieDetailProps) => {
         image={movie_detail.poster_url}
       />
       <CardContent className={classes.movieDescription}>
-        <Typography>{movie_detail.japanese_title}</Typography>
+        <Typography>
+          {movie_detail.japanese_title}
+          {movie_detail.release_year
+            ? " (" + movie_detail.release_year + ") "
+            : ""}
+        </Typography>
         <p>{movie_detail.overview}</p>
       </CardContent>
     </Card>
