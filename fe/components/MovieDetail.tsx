@@ -15,9 +15,14 @@ const useStyles = makeStyles((theme: Theme) =>
     cardRoot: {
       display: "flex",
       marginTop: theme.spacing(5),
+      height: "400px",
+      width: "98%",
     },
-    cardCover: {
-      width: 700,
+    posterImage: {
+      flex: 1.2,
+    },
+    movieDescription: {
+      flex: 2,
     },
   })
 );
@@ -31,10 +36,10 @@ const MovieDetail = ({ movie_detail }: MovieDetailProps) => {
   return (
     <Card className={classes.cardRoot}>
       <CardMedia
-        className={classes.cardCover}
+        className={classes.posterImage}
         image={movie_detail.poster_url}
       />
-      <CardContent>
+      <CardContent className={classes.movieDescription}>
         <Typography>{movie_detail.japanese_title}</Typography>
         <p>{movie_detail.overview}</p>
       </CardContent>

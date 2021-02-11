@@ -14,7 +14,6 @@ const callGetApi = async (url: string, queries: QueriesType) => {
     method: "GET",
   })
     .then(async (response) => {
-      console.log(response);
       return await response.json();
     })
     .catch((err) => {
