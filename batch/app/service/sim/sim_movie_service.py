@@ -1,14 +1,18 @@
+from core.logging import create_logger
 from domain.enums.similarity_enums import SimilarityModelType
 from infra.client.tmdb.api import AbstractTmdbClient
 from infra.repository.sim.redis_repository import AbstarctRedisRepository
 from infra.repository.input.movie import AbstractMovieRepository
 
+log = create_logger(__file__)
 
 def exec_construct_tmdb_similarity(
     tmdb_client: AbstractTmdbClient,
     redis_repository: AbstarctRedisRepository,
     movie_repository: AbstractMovieRepository
-):
+) -> None:
+
+    log.info("TMDB-API類似映画データ構築処理実行開始.")
     
     # 出力対象の映画IDを取得
     movie_id_set = set(movie_repository.fetch_all_movie_id())
@@ -30,3 +34,5 @@ def exec_construct_tmdb_similarity(
             similar_movies=best_5,
             model_type=SimilarityModelType.TMDB_SIM
         )
+    
+    log.info("TMDB-API類似映画データ構築処理実行終了.")

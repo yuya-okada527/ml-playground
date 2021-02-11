@@ -39,8 +39,6 @@ class RedisRepository:
         # 類似映画を保存
         REDIS_CLIENT.set(key, json.dumps(similar_movies))
 
-        print(REDIS_CLIENT.get(key))
-
 
 def _make_sim_key(movie_id: int, model_type: SimilarityModelType) -> str:
     return f"{movie_id}_{model_type.value}"
