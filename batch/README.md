@@ -18,4 +18,10 @@ Movie Recommender App 用のバッチ処理を提供します。
 ```bash
 # ローカル起動(Help)
 $ python app/main.py --help
+# 入稿処理
+$ sh shells/exec_input.sh
+# 出稿処理
+$ sh shells/exec_output.sh
+# 類似映画データ作成処理
+$ sh shells/exec_similarity.sh
 ```
