@@ -27,4 +27,10 @@ if [ $? != 0 ]; then
   exit 1
 fi
 
+# レビュー収集バッチを実行
+python app/main.py input reviews
+if [ $? != 0 ]; then
+  exit 1
+fi
+
 echo "入稿処理が正常に終了しました."
