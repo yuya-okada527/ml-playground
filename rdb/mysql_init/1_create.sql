@@ -30,3 +30,10 @@ CREATE TABLE IF NOT EXISTS `genres` (
   `name`          VARCHAR(64),
   `japanese_name` VARCHAR(64)
 );
+
+-- レビューテーブル
+CREATE TABLE IF NOT EXISTS `reviews` (
+  `review_id`   VARCHAR(64) NOT NULL PRIMARY KEY,
+  `movie_id`    INT NOT NULL,
+  `review`      TEXT
+);
