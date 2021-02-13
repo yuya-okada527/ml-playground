@@ -4,7 +4,8 @@ from core.config import TmdbSettings
 from infra.client.tmdb.api import TmdbClient
 from infra.repository.input.genre import GenreRepository
 from infra.repository.input.movie import MovieRepository
-from service.input.movie import update_genre_master, update_movies
+from infra.repository.input.review_repository import ReviewRepository
+from service.input.movie import collect_reviews, update_genre_master, update_movies
 
 
 app = typer.Typer()
@@ -33,6 +34,24 @@ def input_movies(page: int = 1):
 
     # サービスの実行
     update_movies(page=page, tmdb_client=tmdb_client, movie_repository=movie_repository)
+
+
+@app.command("reviews")
+def input_reviews():
+    
+    # クライアントの初期化
+    tmdb_client = TmdbClient(TmdbSettings())
+
+    # リポジトリの初期化
+    movie_repository = MovieRepository()
+    review_repository = ReviewRepository()
+
+    # サービス実行
+    collect_reviews(
+        tmdb_client=tmdb_client,
+        movie_repository=movie_repository,
+        review_repository=review_repository
+    )
 
 
 if __name__ == "__main__":

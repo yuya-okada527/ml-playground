@@ -5,12 +5,13 @@ from domain.enums.movie_enums import MovieLanguage
 from domain.models.rest.tmdb import (
     TmdbMovieDetail, 
     TmdbMovieGenreList, 
+    TmdbMovieReviewList, 
     TmdbPopularMovieList, 
     TmdbSimilarMovieList
 )
 from infra.client.tmdb.query import (
     MovieDetailQuery, 
-    MovieGenreQuery, 
+    MovieGenreQuery, MovieReviewQuery, 
     PopularMovieQuery,
     SimilarMovieQuery
 )
@@ -22,6 +23,7 @@ POPULAR_MOVIE_PATH = "/movie/popular"
 MOVIE_GENRE_LIST_PATH = "/genre/movie/list"
 MOVIE_DETAIL_PATH = "/movie/{movie_id}"
 SIMILAR_MOVIE_PATH = "/movie/{movie_id}/similar"
+MOVIE_REVIEW_PATH = "/movie/{movie_id}/reviews"
 
 
 class AbstractTmdbClient(Protocol):
@@ -59,6 +61,14 @@ class AbstractTmdbClient(Protocol):
         language: MovieLanguage = MovieLanguage.EN,
         page: int = 1
     ) -> TmdbSimilarMovieList:
+        ...
+    
+    def fetch_movie_reviews(
+        self,
+        movie_id: int,
+        language: MovieLanguage = MovieLanguage.EN,
+        page: int = 1
+    ) -> TmdbMovieReviewList:
         ...
 
 
@@ -159,3 +169,23 @@ class TmdbClient:
         response = call_get_api(url=url, query=query)
 
         return TmdbSimilarMovieList(**response.json())
+    
+    def fetch_movie_reviews(
+        self,
+        movie_id: int,
+        language: MovieLanguage = MovieLanguage.EN,
+        page: int = 1
+    ) -> TmdbMovieReviewList:
+        
+        # リクエスト条件を構築
+        url = self.base_url + MOVIE_REVIEW_PATH.format(movie_id=movie_id)
+        query = MovieReviewQuery(
+            api_key=self.api_key,
+            language=language.value if language else None,
+            page=page
+        )
+
+        # GETメソッドでAPIを実行
+        response = call_get_api(url=url, query=query)
+
+        return TmdbMovieReviewList(**response.json())

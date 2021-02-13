@@ -7,7 +7,9 @@ from domain.models.internal.movie import Genre, Movie, RELEASE_DATE_FMT
 from infra.repository.input.base import ENGINE
 
 
-
+# ---------------------------
+# SQL
+# ---------------------------
 UPSERT_MOVIE_STATEMENT = """\
 INSERT INTO
     movies

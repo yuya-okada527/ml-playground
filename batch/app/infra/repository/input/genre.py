@@ -4,6 +4,9 @@ from domain.models.internal.movie import Genre
 from infra.repository.input.base import ENGINE
 
 
+# ---------------------------
+# SQL
+# ---------------------------
 UPSERT_GENRE_STATEMENT = """\
 INSERT INTO 
     genres

@@ -15,6 +15,7 @@ class Genre(BaseModel):
 
 class Review(BaseModel):
     review_id: str
+    movie_id: int
     review: str
 
 

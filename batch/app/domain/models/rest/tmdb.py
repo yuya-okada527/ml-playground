@@ -104,3 +104,29 @@ class TmdbMovieDetail(BaseModel):
 class TmdbSimilarMovieList(BaseModel):
     page: int
     results: list[TmdbMovie]
+
+
+class TmdbReviewAuthorDetail(BaseModel):
+    name: str
+    username: str
+    avatar_path: Optional[str] = None
+    rating: Optional[int] = None
+
+
+class TmdbMovieReview(BaseModel):
+    author: str
+    author_details: TmdbReviewAuthorDetail
+    content: str
+    created_at: str
+    id: str
+    updated_at: str
+    url: str
+
+
+class TmdbMovieReviewList(BaseModel):
+    id: int
+    page: int
+    results: list[TmdbMovieReview]
+    total_pages: int
+    total_results: int
+

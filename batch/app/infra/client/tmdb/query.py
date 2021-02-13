@@ -23,3 +23,7 @@ class MovieDetailQuery(TmdbQuery):
 
 class SimilarMovieQuery(TmdbQuery):
     page: Optional[int]
+
+
+class MovieReviewQuery(TmdbQuery):
+    page: Optional[int]

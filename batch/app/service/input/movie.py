@@ -1,9 +1,11 @@
 from core.logging import create_logger
 from domain.enums.movie_enums import MovieLanguage
-from domain.models.internal.movie import Genre, Movie
+from domain.models.internal.movie import Genre, Movie, Review
+from domain.models.rest.tmdb import TmdbMovieReview
 from infra.client.tmdb.api import AbstractTmdbClient
 from infra.repository.input.genre import AbstractGenreRepository
 from infra.repository.input.movie import AbstractMovieRepository
+from infra.repository.input.review_repository import AbstractReviewRepository
 
 
 log = create_logger(__file__)
@@ -58,7 +60,7 @@ def update_movies(
     page: int, 
     tmdb_client: AbstractTmdbClient, 
     movie_repository: AbstractMovieRepository
-):
+) -> None:
 
     log.info(f"人気映画情報取得バッチ実行開始. page={page}")
 
@@ -84,3 +86,42 @@ def update_movies(
     movie_repository.save_movie_list(movie_list)
 
     log.info(f"人気映画情報取得バッチ実行完了. 更新数={len(movie_list)}")
+
+
+def collect_reviews(
+    tmdb_client: AbstractTmdbClient, 
+    movie_repository: AbstractMovieRepository,
+    review_repository: AbstractReviewRepository
+) -> None:
+
+    log.info("レビューデータ収集バッチ実行開始.")
+
+    # 登録済の映画IDを全て取得
+    registered_movie_ids = movie_repository.fetch_all_movie_id()
+
+    # 登録済のレビューIDを全て取得
+    registered_review_ids = review_repository.fetch_all_review_id()
+
+    # 映画IDごとにレビューデータを取得・登録していく
+    count = 0
+    for movie_id in registered_movie_ids:
+        # ページは1固定とする
+        movie_review_response = tmdb_client.fetch_movie_reviews(movie_id=movie_id, page=1)
+        # 内部モデルに変換
+        movie_review_list = [_map_review_model(review, movie_id)
+            for review in movie_review_response.results 
+            if review.id not in registered_review_ids   # 登録済の物はスキップする
+        ]
+
+        # 登録
+        count += review_repository.save_review_list(movie_review_list)
+    
+    log.info(f"レビューデータ収集バッチ実行終了.  登録数={count}")
+
+
+def _map_review_model(movie_review: TmdbMovieReview, movie_id: int) -> Review:
+    return Review(
+        review_id=movie_review.id,
+        movie_id=movie_id,
+        review=movie_review.content
+    )
