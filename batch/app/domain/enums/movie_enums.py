@@ -2,5 +2,5 @@ from enum import Enum
 
 
 class MovieLanguage(Enum):
-    JP = "jp"
+    JP = "ja"
     EN = "en-US"
