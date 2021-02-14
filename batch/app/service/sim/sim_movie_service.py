@@ -7,26 +7,19 @@ from infra.repository.input.movie import AbstractMovieRepository
 log = create_logger(__file__)
 
 def exec_construct_tmdb_similarity(
-    tmdb_client: AbstractTmdbClient,
     redis_repository: AbstarctRedisRepository,
     movie_repository: AbstractMovieRepository
 ) -> None:
 
     log.info("TMDB-API類似映画データ構築処理実行開始.")
-    
-    # 出力対象の映画IDを取得
-    movie_id_set = set(movie_repository.fetch_all_movie_id())
+
+    # 類似映画情報を全て取得
+    similar_movies_map = movie_repository.fetch_all_similar_movie()
 
     # 映画IDごとにKVSデータを構築
-    for movie_id in movie_id_set:
-
-        # 類似映画リストを取得
-        similar_movie_list = tmdb_client.fetch_similar_movie_list(movie_id=movie_id)
-        if not similar_movie_list:
-            continue
-
+    for movie_id, similar_movies in similar_movies_map.items():
         # ベスト5のIDを取得
-        best_5 = [movie.id for movie in similar_movie_list.results if movie.id in movie_id_set][:5]
+        best_5 = similar_movies[:5]
 
         # KVSデータを構築
         redis_repository.save_movie_similarity(
@@ -34,5 +27,5 @@ def exec_construct_tmdb_similarity(
             similar_movies=best_5,
             model_type=SimilarityModelType.TMDB_SIM
         )
-    
+
     log.info("TMDB-API類似映画データ構築処理実行終了.")

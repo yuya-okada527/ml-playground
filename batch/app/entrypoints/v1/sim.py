@@ -13,16 +13,12 @@ app = typer.Typer()
 @app.command("tmdb-sim")
 def construct_tmdb_similarity():
 
-    # クライアントを初期化
-    tmdb_client = TmdbClient(TmdbSettings())
-
     # リポジトリを初期化
     redis_repository = RedisRepository()
     movie_repository = MovieRepository()
 
     # サービス実行
     exec_construct_tmdb_similarity(
-        tmdb_client=tmdb_client,
         redis_repository=redis_repository,
         movie_repository=movie_repository
     )

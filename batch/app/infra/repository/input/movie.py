@@ -206,7 +206,7 @@ class MovieRepository:
 
         return [int(movie.movie_id) for movie in result_proxy]
 
-    def fetch_all_similar_movie(self) -> dict[int, set[int]]:
+    def fetch_all_similar_movie(self) -> dict[int, list[int]]:
 
         # SQL実行
         result_proxy = ENGINE.execute(SELECT_ALL_SIMILAR_MOVIE_STATEMENT)
