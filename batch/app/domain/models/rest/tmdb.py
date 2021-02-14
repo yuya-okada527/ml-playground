@@ -104,6 +104,8 @@ class TmdbMovieDetail(BaseModel):
 class TmdbSimilarMovieList(BaseModel):
     page: int
     results: list[TmdbMovie]
+    total_pages: int
+    total_results: int
 
 
 class TmdbReviewAuthorDetail(BaseModel):
@@ -129,4 +131,3 @@ class TmdbMovieReviewList(BaseModel):
     results: list[TmdbMovieReview]
     total_pages: int
     total_results: int
-

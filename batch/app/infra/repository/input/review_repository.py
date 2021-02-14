@@ -29,7 +29,7 @@ class AbstractReviewRepository(Protocol):
 
     def fetch_all_review_id(self) -> list[str]:
         ...
-    
+
     def save_review_list(self, review_list: list[Review]) -> int:
         ...
 
@@ -37,14 +37,14 @@ class AbstractReviewRepository(Protocol):
 class ReviewRepository:
 
     def fetch_all_review_id(self) -> list[str]:
-        
+
         # SQL実行
         result_proxy = ENGINE.execute(SELECT_ALL_REVIEW_ID_STATEMENT)
 
-        return [int(review.review_id) for review in result_proxy]
-    
+        return [review.review_id for review in result_proxy]
+
     def save_review_list(self, review_list: list[Review]) -> int:
-        
+
         count = 0
         # トランザクション開始
         with ENGINE.begin() as conn:
@@ -54,5 +54,5 @@ class ReviewRepository:
                     "movie_id": review.movie_id,
                     "review": review.review
                 }).rowcount
-        
+
         return count

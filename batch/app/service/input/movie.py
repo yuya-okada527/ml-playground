@@ -12,7 +12,7 @@ log = create_logger(__file__)
 
 
 def update_genre_master(
-    genre_repository: AbstractGenreRepository, 
+    genre_repository: AbstractGenreRepository,
     tmdb_client: AbstractTmdbClient
 ) -> None:
 
@@ -20,7 +20,7 @@ def update_genre_master(
 
     # 登録済のジャンルIDを全て取得
     genre_id_set = {genre.genre_id for genre in genre_repository.fetch_all()}
-    
+
     # 英語表記のジャンルを取得
     english_genres = tmdb_client.fetch_genres(MovieLanguage.EN)
 
@@ -45,8 +45,8 @@ def update_genre_master(
             continue
 
         genre_list.append(Genre(
-            genre_id=en_genre.id, 
-            name=en_genre.name, 
+            genre_id=en_genre.id,
+            name=en_genre.name,
             japanese_name=jp_genre.name)
         )
 
@@ -57,8 +57,8 @@ def update_genre_master(
 
 
 def update_movies(
-    page: int, 
-    tmdb_client: AbstractTmdbClient, 
+    page: int,
+    tmdb_client: AbstractTmdbClient,
     movie_repository: AbstractMovieRepository
 ) -> None:
 
@@ -66,7 +66,7 @@ def update_movies(
 
     # 登録済の映画IDを取得
     registered_movies = set(movie_repository.fetch_all_movie_id())
-    
+
     # 人気映画のリストを取得
     popular_movies = tmdb_client.fetch_popular_movies(page)
 
@@ -89,7 +89,7 @@ def update_movies(
 
 
 def collect_reviews(
-    tmdb_client: AbstractTmdbClient, 
+    tmdb_client: AbstractTmdbClient,
     movie_repository: AbstractMovieRepository,
     review_repository: AbstractReviewRepository
 ) -> None:
@@ -109,14 +109,56 @@ def collect_reviews(
         movie_review_response = tmdb_client.fetch_movie_reviews(movie_id=movie_id, page=1)
         # 内部モデルに変換
         movie_review_list = [_map_review_model(review, movie_id)
-            for review in movie_review_response.results 
+            for review in movie_review_response.results
             if review.id not in registered_review_ids   # 登録済の物はスキップする
         ]
 
         # 登録
         count += review_repository.save_review_list(movie_review_list)
-    
+
     log.info(f"レビューデータ収集バッチ実行終了.  登録数={count}")
+
+
+def collect_similar_movies(
+    tmdb_client: AbstractTmdbClient,
+    movie_repository: AbstractMovieRepository
+) -> None:
+
+    log.info("類似映画収集バッチ実行開始.")
+
+    # 登録済の映画IDを全て取得
+    registered_movies_id_set = set(movie_repository.fetch_all_movie_id())
+
+    # 登録済の類似映画IDを全て取得 (key: movie_id, value: set(similar_movie_id))
+    registered_similar_movie_map = movie_repository.fetch_all_similar_movie()
+
+    # 映画IDごとに全ての類似映画を取得
+    count = 0
+    for movie_id in registered_movies_id_set:
+
+        # 登録している映画はスキップする
+        if movie_id in registered_similar_movie_map:
+            continue
+
+        # 全ての類似映画を取得
+        similar_movie_list = tmdb_client.fetch_all_similar_movie_id(movie_id=movie_id)
+
+        # 映画テーブルに存在する映画IDのみ残してフィルタ
+        similar_movie_list = [x for x in similar_movie_list if x in registered_movies_id_set]
+
+        # 登録できる映画IDがない場合、スキップ
+        if not similar_movie_list:
+            print("skipped")
+            continue
+
+        # UPSERT処理で登録
+        count += movie_repository.save_similar_movie_list(
+            movie_id=movie_id,
+            similar_movie_list=similar_movie_list
+        )
+        print(f"登録数={count}")
+
+    log.info(f"類似映画収集バッチ実行終了.  登録数={count}")
 
 
 def _map_review_model(movie_review: TmdbMovieReview, movie_id: int) -> Review:

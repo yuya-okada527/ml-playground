@@ -3,15 +3,15 @@ from typing import Protocol, Optional
 from core.config import TmdbSettings
 from domain.enums.movie_enums import MovieLanguage
 from domain.models.rest.tmdb import (
-    TmdbMovieDetail, 
-    TmdbMovieGenreList, 
-    TmdbMovieReviewList, 
-    TmdbPopularMovieList, 
+    TmdbMovieDetail,
+    TmdbMovieGenreList,
+    TmdbMovieReviewList,
+    TmdbPopularMovieList,
     TmdbSimilarMovieList
 )
 from infra.client.tmdb.query import (
-    MovieDetailQuery, 
-    MovieGenreQuery, MovieReviewQuery, 
+    MovieDetailQuery,
+    MovieGenreQuery, MovieReviewQuery,
     PopularMovieQuery,
     SimilarMovieQuery
 )
@@ -25,28 +25,31 @@ MOVIE_DETAIL_PATH = "/movie/{movie_id}"
 SIMILAR_MOVIE_PATH = "/movie/{movie_id}/similar"
 MOVIE_REVIEW_PATH = "/movie/{movie_id}/reviews"
 
+# MAXページ
+MAX_PAGE = 10
+
 
 class AbstractTmdbClient(Protocol):
-    
+
     def fetch_genres(self, language: MovieLanguage) -> TmdbMovieGenreList:
         ...
-    
+
     def fetch_popular_movies(
-        self, 
-        page: int, 
-        region: Optional[str], 
+        self,
+        page: int,
+        region: Optional[str],
         language: Optional[MovieLanguage] = None
     ) -> TmdbPopularMovieList:
         ...
-    
+
     def fetch_movie_detail(
-        self, 
-        movie_id: int, 
-        language: Optional[MovieLanguage] = None, 
+        self,
+        movie_id: int,
+        language: Optional[MovieLanguage] = None,
         append_to_response: Optional[str] = None
     ) -> TmdbMovieDetail:
         ...
-    
+
     def fetch_movie_detail_list(
         self,
         movie_id_list: list[int],
@@ -54,7 +57,7 @@ class AbstractTmdbClient(Protocol):
         append_to_response: Optional[str] = None
     ) -> list[TmdbMovieDetail]:
         ...
-    
+
     def fetch_similar_movie_list(
         self,
         movie_id: int,
@@ -62,7 +65,13 @@ class AbstractTmdbClient(Protocol):
         page: int = 1
     ) -> TmdbSimilarMovieList:
         ...
-    
+
+    def fetch_all_similar_movie_id(
+        self,
+        movie_id: int,
+    ) -> list[int]:
+        ...
+
     def fetch_movie_reviews(
         self,
         movie_id: int,
@@ -93,12 +102,12 @@ class TmdbClient:
         return TmdbMovieGenreList(**response.json())
 
     def fetch_popular_movies(
-        self, 
-        page: int, 
+        self,
+        page: int,
         region: Optional[str] = None,
         language: Optional[MovieLanguage] = None
     ) -> TmdbPopularMovieList:
-        
+
         # リクエスト条件を構築
         url = self.base_url + POPULAR_MOVIE_PATH
         query = PopularMovieQuery(
@@ -112,14 +121,14 @@ class TmdbClient:
         response = call_get_api(url, query)
 
         return TmdbPopularMovieList(**response.json())
-    
+
     def fetch_movie_detail(
-        self, 
-        movie_id: int, 
-        language: Optional[MovieLanguage] = None, 
+        self,
+        movie_id: int,
+        language: Optional[MovieLanguage] = None,
         append_to_response: Optional[str] = None
     ) -> TmdbMovieDetail:
-        
+
         # リクエスト条件を構築
         url = self.base_url + MOVIE_DETAIL_PATH.format(movie_id=movie_id)
         query = MovieDetailQuery(
@@ -139,7 +148,7 @@ class TmdbClient:
         language: Optional[MovieLanguage] = None,
         append_to_response: Optional[str] = None
     ) -> list[TmdbMovieDetail]:
-        
+
         movie_detail_list = []
         for movie_id in movie_id_list:
             movie_detail_list.append(self.fetch_movie_detail(
@@ -147,16 +156,16 @@ class TmdbClient:
                 language=language,
                 append_to_response=append_to_response
             ))
-        
+
         return movie_detail_list
-    
+
     def fetch_similar_movie_list(
         self,
         movie_id: int,
         language: MovieLanguage = MovieLanguage.EN,
         page: int = 1
     ) -> TmdbSimilarMovieList:
-        
+
         # リクエスト条件を構築
         url = self.base_url + SIMILAR_MOVIE_PATH.format(movie_id=movie_id)
         query = SimilarMovieQuery(
@@ -169,14 +178,52 @@ class TmdbClient:
         response = call_get_api(url=url, query=query)
 
         return TmdbSimilarMovieList(**response.json())
-    
+
+    def fetch_all_similar_movie_id(
+        self,
+        movie_id: int,
+    ) -> list[int]:
+
+        # リクエスト条件を構築
+        url = self.base_url + SIMILAR_MOVIE_PATH.format(movie_id=movie_id)
+        # 1ページ目を取得
+        query = SimilarMovieQuery(
+            api_key=self.api_key,
+            page=1
+        )
+        response = call_get_api(url=url, query=query)
+
+        # 最終ページまで全ての類似映画を取得する
+        similar_movie_list = []
+        current_page = 1
+        while True:
+            # 類似映画IDリストを更新
+            similar_movie_response = TmdbSimilarMovieList(**response.json())
+            similar_movie_list.extend([movie.id for movie in similar_movie_response.results])
+
+            # 最終ページなら終了
+            if current_page == similar_movie_response.total_pages:
+                break
+
+            # 閾値を超えたらリクエストを打ち切る
+            if current_page >= MAX_PAGE:
+                break
+
+            # ページを更新し、再度API実行
+            current_page += 1
+            query.page = current_page
+            response = call_get_api(url=url, query=query)
+
+        return similar_movie_list
+
+
     def fetch_movie_reviews(
         self,
         movie_id: int,
         language: MovieLanguage = MovieLanguage.EN,
         page: int = 1
     ) -> TmdbMovieReviewList:
-        
+
         # リクエスト条件を構築
         url = self.base_url + MOVIE_REVIEW_PATH.format(movie_id=movie_id)
         query = MovieReviewQuery(

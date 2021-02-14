@@ -5,7 +5,12 @@ from infra.client.tmdb.api import TmdbClient
 from infra.repository.input.genre import GenreRepository
 from infra.repository.input.movie import MovieRepository
 from infra.repository.input.review_repository import ReviewRepository
-from service.input.movie import collect_reviews, update_genre_master, update_movies
+from service.input.movie import (
+    update_genre_master,
+    update_movies,
+    collect_reviews,
+    collect_similar_movies
+)
 
 
 app = typer.Typer()
@@ -38,7 +43,7 @@ def input_movies(page: int = 1):
 
 @app.command("reviews")
 def input_reviews():
-    
+
     # クライアントの初期化
     tmdb_client = TmdbClient(TmdbSettings())
 
@@ -51,6 +56,22 @@ def input_reviews():
         tmdb_client=tmdb_client,
         movie_repository=movie_repository,
         review_repository=review_repository
+    )
+
+
+@app.command("similar_movies")
+def input_similar_movies():
+
+    # クライアントの初期化
+    tmdb_client = TmdbClient(TmdbSettings())
+
+    # リポジトリの初期化
+    movie_repository = MovieRepository()
+
+    # サービス実行
+    collect_similar_movies(
+        tmdb_client=tmdb_client,
+        movie_repository=movie_repository
     )
 
 

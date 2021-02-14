@@ -33,4 +33,10 @@ if [ $? != 0 ]; then
   exit 1
 fi
 
+# 類似映画収集バッチを実行
+python app/main.py input similar_movies
+if [ $? != 0 ]; then
+  exit 1
+fi
+
 echo "入稿処理が正常に終了しました."
