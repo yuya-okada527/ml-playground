@@ -25,9 +25,6 @@ MOVIE_DETAIL_PATH = "/movie/{movie_id}"
 SIMILAR_MOVIE_PATH = "/movie/{movie_id}/similar"
 MOVIE_REVIEW_PATH = "/movie/{movie_id}/reviews"
 
-# MAXページ
-MAX_PAGE = 10
-
 
 class AbstractTmdbClient(Protocol):
 
@@ -178,43 +175,6 @@ class TmdbClient:
         response = call_get_api(url=url, query=query)
 
         return TmdbSimilarMovieList(**response.json())
-
-    def fetch_all_similar_movie_id(
-        self,
-        movie_id: int,
-    ) -> list[int]:
-
-        # リクエスト条件を構築
-        url = self.base_url + SIMILAR_MOVIE_PATH.format(movie_id=movie_id)
-        # 1ページ目を取得
-        query = SimilarMovieQuery(
-            api_key=self.api_key,
-            page=1
-        )
-        response = call_get_api(url=url, query=query)
-
-        # 最終ページまで全ての類似映画を取得する
-        similar_movie_list = []
-        current_page = 1
-        while True:
-            # 類似映画IDリストを更新
-            similar_movie_response = TmdbSimilarMovieList(**response.json())
-            similar_movie_list.extend([movie.id for movie in similar_movie_response.results])
-
-            # 最終ページなら終了
-            if current_page == similar_movie_response.total_pages:
-                break
-
-            # 閾値を超えたらリクエストを打ち切る
-            if current_page >= MAX_PAGE:
-                break
-
-            # ページを更新し、再度API実行
-            current_page += 1
-            query.page = current_page
-            response = call_get_api(url=url, query=query)
-
-        return similar_movie_list
 
 
     def fetch_movie_reviews(
