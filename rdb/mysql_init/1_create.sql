@@ -37,3 +37,10 @@ CREATE TABLE IF NOT EXISTS `reviews` (
   `movie_id`    INT NOT NULL,
   `review`      TEXT
 );
+
+-- 類似映画テーブル
+CREATE TABLE IF NOT EXISTS `similar_movies` (
+  `movie_id`          INT NOT NULL,
+  `similar_movie_id`  INT NOT NULL,
+  PRIMARY KEY(`movie_id`, `similar_movie_id`)
+);
