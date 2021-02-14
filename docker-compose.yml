@@ -4,7 +4,7 @@ services:
     build: ./api
     image: movie-recommender-api
     ports:
-      - "8888:80"
+      - "8999:80"
     env_file:
       - api/env/solr-docker-compose.env
       - api/env/redis-docker-compose.env
