@@ -211,10 +211,10 @@ class MovieRepository:
         # SQL実行
         result_proxy = ENGINE.execute(SELECT_ALL_SIMILAR_MOVIE_STATEMENT)
 
-        # 類似映画MAPを作成 (key: movie_id, value: set(similar_movie_id))
-        similar_movies = defaultdict(set)
+        # 類似映画MAPを作成 (key: movie_id, value: list(similar_movie_id))
+        similar_movies = defaultdict(list)
         for row in result_proxy:
-            similar_movies[row.movie_id].add(row.similar_movie_id)
+            similar_movies[row.movie_id].append(row.similar_movie_id)
 
         return similar_movies
 
