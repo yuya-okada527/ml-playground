@@ -1,6 +1,9 @@
 import re
+from typing import Dict
+from numpy import vectorize
 
 import pandas as pd
+import spacy
 
 
 def concatenate_reviews(reviews: pd.DataFrame) -> pd.DataFrame:
@@ -29,6 +32,23 @@ def normalize_reviews(concatenated_reviews: pd.DataFrame) -> pd.DataFrame:
     concatenated_reviews["review"] = concatenated_reviews["review"].apply(_remove_duplicate_space)
 
     return concatenated_reviews
+
+
+def verctorize_reviews(
+    normalized_reviews: pd.DataFrame,
+    parameters: Dict
+) -> pd.DataFrame:
+
+    # ベクトル変換モデルをロード
+    nlp = spacy.load(parameters["spacy_model"])
+
+    # ベクトルに変換
+    vectors = normalized_reviews["review"].apply(lambda x: nlp(x).vector)
+
+    return pd.DataFrame({
+        "movie_id": normalized_reviews["movie_id"],
+        "vector": vectors
+    })
 
 
 def _remove_line_separator(text: str) -> str:

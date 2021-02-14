@@ -1,6 +1,6 @@
 from kedro.pipeline import node, Pipeline
 from movie_recommeder_ml_pipeline.pipelines.data_engineering.nodes import (
-    concatenate_reviews, normalize_reviews
+    concatenate_reviews, normalize_reviews, verctorize_reviews
 )
 
 
@@ -18,7 +18,12 @@ def create_pipeline(**kwargs):
                 inputs="concatenated_reviews",
                 outputs="normalized_reviews",
                 name="normalize_reviews"
+            ),
+            node(
+                func=verctorize_reviews,
+                inputs=["normalized_reviews", "parameters"],
+                outputs="review_vectors",
+                name="verctorize_reviews"
             )
         ]
     )
-

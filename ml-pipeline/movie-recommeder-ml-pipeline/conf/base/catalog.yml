@@ -16,3 +16,6 @@ normalized_reviews:
     sep: "\t"
   load_args:
     sep: "\t"
+review_vectors:
+  type: pickle.PickleDataSet
+  filepath: data/04_feature/review_vectors.pickle
