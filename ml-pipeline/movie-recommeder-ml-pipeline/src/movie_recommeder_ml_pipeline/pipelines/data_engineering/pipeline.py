@@ -1,6 +1,8 @@
 from kedro.pipeline import node, Pipeline
 from movie_recommeder_ml_pipeline.pipelines.data_engineering.nodes import (
-    concatenate_reviews, normalize_reviews, verctorize_reviews
+    concatenate_reviews,
+    normalize_reviews,
+    verctorize_reviews
 )
 
 

@@ -1,6 +1,5 @@
 import re
 from typing import Dict
-from numpy import vectorize
 
 import pandas as pd
 import spacy
