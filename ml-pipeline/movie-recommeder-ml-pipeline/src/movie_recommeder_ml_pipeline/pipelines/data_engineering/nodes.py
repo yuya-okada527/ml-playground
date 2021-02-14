@@ -33,7 +33,7 @@ def normalize_reviews(concatenated_reviews: pd.DataFrame) -> pd.DataFrame:
     return concatenated_reviews
 
 
-def verctorize_reviews(
+def vectorize_reviews(
     normalized_reviews: pd.DataFrame,
     parameters: Dict
 ) -> pd.DataFrame:

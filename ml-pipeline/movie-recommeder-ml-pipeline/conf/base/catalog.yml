@@ -11,7 +11,7 @@ concatenated_reviews:
   type: MemoryDataSet
 normalized_reviews:
   type: pandas.CSVDataSet
-  filepath: data/03_primary/normalized_reviews.csv
+  filepath: data/03_primary/normalized_reviews.tsv
   save_args:
     sep: "\t"
   load_args:
@@ -19,3 +19,8 @@ normalized_reviews:
 review_vectors:
   type: pickle.PickleDataSet
   filepath: data/04_feature/review_vectors.pickle
+similar_movies:
+  type: pandas.CSVDataSet
+  filepath: data/07_model_output/similar_movies.tsv
+  save_args:
+    sep: "\t"
