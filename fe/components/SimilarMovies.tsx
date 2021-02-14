@@ -28,7 +28,7 @@ const SimilarMovies = ({ similarMovies }: SimilarMoviesProps) => (
         </TableHead>
         <TableBody>
           {similarMovies.map((movie: Movie, index: number) => (
-            <TableRow>
+            <TableRow key={movie.movie_id}>
               <TableCell>{index + 1}</TableCell>
               <TableCell>
                 {movie.japanese_title}{" "}
