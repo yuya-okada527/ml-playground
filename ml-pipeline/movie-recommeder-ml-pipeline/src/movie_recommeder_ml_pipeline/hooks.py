@@ -35,6 +35,8 @@ from kedro.io import DataCatalog
 from kedro.pipeline import Pipeline
 from kedro.versioning import Journal
 
+from movie_recommeder_ml_pipeline.pipelines.data_engineering import pipeline as de
+
 
 class ProjectHooks:
     @hook_impl
@@ -46,7 +48,12 @@ class ProjectHooks:
 
         """
 
-        return {"__default__": Pipeline([])}
+        de_pipeline = de.create_pipeline()
+
+        return {
+            "de": de_pipeline,
+            "__default__": de_pipeline
+        }
 
     @hook_impl
     def register_config_loader(self, conf_paths: Iterable[str]) -> ConfigLoader:
