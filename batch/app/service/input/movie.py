@@ -31,6 +31,7 @@ def update_genre_master(
     genre_id_dict = {genre.id : genre for genre in english_genres.genres}
 
     # 日本語表記のジャンルを取得
+    # TODO APIだと日本語データを取得できない... (翻訳API?)
     japanese_genres = tmdb_client.fetch_genres(MovieLanguage.JP)
 
     # ジャンルモデルに詰め替える
