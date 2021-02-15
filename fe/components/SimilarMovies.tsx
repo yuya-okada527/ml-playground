@@ -27,15 +27,16 @@ const SimilarMovies = ({ similarMovies }: SimilarMoviesProps) => (
           </TableRow>
         </TableHead>
         <TableBody>
-          {similarMovies.map((movie: Movie, index: number) => (
-            <TableRow key={movie.movie_id}>
-              <TableCell>{index + 1}</TableCell>
-              <TableCell>
-                {movie.japanese_title}{" "}
-                {movie.release_year ? " (" + movie.release_year + ") " : ""}
-              </TableCell>
-            </TableRow>
-          ))}
+          {similarMovies &&
+            similarMovies.map((movie: Movie, index: number) => (
+              <TableRow key={movie.movie_id}>
+                <TableCell>{index + 1}</TableCell>
+                <TableCell>
+                  {movie.japanese_title}{" "}
+                  {movie.release_year ? " (" + movie.release_year + ") " : ""}
+                </TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
     </TableContainer>

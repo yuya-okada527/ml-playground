@@ -27,14 +27,16 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const fetchSearchResult = async (searchTerm: string, page: number) => {
   const url = config.apiEndpoint + "/v1/movie/search";
+  console.log("page: " + page);
   const query = {
     query: searchTerm,
-    start: (page - 1) * 5,
+    start: page ? (page - 1) * 5 : 0,
     rows: 5,
   };
   console.log(JSON.stringify(query));
+
   const response = await callGetApi(url, query);
-  return response.results;
+  return response;
 };
 
 const parsePageQuery = (query: ParsedUrlQuery) => {
@@ -45,6 +47,14 @@ const parsePageQuery = (query: ParsedUrlQuery) => {
   }
 
   return Number(pageStr);
+};
+
+const calcTotalPage = (hitNum: number) => {
+  if (hitNum % 5 == 0) {
+    return Math.floor(hitNum / 5);
+  }
+
+  return Math.floor(hitNum / 5) + 1;
 };
 
 const IndexPage = () => {
@@ -62,6 +72,7 @@ const IndexPage = () => {
   );
   const [searchResult, setSearchResult] = React.useState<Array<Movie>>([]);
   const [page, setPage] = React.useState<number>(parsePageQuery(router.query));
+  const [totalPage, setTotalPage] = React.useState<number>(0);
 
   const handleSearchTermChange = (
     event: ChangeEvent<HTMLInputElement>
@@ -71,9 +82,12 @@ const IndexPage = () => {
 
   const handleSearchButtonClick = React.useCallback(
     async (pageParam: number = 1) => {
+      console.log("pageParam: " + pageParam);
       const response = await fetchSearchResult(searchTerm, pageParam);
-      setSearchResult(response);
+      const hitNum: number = response.available_num;
+      setSearchResult(response.results);
       setSearchedTerm(searchTerm);
+      setTotalPage(calcTotalPage(hitNum));
     },
     [searchTerm, page]
   );
@@ -107,7 +121,7 @@ const IndexPage = () => {
                 movies={searchResult}
                 searchedTerm={searchedTerm}
                 page={page}
-                pageCount={10}
+                pageCount={totalPage}
                 handlePageChange={handlePageChange}
               />
             )}
