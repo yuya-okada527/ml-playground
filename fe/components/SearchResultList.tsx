@@ -31,6 +31,11 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     searchResultItemPaper: {
       width: "100%",
+      transition: "0.3s",
+      "&:hover": {
+        backgroundColor: "#eee",
+        opacity: 0.8,
+      },
     },
   })
 );
