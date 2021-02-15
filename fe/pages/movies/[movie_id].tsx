@@ -18,7 +18,7 @@ import { callGetApi } from "../../utils/http";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
-      marginLeft: theme.spacing(2),
+      marginLeft: theme.spacing(0),
       marginRight: theme.spacing(2),
     },
   })
