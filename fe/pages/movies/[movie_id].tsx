@@ -27,7 +27,6 @@ const useStyles = makeStyles((theme: Theme) =>
 const DetailPage = () => {
   const classes = useStyles();
   const router = useRouter();
-  // const { movie_id } = router.query;
   const [movieId, setMovieId] = React.useState("");
   const [movie, setMovie] = React.useState<Movie>();
   const [searchTerm, setSearchTerm] = React.useState("");
