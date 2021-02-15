@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) =>
 type SearchBoxProps = {
   searchTerm: string;
   handleSearchTermChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  handleSearchButtonClick: () => void;
+  handleSearchButtonClick: (_event?: React.MouseEvent<unknown>) => void;
 };
 
 const SearchBox = ({

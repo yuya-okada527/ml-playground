@@ -25,15 +25,13 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const fetchSearchResult = async (searchTerm: string, page: number) => {
+const fetchSearchResult = async (searchTerm: string, page?: number) => {
   const url = config.apiEndpoint + "/v1/movie/search";
-  console.log("page: " + page);
   const query = {
     query: searchTerm,
     start: page ? (page - 1) * 5 : 0,
     rows: 5,
   };
-  console.log(JSON.stringify(query));
 
   const response = await callGetApi(url, query);
   return response;
@@ -81,8 +79,7 @@ const IndexPage = () => {
   };
 
   const handleSearchButtonClick = React.useCallback(
-    async (pageParam: number = 1) => {
-      console.log("pageParam: " + pageParam);
+    async (_event?: React.MouseEvent<unknown>, pageParam?: number) => {
       const response = await fetchSearchResult(searchTerm, pageParam);
       const hitNum: number = response.available_num;
       setSearchResult(response.results);
@@ -97,13 +94,13 @@ const IndexPage = () => {
     page: number
   ): void => {
     setPage(page);
-    handleSearchButtonClick(page);
+    handleSearchButtonClick(undefined, page);
   };
 
   // 初期化時のみ起動、searchTermパラメータありの場合のみ検索を実行する
   React.useEffect(() => {
     if (searchTerm !== undefined) {
-      handleSearchButtonClick();
+      handleSearchButtonClick(undefined);
     }
   }, []);
   return (

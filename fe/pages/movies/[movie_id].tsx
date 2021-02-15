@@ -27,7 +27,8 @@ const useStyles = makeStyles((theme: Theme) =>
 const DetailPage = () => {
   const classes = useStyles();
   const router = useRouter();
-  const { movie_id } = router.query;
+  // const { movie_id } = router.query;
+  const [movieId, setMovieId] = React.useState("");
   const [movie, setMovie] = React.useState<Movie>();
   const [searchTerm, setSearchTerm] = React.useState("");
   const [similarMovies, setSimilarMovies] = React.useState<Array<Movie>>([]);
@@ -46,14 +47,28 @@ const DetailPage = () => {
   };
 
   React.useEffect(() => {
+    // idがqueryで利用可能になったら処理される
+    if (router.asPath !== router.route) {
+      setMovieId(
+        Array.isArray(router.query.movie_id)
+          ? router.query.movie_id[0]
+          : router.query.movie_id
+      );
+    }
+  }, [router]);
+
+  React.useEffect(() => {
+    if (!movieId) {
+      return;
+    }
     const initMovieData = async () => {
-      const url = config.apiEndpoint + `/v1/movie/search/${movie_id}`;
+      const url = config.apiEndpoint + `/v1/movie/search/${movieId}`;
       const query = {};
       const response = await callGetApi(url, query);
       setMovie(response);
     };
     const initSimilarMovies = async () => {
-      const url = config.apiEndpoint + `/v1/movie/similar/${movie_id}`;
+      const url = config.apiEndpoint + `/v1/movie/similar/${movieId}`;
       const query = {
         model_type: "tmdb-sim",
       };
@@ -62,9 +77,9 @@ const DetailPage = () => {
     };
     initMovieData();
     initSimilarMovies();
-  }, []);
+  }, [movieId]);
   return (
-    <Layout title={`Movie_${movie_id}`}>
+    <Layout title={`Movie_${movieId}`}>
       <Container className={classes.container}>
         <Grid container>
           <Grid item xs={8}>

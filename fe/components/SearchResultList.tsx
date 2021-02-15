@@ -50,6 +50,14 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+const makeSearchTermView = (searchTerm: string) => {
+  if (searchTerm) {
+    return `"${searchTerm}"`;
+  }
+
+  return "all";
+};
+
 type SearchResultProps = {
   movies: Movie[];
   searchedTerm: string;
@@ -69,7 +77,7 @@ const SearchResultList = ({
   return (
     <>
       <div className={classes.underSearch} />
-      <Typography>Results for "{searchedTerm}"</Typography>
+      <Typography>Results for {makeSearchTermView(searchedTerm)}</Typography>
       <List>
         {movies.map((movie: Movie) => (
           <Link href={`/movies/${movie.movie_id}`} key={movie.movie_id}>
