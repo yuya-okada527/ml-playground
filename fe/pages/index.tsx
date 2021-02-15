@@ -14,6 +14,7 @@ import SearchResultList from "../components/SearchResultList";
 import { Movie } from "../interfaces/index";
 import { callGetApi } from "../utils/http";
 import config from "../utils/config";
+import { ParsedUrlQuery } from "querystring";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -24,15 +25,26 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const fetchSearchResult = async (searchTerm: string) => {
+const fetchSearchResult = async (searchTerm: string, page: number) => {
   const url = config.apiEndpoint + "/v1/movie/search";
   const query = {
     query: searchTerm,
-    start: 0,
+    start: (page - 1) * 5,
     rows: 5,
   };
+  console.log(JSON.stringify(query));
   const response = await callGetApi(url, query);
   return response.results;
+};
+
+const parsePageQuery = (query: ParsedUrlQuery) => {
+  const pageStr = Array.isArray(query.page) ? query.page[0] : query.page;
+  // 指定なしの場合、1
+  if (!pageStr) {
+    return 1;
+  }
+
+  return Number(pageStr);
 };
 
 const IndexPage = () => {
@@ -49,6 +61,7 @@ const IndexPage = () => {
       : router.query.searchedTerm
   );
   const [searchResult, setSearchResult] = React.useState<Array<Movie>>([]);
+  const [page, setPage] = React.useState<number>(parsePageQuery(router.query));
 
   const handleSearchTermChange = (
     event: ChangeEvent<HTMLInputElement>
@@ -56,11 +69,22 @@ const IndexPage = () => {
     setSearchTerm(event.target.value);
   };
 
-  const handleSearchButtonClick = React.useCallback(async () => {
-    const response = await fetchSearchResult(searchTerm);
-    setSearchResult(response);
-    setSearchedTerm(searchTerm);
-  }, [searchTerm]);
+  const handleSearchButtonClick = React.useCallback(
+    async (pageParam: number = 1) => {
+      const response = await fetchSearchResult(searchTerm, pageParam);
+      setSearchResult(response);
+      setSearchedTerm(searchTerm);
+    },
+    [searchTerm, page]
+  );
+
+  const handlePageChange = (
+    _event: React.ChangeEvent<unknown>,
+    page: number
+  ): void => {
+    setPage(page);
+    handleSearchButtonClick(page);
+  };
 
   // 初期化時のみ起動、searchTermパラメータありの場合のみ検索を実行する
   React.useEffect(() => {
@@ -82,7 +106,9 @@ const IndexPage = () => {
               <SearchResultList
                 movies={searchResult}
                 searchedTerm={searchedTerm}
-                page={1}
+                page={page}
+                pageCount={10}
+                handlePageChange={handlePageChange}
               />
             )}
           </Grid>

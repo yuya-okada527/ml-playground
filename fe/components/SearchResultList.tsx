@@ -54,15 +54,18 @@ type SearchResultProps = {
   movies: Movie[];
   searchedTerm: string;
   page: number;
+  pageCount: number;
+  handlePageChange: (event: React.ChangeEvent<unknown>, page: number) => void;
 };
 
 const SearchResultList = ({
   movies,
   searchedTerm,
   page,
+  pageCount,
+  handlePageChange,
 }: SearchResultProps) => {
   const classes = useStyles();
-  console.log(movies);
   return (
     <>
       <div className={classes.underSearch} />
@@ -106,10 +109,11 @@ const SearchResultList = ({
       </List>
       <div className={classes.paginationRoot}>
         <Pagination
-          count={5}
+          count={pageCount}
           page={page}
           color="primary"
           className={classes.pagination}
+          onChange={handlePageChange}
         />
       </div>
     </>
