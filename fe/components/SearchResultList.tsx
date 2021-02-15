@@ -10,6 +10,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import Image from "material-ui-image";
+import Pagination from "@material-ui/lab/Pagination";
 import Link from "next/link";
 import { Movie } from "../interfaces/index";
 
@@ -37,15 +38,29 @@ const useStyles = makeStyles((theme: Theme) =>
         opacity: 0.8,
       },
     },
+    paginationRoot: {
+      textAlign: "center",
+      "& > * + *": {
+        marginTop: theme.spacing(2),
+      },
+    },
+    pagination: {
+      display: "inline-block",
+    },
   })
 );
 
 type SearchResultProps = {
   movies: Movie[];
   searchedTerm: string;
+  page: number;
 };
 
-const SearchResultList = ({ movies, searchedTerm }: SearchResultProps) => {
+const SearchResultList = ({
+  movies,
+  searchedTerm,
+  page,
+}: SearchResultProps) => {
   const classes = useStyles();
   console.log(movies);
   return (
@@ -89,6 +104,14 @@ const SearchResultList = ({ movies, searchedTerm }: SearchResultProps) => {
           </Link>
         ))}
       </List>
+      <div className={classes.paginationRoot}>
+        <Pagination
+          count={5}
+          page={page}
+          color="primary"
+          className={classes.pagination}
+        />
+      </div>
     </>
   );
 };

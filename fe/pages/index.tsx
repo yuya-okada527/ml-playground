@@ -82,6 +82,7 @@ const IndexPage = () => {
               <SearchResultList
                 movies={searchResult}
                 searchedTerm={searchedTerm}
+                page={1}
               />
             )}
           </Grid>
