@@ -1,12 +1,15 @@
 import React from "react";
 import {
   createStyles,
+  Grid,
   List,
   ListItem,
   makeStyles,
+  Paper,
   Theme,
   Typography,
 } from "@material-ui/core";
+import Image from "material-ui-image";
 import Link from "next/link";
 import { Movie } from "../interfaces/index";
 
@@ -17,6 +20,17 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     underSearch: {
       marginBottom: theme.spacing(2),
+    },
+    link: {
+      textDecoration: "none",
+    },
+    searchResultItem: {
+      paddingLeft: 0,
+      paddingBottom: theme.spacing(1),
+      paddingTop: theme.spacing(0),
+    },
+    searchResultItemPaper: {
+      width: "100%",
     },
   })
 );
@@ -36,16 +50,36 @@ const SearchResultList = ({ movies, searchedTerm }: SearchResultProps) => {
       <List>
         {movies.map((movie: Movie) => (
           <Link href={`/movies/${movie.movie_id}`} key={movie.movie_id}>
-            <a>
-              <ListItem key={movie.movie_id}>
-                <Typography className={classes.movieCardTitle} variant="h6">
-                  {movie.japanese_title
-                    ? movie.japanese_title
-                    : movie.original_title}
-                  {movie.release_year ? " (" + movie.release_year + ") " : ""}
-                </Typography>
+            <a className={classes.link}>
+              <ListItem
+                className={classes.searchResultItem}
+                key={movie.movie_id}
+              >
+                <Paper
+                  className={classes.searchResultItemPaper}
+                  variant="outlined"
+                  square
+                >
+                  <Grid container>
+                    <Grid item xs={1}>
+                      <Image src={movie.poster_url} aspectRatio={9 / 12} />
+                    </Grid>
+                    <Grid item xs={11}>
+                      <Typography
+                        className={classes.movieCardTitle}
+                        variant="h6"
+                      >
+                        {movie.japanese_title
+                          ? movie.japanese_title
+                          : movie.original_title}
+                        {movie.release_year
+                          ? " (" + movie.release_year + ") "
+                          : ""}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </Paper>
               </ListItem>
-              <hr />
             </a>
           </Link>
         ))}

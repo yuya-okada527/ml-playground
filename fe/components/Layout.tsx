@@ -32,6 +32,10 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "100%",
       position: "absolute",
       bottom: 0,
+      borderTop: "1px solid black",
+    },
+    footerList: {
+      paddingTop: theme.spacing(0.5),
     },
     footerListItem: {
       paddingTop: theme.spacing(0.5),
@@ -97,8 +101,7 @@ const Layout = ({ children, title = "This is the default title" }: Props) => {
       </Grid>
 
       <footer className={classes.footer}>
-        <hr />
-        <List>
+        <List className={classes.footerList}>
           <ListItem className={classes.footerListItem}>
             Contact: hoge@gmail.com
           </ListItem>
