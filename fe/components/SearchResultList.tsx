@@ -55,7 +55,7 @@ const makeSearchTermView = (searchTerm: string) => {
     return `"${searchTerm}"`;
   }
 
-  return "all";
+  return "ALL";
 };
 
 type SearchResultProps = {

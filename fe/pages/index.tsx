@@ -84,6 +84,7 @@ const IndexPage = () => {
       const hitNum: number = response.available_num;
       setSearchResult(response.results);
       setSearchedTerm(searchTerm);
+      setPage(pageParam ? pageParam : 1);
       setTotalPage(calcTotalPage(hitNum));
     },
     [searchTerm, page]
@@ -93,7 +94,6 @@ const IndexPage = () => {
     _event: React.ChangeEvent<unknown>,
     page: number
   ): void => {
-    setPage(page);
     handleSearchButtonClick(undefined, page);
   };
 
