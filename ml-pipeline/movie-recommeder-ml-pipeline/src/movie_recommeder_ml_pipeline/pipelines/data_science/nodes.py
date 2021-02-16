@@ -1,6 +1,8 @@
 from typing import Dict
+
 import pandas as pd
 from annoy import AnnoyIndex
+import mlflow
 
 
 
@@ -31,3 +33,23 @@ def predict_similar_movies(
         "movie_id": similar_movies.keys(),
         "similar_movie_ids": similar_movies.values()
     })
+
+
+def make_test_data(tmdb_similar_movies: pd.DataFrame) -> pd.DataFrame:
+
+    # 映画IDごとに類似映画を集約して5件以下に絞る
+    similar_movie_list = (tmdb_similar_movies.groupby("movie_id")["similar_movie_id"]
+        .apply(list)
+        .apply(lambda x: x[:5])
+    )
+
+    # テストデータを構築
+    test_data = pd.DataFrame({
+        "movie_id": similar_movie_list.index,
+        "similar_movie_list": similar_movie_list
+    })
+
+    # 類似映画が5件だけのものに絞る
+    test_data = test_data[test_data.apply(lambda x: len(x["similar_movie_list"]), axis=1) == 5]
+
+    return test_data

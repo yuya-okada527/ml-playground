@@ -5,7 +5,7 @@
 
 reviews:
   type: pandas.SQLQueryDataSet
-  credentials: reviews_credentials
+  credentials: input_db_credentials
   sql: SELECT movie_id, review FROM reviews
 concatenated_reviews:
   type: MemoryDataSet
@@ -23,4 +23,17 @@ similar_movies:
   type: pandas.CSVDataSet
   filepath: data/07_model_output/similar_movies.tsv
   save_args:
+    sep: "\t"
+  load_args:
+    sep: "\t"
+tmdb_similar_movies:
+  type: pandas.SQLQueryDataSet
+  credentials: input_db_credentials
+  sql: SELECT movie_id, similar_movie_id FROM similar_movies
+test_data:
+  type: pandas.CSVDataSet
+  filepath: data/07_model_output/test_data.tsv
+  save_args:
+    sep: "\t"
+  load_args:
     sep: "\t"
