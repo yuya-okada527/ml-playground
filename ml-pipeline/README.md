@@ -4,7 +4,8 @@
 
 - 言語: Python3.8
 - フレームワーク:
-  - ワークフロー: kedro
+  - ワークフロー管理: kedro
+  - 実験管理: mlflow tracking
 - 主要ライブラリ
   - numpy
   - pandas
