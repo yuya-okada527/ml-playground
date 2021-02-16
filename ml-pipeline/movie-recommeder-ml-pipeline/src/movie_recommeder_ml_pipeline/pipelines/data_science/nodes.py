@@ -1,9 +1,17 @@
+import os
 from typing import Dict
+from pathlib import Path
 
 import pandas as pd
 from annoy import AnnoyIndex
 import mlflow
 
+
+# mlflowログ出力ディレクトリ
+MLFLOW_PATH = os.path.join(
+    Path(__file__).resolve().parents[5],
+    "mlruns"
+)
 
 
 def predict_similar_movies(
@@ -37,19 +45,27 @@ def predict_similar_movies(
 
 def make_test_data(tmdb_similar_movies: pd.DataFrame) -> pd.DataFrame:
 
-    # 映画IDごとに類似映画を集約して5件以下に絞る
-    similar_movie_list = (tmdb_similar_movies.groupby("movie_id")["similar_movie_id"]
-        .apply(list)
-        .apply(lambda x: x[:5])
-    )
+    # mlflow用のログディレクトリを準備
+    # mlflow.set_tracking_uri(f"file:/{MLFLOW_PATH}")
+    mlflow.set_experiment("make_test_data")
 
-    # テストデータを構築
-    test_data = pd.DataFrame({
-        "movie_id": similar_movie_list.index,
-        "similar_movie_list": similar_movie_list
-    })
+    # 実験開始
+    with mlflow.start_run():
+        # 映画IDごとに類似映画を集約して5件以下に絞る
+        similar_movie_list = (tmdb_similar_movies.groupby("movie_id")["similar_movie_id"]
+            .apply(list)
+            .apply(lambda x: x[:5])
+        )
 
-    # 類似映画が5件だけのものに絞る
-    test_data = test_data[test_data.apply(lambda x: len(x["similar_movie_list"]), axis=1) == 5]
+        # テストデータを構築
+        test_data = pd.DataFrame({
+            "movie_id": similar_movie_list.index,
+            "similar_movie_list": similar_movie_list
+        })
+
+        # 類似映画が5件だけのものに絞る
+        test_data = test_data[test_data.apply(lambda x: len(x["similar_movie_list"]), axis=1) == 5]
+
+        mlflow.log_metric("test_size", len(test_data))
 
     return test_data
