@@ -1,3 +1,4 @@
+from core.decorator import service
 from core.logging import create_logger
 from domain.enums.similarity_enums import SimilarityModelType
 from infra.client.tmdb.api import AbstractTmdbClient
@@ -6,6 +7,8 @@ from infra.repository.input.movie import AbstractMovieRepository
 
 log = create_logger(__file__)
 
+
+@service
 def exec_construct_tmdb_similarity(
     redis_repository: AbstarctRedisRepository,
     movie_repository: AbstractMovieRepository

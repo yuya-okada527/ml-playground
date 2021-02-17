@@ -3,6 +3,7 @@ from time import time_ns
 from datetime import date
 
 from core.constants import HALF_SPACE
+from core.decorator import service
 from core.logging import create_logger
 from domain.models.internal.movie import Movie
 from domain.models.solr.movie import MovieSolrModel
@@ -18,6 +19,7 @@ log = create_logger(__file__)
 SOLR_CONFIG_PATH = "solr/schema.json"
 
 
+@service
 def update_schema(solr_client: AbstractSolrClient) -> None:
 
     log.info("検索スキーマ更新バッチ実行開始.")
@@ -40,8 +42,9 @@ def update_schema(solr_client: AbstractSolrClient) -> None:
     log.info(f"検索スキーマ更新バッチ実行終了.")
 
 
+@service
 def build_index(
-    solr_client: AbstractSolrClient, 
+    solr_client: AbstractSolrClient,
     movie_repository: AbstractMovieRepository
 ) -> None:
 
@@ -91,7 +94,7 @@ def _map_to_solr_model(movie: Movie, exec_time: int) -> MovieSolrModel:
 
 
 def _make_freeword(movie: Movie):
-    
+
     # フリーワードの要素を保持
     free_word_list = []
 
@@ -107,7 +110,7 @@ def _make_freeword(movie: Movie):
 
 
 def _calculate_difference(
-    current_schema: SolrSchemaModel, 
+    current_schema: SolrSchemaModel,
     update_schema: dict
 ) -> dict:
     """差分スキーマ計算関数
@@ -142,7 +145,7 @@ def _calculate_difference(
         # 新規のフィールドタイプの場合、add
         else:
             add_field.append(field)
-    
+
     # TODO スキーマクラスを実装
     return {
         "add-field-type": add_field_type,

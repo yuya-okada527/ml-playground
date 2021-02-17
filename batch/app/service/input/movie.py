@@ -1,3 +1,4 @@
+from core.decorator import service
 from core.logging import create_logger
 from domain.enums.movie_enums import MovieLanguage
 from domain.models.internal.movie import Genre, Movie, Review
@@ -14,6 +15,7 @@ MAX_SIMILAR_MOVIES = 5
 log = create_logger(__file__)
 
 
+@service
 def update_genre_master(
     genre_repository: AbstractGenreRepository,
     tmdb_client: AbstractTmdbClient
@@ -60,6 +62,7 @@ def update_genre_master(
     log.info(f"ジャンルマスタ更新バッチ実行完了. 更新数={count}")
 
 
+@service
 def update_movies(
     page: int,
     tmdb_client: AbstractTmdbClient,
@@ -92,6 +95,7 @@ def update_movies(
     log.info(f"人気映画情報取得バッチ実行完了. 更新数={len(movie_list)}")
 
 
+@service
 def collect_reviews(
     tmdb_client: AbstractTmdbClient,
     movie_repository: AbstractMovieRepository,
@@ -123,6 +127,7 @@ def collect_reviews(
     log.info(f"レビューデータ収集バッチ実行終了.  登録数={count}")
 
 
+@service
 def collect_similar_movies(
     tmdb_client: AbstractTmdbClient,
     movie_repository: AbstractMovieRepository
