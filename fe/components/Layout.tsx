@@ -103,10 +103,10 @@ const Layout = ({ children, title = "This is the default title" }: Props) => {
       <footer className={classes.footer}>
         <List className={classes.footerList}>
           <ListItem className={classes.footerListItem}>
-            Contact: hoge@gmail.com
+            Contact: yuya.okada527@gmail.com
           </ListItem>
           <ListItem className={classes.footerListItem}>
-            Github: https://github.com/hoge
+            Github: https://github.com/yuya-okada527/movie-recommender
           </ListItem>
         </List>
       </footer>
