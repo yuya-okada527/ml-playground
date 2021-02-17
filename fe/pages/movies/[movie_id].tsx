@@ -1,11 +1,5 @@
 import React, { ChangeEvent } from "react";
-import {
-  Container,
-  createStyles,
-  Grid,
-  makeStyles,
-  Theme,
-} from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { useRouter } from "next/router";
 import Layout from "../../components/Layout";
 import SearchBox from "../../components/SearchBox";
@@ -15,17 +9,7 @@ import { Movie } from "../../interfaces";
 import config from "../../utils/config";
 import { callGetApi } from "../../utils/http";
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    container: {
-      marginLeft: theme.spacing(0),
-      marginRight: theme.spacing(2),
-    },
-  })
-);
-
 const DetailPage = () => {
-  const classes = useStyles();
   const router = useRouter();
   const [movieId, setMovieId] = React.useState("");
   const [movie, setMovie] = React.useState<Movie>();
@@ -79,21 +63,19 @@ const DetailPage = () => {
   }, [movieId]);
   return (
     <Layout title={`Movie_${movieId}`}>
-      <Container className={classes.container}>
-        <Grid container>
-          <Grid item xs={8}>
-            <SearchBox
-              searchTerm={searchTerm}
-              handleSearchTermChange={handleSearchTermChange}
-              handleSearchButtonClick={handleSearchButtonClick}
-            />
-            {movie !== undefined && <MovieDetail movie_detail={movie} />}
-          </Grid>
-          <Grid item xs={4}>
-            <SimilarMovies similarMovies={similarMovies} />
-          </Grid>
+      <Grid container>
+        <Grid item xs={8}>
+          <SearchBox
+            searchTerm={searchTerm}
+            handleSearchTermChange={handleSearchTermChange}
+            handleSearchButtonClick={handleSearchButtonClick}
+          />
+          {movie !== undefined && <MovieDetail movie_detail={movie} />}
         </Grid>
-      </Container>
+        <Grid item xs={4}>
+          <SimilarMovies similarMovies={similarMovies} />
+        </Grid>
+      </Grid>
     </Layout>
   );
 };

@@ -1,11 +1,5 @@
 import React, { ChangeEvent } from "react";
-import {
-  Container,
-  createStyles,
-  makeStyles,
-  Theme,
-  Grid,
-} from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { useRouter } from "next/router";
 
 import Layout from "../components/Layout";
@@ -15,15 +9,6 @@ import { Movie } from "../interfaces/index";
 import { callGetApi } from "../utils/http";
 import config from "../utils/config";
 import { ParsedUrlQuery } from "querystring";
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    container: {
-      marginLeft: theme.spacing(0),
-      marginRight: theme.spacing(2),
-    },
-  })
-);
 
 const fetchSearchResult = async (searchTerm: string, page?: number) => {
   const url = config.apiEndpoint + "/v1/movie/search";
@@ -56,7 +41,6 @@ const calcTotalPage = (hitNum: number) => {
 };
 
 const IndexPage = () => {
-  const classes = useStyles();
   const router = useRouter();
   const [searchTerm, setSearchTerm] = React.useState<string>(
     Array.isArray(router.query.searchTerm)
@@ -105,26 +89,24 @@ const IndexPage = () => {
   }, []);
   return (
     <Layout title="Movie Recommender">
-      <Container className={classes.container}>
-        <Grid container>
-          <Grid item xs={8}>
-            <SearchBox
-              searchTerm={searchTerm}
-              handleSearchTermChange={handleSearchTermChange}
-              handleSearchButtonClick={handleSearchButtonClick}
+      <Grid container>
+        <Grid item xs={8}>
+          <SearchBox
+            searchTerm={searchTerm}
+            handleSearchTermChange={handleSearchTermChange}
+            handleSearchButtonClick={handleSearchButtonClick}
+          />
+          {searchResult.length > 0 && (
+            <SearchResultList
+              movies={searchResult}
+              searchedTerm={searchedTerm}
+              page={page}
+              pageCount={totalPage}
+              handlePageChange={handlePageChange}
             />
-            {searchResult.length > 0 && (
-              <SearchResultList
-                movies={searchResult}
-                searchedTerm={searchedTerm}
-                page={page}
-                pageCount={totalPage}
-                handlePageChange={handlePageChange}
-              />
-            )}
-          </Grid>
+          )}
         </Grid>
-      </Container>
+      </Grid>
     </Layout>
   );
 };
