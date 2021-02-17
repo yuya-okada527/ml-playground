@@ -5,6 +5,7 @@ from pathlib import Path
 import pandas as pd
 from annoy import AnnoyIndex
 import mlflow
+from pandas.io import json
 
 
 # mlflowログ出力ディレクトリ
@@ -39,7 +40,7 @@ def predict_similar_movies(
 
     return pd.DataFrame({
         "movie_id": similar_movies.keys(),
-        "similar_movie_ids": similar_movies.values()
+        "similar_movie_ids": [[idx2movie[movie_id] for movie_id in movie_list] for movie_list in similar_movies.values()]
     })
 
 
@@ -60,12 +61,39 @@ def make_test_data(tmdb_similar_movies: pd.DataFrame) -> pd.DataFrame:
         # テストデータを構築
         test_data = pd.DataFrame({
             "movie_id": similar_movie_list.index,
-            "similar_movie_list": similar_movie_list
+            "test_similar_movie_ids": similar_movie_list
         })
 
         # 類似映画が5件だけのものに絞る
-        test_data = test_data[test_data.apply(lambda x: len(x["similar_movie_list"]), axis=1) == 5]
+        test_data = test_data[test_data.apply(lambda x: len(x["test_similar_movie_ids"]), axis=1) == 5]
 
         mlflow.log_metric("test_size", len(test_data))
 
     return test_data
+
+
+def evaluate_results(
+    similar_movies: pd.DataFrame,
+    test_data: pd.DataFrame
+) -> pd.DataFrame:
+
+    mlflow.set_experiment("evaludate_results")
+
+    with mlflow.start_run():
+
+        # 推論結果とテストデータをマージする
+        data = pd.merge(similar_movies, test_data)
+
+        # 比較対象の類似映画IDリスト文字列をセットに変換
+        data["similar_movie_ids"] = data["similar_movie_ids"].apply(json.loads).apply(set)
+        data["test_similar_movie_ids"] = data["test_similar_movie_ids"].apply(json.loads).apply(set)
+
+        # 両方に存在するIDの数を数える
+        data["match_num"] = data.apply(lambda x: len(x["similar_movie_ids"] & x["test_similar_movie_ids"]), axis=1)
+
+        # 正解率を計算
+        data_size = len(data)
+        accuracy = sum(data["match_num"] / (data_size * 5))
+
+        mlflow.log_metric("data_size", data_size)
+        mlflow.log_metric("accuracy", accuracy)
