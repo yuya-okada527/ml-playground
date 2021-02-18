@@ -3,7 +3,7 @@ from core.config import SolrSettings
 
 from infra.client.solr.api import SolrClient
 from infra.repository.input.movie import MovieRepository
-from service.output.movie import build_index, update_schema
+from service.output_service import build_index, update_schema
 
 
 app = typer.Typer()
