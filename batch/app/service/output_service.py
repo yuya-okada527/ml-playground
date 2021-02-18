@@ -57,7 +57,7 @@ def build_index(
     movies = movie_repository.fetch_all()
 
     # Solr用のモデルに変換
-    movie_solr_model_list = [_map_to_solr_model(movie, exec_time) for movie in movies]
+    movie_solr_model_list = [_map_to_solr_model(movie, exec_time) for movie in movies if movie.can_output()]
 
     # 映画リストのインデックスを構築
     solr_client.index_movies(movie_solr_model_list)
@@ -68,7 +68,7 @@ def build_index(
     # コミット
     solr_client.commit()
 
-    log.info("検索インデックス構築バッチ実行終了.")
+    log.info(f"検索インデックス構築バッチ実行終了. データ数={len(movie_solr_model_list)}")
 
 
 

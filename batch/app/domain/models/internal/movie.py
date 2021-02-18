@@ -47,10 +47,21 @@ class Movie(BaseModel):
         if self.release_date:
             return date.strftime(self.release_date, RELEASE_DATE_FMT)
         return None
-    
+
     @property
     def release_year(self) -> Optional[int]:
         if self.release_date:
             return self.release_date.year
         return None
 
+    def can_output(self) -> bool:
+
+        # シナリオない場合出稿しない
+        if not self.overview:
+            return False
+        # ポスタと背景の両方がない場合出稿しない
+        if not self.poster_path or not self.backdrop_path:
+            return False
+        # TODO 類似映画の数で絞る処理を追加
+
+        return True
