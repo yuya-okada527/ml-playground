@@ -32,3 +32,5 @@ $ sh shells/exec_similarity.sh
 # flake8(1行の文字数制限とビジュアルインデントは無視)
 flake8 app --ignore E501,E128
 ```
+
+テストコミット
