@@ -7,7 +7,7 @@ from core.logging import create_logger
 log = create_logger(__file__)
 
 
-def service(func):
+def batch_service(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         start = time.time()

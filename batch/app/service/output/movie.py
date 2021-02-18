@@ -3,7 +3,7 @@ from time import time_ns
 from datetime import date
 
 from core.constants import HALF_SPACE
-from core.decorator import service
+from core.decorator import batch_service
 from core.logging import create_logger
 from domain.models.internal.movie import Movie
 from domain.models.solr.movie import MovieSolrModel
@@ -19,7 +19,7 @@ log = create_logger(__file__)
 SOLR_CONFIG_PATH = "solr/schema.json"
 
 
-@service
+@batch_service
 def update_schema(solr_client: AbstractSolrClient) -> None:
 
     log.info("検索スキーマ更新バッチ実行開始.")
@@ -42,7 +42,7 @@ def update_schema(solr_client: AbstractSolrClient) -> None:
     log.info(f"検索スキーマ更新バッチ実行終了.")
 
 
-@service
+@batch_service
 def build_index(
     solr_client: AbstractSolrClient,
     movie_repository: AbstractMovieRepository
