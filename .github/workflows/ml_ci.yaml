@@ -1,0 +1,28 @@
+name: CI Pipeline for ML pipeline
+
+# ml-pipelineディレクトリ配下のコードの変更がdevelopブランチにプッシュされたら実行
+on:
+  push:
+    branches:
+      - develop
+    paths:
+      - ml-pipeline/**
+      - .github/workflows/ml_ci.yaml
+
+jobs:
+  check:
+    name: Check the source code
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install Dependencies
+        working-directory: ./ml-pipeline
+        run: pip install -r requirements.txt
+      - name: flake8
+        working-directory: ./ml-pipeline
+        run: flake8 movie-recommeder-ml-pipeline --ignore E501,E128 --exclude movie-recommeder-ml-pipeline/.ipython
