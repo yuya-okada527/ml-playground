@@ -38,7 +38,7 @@ def update_schema(solr_client: AbstractSolrClient) -> None:
     # スキーマをアップデート
     solr_client.update_schema(schema)
 
-    log.info(f"検索スキーマ更新バッチ実行終了.")
+    log.info("検索スキーマ更新バッチ実行終了.")
 
 
 @batch_service
@@ -69,7 +69,6 @@ def build_index(
     solr_client.commit()
 
     log.info(f"検索インデックス構築バッチ実行終了. データ数={len(movie_solr_model_list)}")
-
 
 
 def _map_to_solr_model(movie: Movie, exec_time: int) -> MovieSolrModel:

@@ -41,7 +41,6 @@ class InputDbSettings(BaseSettings):
             }
         }
 
-
     class Config:
         env_file = "env/input_db.env"
 

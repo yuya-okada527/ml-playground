@@ -184,7 +184,6 @@ class MovieRepository:
 
         return count
 
-
     def fetch_all(self) -> list[Movie]:
 
         # SQL実行
@@ -236,6 +235,7 @@ def _map_to_movie(result) -> Movie:
         release_date=datetime.strptime(result.release_date, RELEASE_DATE_FMT) if result.release_date else None,
         genres=[_map_to_genre(result)]
     )
+
 
 def _map_to_genre(result) -> Genre:
     return Genre(

@@ -176,7 +176,6 @@ class TmdbClient:
 
         return TmdbSimilarMovieList(**response.json())
 
-
     def fetch_movie_reviews(
         self,
         movie_id: int,

@@ -34,7 +34,7 @@ def update_genre_master(
     english_genres = tmdb_client.fetch_genres(MovieLanguage.EN)
 
     # ジャンルIDで集計
-    genre_id_dict = {genre.id : genre for genre in english_genres.genres}
+    genre_id_dict = {genre.id: genre for genre in english_genres.genres}
 
     # 日本語表記のジャンルを取得
     # TODO APIだと日本語データを取得できない... (翻訳API?)
@@ -82,7 +82,7 @@ def update_movies(
     popular_movies = tmdb_client.fetch_popular_movies(page)
 
     # 映画IDリストを取得(登録済の映画は含めないが、強制アップデートフラグありの場合取得)
-    movie_id_list = [movie.id for movie in popular_movies.results if not movie.id in registered_movies or force_update]
+    movie_id_list = [movie.id for movie in popular_movies.results if movie.id not in registered_movies or force_update]
 
     # 映画詳細リストを取得
     movie_detail_list = tmdb_client.fetch_movie_detail_list(
@@ -120,7 +120,8 @@ def collect_reviews(
         # ページは1固定とする
         movie_review_response = tmdb_client.fetch_movie_reviews(movie_id=movie_id, page=1)
         # 内部モデルに変換
-        movie_review_list = [_map_review_model(review, movie_id)
+        movie_review_list = [
+            _map_review_model(review, movie_id)
             for review in movie_review_response.results
             if review.id not in registered_review_ids  # 登録済の物はスキップする(強制アップデートフラグがあればスキップしない)
         ]

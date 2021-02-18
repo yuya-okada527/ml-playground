@@ -26,6 +26,7 @@ VALUES
     )
 """
 
+
 # TODO Protocolよりabcの方が使いやすい？
 class AbstractReviewRepository(Protocol):
 

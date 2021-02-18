@@ -8,7 +8,7 @@ from infra.repository.input.base import ENGINE
 # SQL
 # ---------------------------
 UPSERT_GENRE_STATEMENT = """\
-INSERT INTO 
+INSERT INTO
     genres
 VALUES
     (%(genre_id)s, %(name)s, %(japanese_name)s)
@@ -28,16 +28,16 @@ FROM
 
 
 class AbstractGenreRepository(Protocol):
-    
+
     def save(self, genre_list: list[Genre]) -> int:
         ...
-    
+
     def fetch_all(self) -> list[Genre]:
         ...
 
 
 class GenreRepository:
-    
+
     def save(self, genre_list: list[Genre]) -> int:
 
         count = 0
@@ -47,11 +47,11 @@ class GenreRepository:
                 "name": genre.name,
                 "japanese_name": genre.japanese_name
             }).rowcount
-        
+
         return count
-    
+
     def fetch_all(self) -> list[Genre]:
-        
+
         # SQL実行
         result = ENGINE.execute(SELECT_ALL_GENRE_STATEMENT)
 
@@ -63,6 +63,5 @@ class GenreRepository:
                 name=genre.name,
                 japanese_name=genre.japanese_name
             ))
-        
-        return genre_list
 
+        return genre_list

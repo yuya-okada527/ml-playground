@@ -8,4 +8,5 @@ def create_input_engine(settings: InputDbSettings):
         f"{settings.engine}://{settings.db_user}:{settings.password}@{settings.host}:{settings.port}/{settings.database}"
     )
 
+
 ENGINE = create_input_engine(InputDbSettings())

@@ -25,7 +25,7 @@ def retry_exec(max_retry_num: int):
             for i in range(max_retry_num):
                 try:
                     return func(*args, **kwargs)
-                except ServerSideError as e:
+                except ServerSideError:
                     # TODO ログ
                     time.sleep(WAIT_TIME_BASE * (i + 1))
         return wrapper
@@ -60,7 +60,7 @@ def call_post_api(url: str, data: Union[str, dict, BaseModel] = "", headers: dic
         response = requests.post(url=url, data=data_str, timeout=TIMEOUT, headers=headers)
     except Timeout:
         raise ServerSideError()
-    
+
     # ステータスコードをチェック
     __check_status_code(response)
 
@@ -74,7 +74,7 @@ def _to_string(data: Union[str, dict, BaseModel]):
         return json.dumps(data)
     elif isinstance(data, BaseModel):
         return data.json()
-    
+
     # TODO 例外
     return None
 
@@ -87,4 +87,3 @@ def __check_status_code(response) -> None:
         # TODO schema更新エラー
         print(response.json())
         raise ClientSideError()
-    

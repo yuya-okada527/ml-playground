@@ -14,9 +14,9 @@ REDIS_CLIENT = redis.Redis(host=REDIS_SETTINGS.redis_host, port=REDIS_SETTINGS.r
 class AbstarctRedisRepository(Protocol):
 
     def save_movie_similarity(
-        self, 
-        movie_id: int, 
-        similar_movies: list[int], 
+        self,
+        movie_id: int,
+        similar_movies: list[int],
         model_type: SimilarityModelType
     ):
         ...
@@ -25,9 +25,9 @@ class AbstarctRedisRepository(Protocol):
 class RedisRepository:
 
     def save_movie_similarity(
-        self, 
-        movie_id: int, 
-        similar_movies: list[int], 
+        self,
+        movie_id: int,
+        similar_movies: list[int],
         model_type: SimilarityModelType
     ):
         # ガード

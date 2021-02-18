@@ -7,7 +7,6 @@ from domain.enums.core_enums import LogLevel
 settings = CoreSettings()
 
 
-
 def create_logger(log_name: str) -> logging.Logger:
 
     # ロガーの作成

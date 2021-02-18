@@ -25,3 +25,10 @@ $ sh shells/exec_output.sh
 # 類似映画データ作成処理
 $ sh shells/exec_similarity.sh
 ```
+
+## 静的解析
+
+```bash
+# flake8(1行の文字数制限とビジュアルインデントは無視)
+flake8 app --ignore E501,E128
+```
