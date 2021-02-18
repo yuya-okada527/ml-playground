@@ -5,7 +5,7 @@ from infra.client.tmdb.api import TmdbClient
 from infra.repository.input.genre import GenreRepository
 from infra.repository.input.movie import MovieRepository
 from infra.repository.input.review_repository import ReviewRepository
-from service.input.movie import (
+from service.input_service import (
     update_genre_master,
     update_movies,
     collect_reviews,
@@ -17,7 +17,7 @@ app = typer.Typer()
 
 
 @app.command("genre")
-def input_genre():
+def input_genre(force_update: bool = False):
 
     # リポジトリの初期化
     genre_repository = GenreRepository()
@@ -25,11 +25,15 @@ def input_genre():
     tmdb_client = TmdbClient(TmdbSettings())
 
     # サービスの実行
-    update_genre_master(genre_repository=genre_repository, tmdb_client=tmdb_client)
+    update_genre_master(
+        force_update=force_update,
+        genre_repository=genre_repository,
+        tmdb_client=tmdb_client
+    )
 
 
 @app.command("movies")
-def input_movies(page: int = 1):
+def input_movies(page: int = 1, force_update: bool = False):
 
     # クライアントの初期化
     tmdb_client = TmdbClient(TmdbSettings())
@@ -38,11 +42,16 @@ def input_movies(page: int = 1):
     movie_repository = MovieRepository()
 
     # サービスの実行
-    update_movies(page=page, tmdb_client=tmdb_client, movie_repository=movie_repository)
+    update_movies(
+        force_update=force_update,
+        page=page,
+        tmdb_client=tmdb_client,
+        movie_repository=movie_repository
+    )
 
 
 @app.command("reviews")
-def input_reviews():
+def input_reviews(force_update: bool = False):
 
     # クライアントの初期化
     tmdb_client = TmdbClient(TmdbSettings())
@@ -53,6 +62,7 @@ def input_reviews():
 
     # サービス実行
     collect_reviews(
+        force_update=force_update,
         tmdb_client=tmdb_client,
         movie_repository=movie_repository,
         review_repository=review_repository
@@ -60,7 +70,7 @@ def input_reviews():
 
 
 @app.command("similar_movies")
-def input_similar_movies():
+def input_similar_movies(force_update: bool = False):
 
     # クライアントの初期化
     tmdb_client = TmdbClient(TmdbSettings())
@@ -70,6 +80,7 @@ def input_similar_movies():
 
     # サービス実行
     collect_similar_movies(
+        force_update=force_update,
         tmdb_client=tmdb_client,
         movie_repository=movie_repository
     )

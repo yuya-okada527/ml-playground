@@ -1,7 +1,7 @@
 from core.decorator import batch_service
 from core.logging import create_logger
 from domain.enums.movie_enums import MovieLanguage
-from domain.models.internal.movie import Genre, Movie, Review
+from domain.models.internal.movie import Genre, Review
 from domain.models.rest.tmdb import TmdbMovieReview
 from infra.client.tmdb.api import AbstractTmdbClient
 from infra.repository.input.genre import AbstractGenreRepository
@@ -17,6 +17,7 @@ log = create_logger(__file__)
 
 @batch_service
 def update_genre_master(
+    force_update: bool,
     genre_repository: AbstractGenreRepository,
     tmdb_client: AbstractTmdbClient
 ) -> None:
@@ -40,8 +41,8 @@ def update_genre_master(
     genre_list = []
     for jp_genre in japanese_genres.genres:
 
-        # 登録済のジャンルはスキップ
-        if jp_genre.id in genre_id_set:
+        # 登録済のジャンルはスキップ(強制アップデートフラグありの場合は登録する)
+        if jp_genre.id in genre_id_set and not force_update:
             continue
 
         # 日本語表記と英語表記が一致しない場合はスキップ
@@ -65,6 +66,7 @@ def update_genre_master(
 @batch_service
 def update_movies(
     page: int,
+    force_update: bool,
     tmdb_client: AbstractTmdbClient,
     movie_repository: AbstractMovieRepository
 ) -> None:
@@ -77,8 +79,8 @@ def update_movies(
     # 人気映画のリストを取得
     popular_movies = tmdb_client.fetch_popular_movies(page)
 
-    # 映画IDリストを取得
-    movie_id_list = [movie.id for movie in popular_movies.results if not movie.id in registered_movies]
+    # 映画IDリストを取得(登録済の映画は含めないが、強制アップデートフラグありの場合取得)
+    movie_id_list = [movie.id for movie in popular_movies.results if not movie.id in registered_movies or force_update]
 
     # 映画詳細リストを取得
     movie_detail_list = tmdb_client.fetch_movie_detail_list(
@@ -97,6 +99,7 @@ def update_movies(
 
 @batch_service
 def collect_reviews(
+    force_update: bool,
     tmdb_client: AbstractTmdbClient,
     movie_repository: AbstractMovieRepository,
     review_repository: AbstractReviewRepository
@@ -118,7 +121,7 @@ def collect_reviews(
         # 内部モデルに変換
         movie_review_list = [_map_review_model(review, movie_id)
             for review in movie_review_response.results
-            if review.id not in registered_review_ids   # 登録済の物はスキップする
+            if review.id not in registered_review_ids  or force_update  # 登録済の物はスキップする(強制アップデートフラグがあればスキップしない)
         ]
 
         # 登録
@@ -129,6 +132,7 @@ def collect_reviews(
 
 @batch_service
 def collect_similar_movies(
+    force_update: bool,
     tmdb_client: AbstractTmdbClient,
     movie_repository: AbstractMovieRepository
 ) -> None:
@@ -146,7 +150,7 @@ def collect_similar_movies(
     for i, movie_id in enumerate(registered_movies_id_set, start=1):
 
         # 登録している映画はスキップする
-        if movie_id in registered_similar_movie_map:
+        if movie_id in registered_similar_movie_map or force_update:
             continue
 
         # 最終ページまで全ての類似映画を取得する

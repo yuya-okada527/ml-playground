@@ -17,6 +17,6 @@ def batch_service(func):
             log.exception(f"{wrapper.__name__}の実行に失敗しました.")
             raise e
         end = time.time()
-        log.info(f"{wrapper.__name__}の実行完了. 経過時間={end - start:.3f} sec")
+        log.info(f"{wrapper.__name__}の実行完了. パラメータ={kwargs}.  経過時間={end - start:.3f} sec")
         return result
     return wrapper
