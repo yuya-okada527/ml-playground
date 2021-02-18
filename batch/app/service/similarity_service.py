@@ -1,7 +1,6 @@
 from core.decorator import batch_service
 from core.logging import create_logger
 from domain.enums.similarity_enums import SimilarityModelType
-from infra.client.tmdb.api import AbstractTmdbClient
 from infra.repository.sim.redis_repository import AbstarctRedisRepository
 from infra.repository.input.movie import AbstractMovieRepository
 
