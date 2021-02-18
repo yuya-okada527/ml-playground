@@ -27,7 +27,7 @@ jobs:
         run: echo "$HOME/.poetry/bin" >> $GITHUB_PATH
       - name: Install Dependencies
         working-directory: ./backend
-        run: poetry install --no-interaction
+        run: poetry install
       - name: flake8
         working-directory: ./backend
         run: flake8 app --ignore E501,E128
