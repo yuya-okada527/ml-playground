@@ -9,7 +9,10 @@ from infra.repository.input.movie import AbstractMovieRepository
 from infra.repository.input.review_repository import AbstractReviewRepository
 
 
+# 最大類似映画数
 MAX_SIMILAR_MOVIES = 5
+# ログ頻度
+LOG_FREQUENCY = 20
 
 
 log = create_logger(__file__)
@@ -48,7 +51,6 @@ def update_genre_master(
         # 日本語表記と英語表記が一致しない場合はスキップ
         en_genre = genre_id_dict.get(jp_genre.id)
         if not en_genre:
-            print(jp_genre)
             continue
 
         genre_list.append(Genre(
@@ -99,7 +101,6 @@ def update_movies(
 
 @batch_service
 def collect_reviews(
-    force_update: bool,
     tmdb_client: AbstractTmdbClient,
     movie_repository: AbstractMovieRepository,
     review_repository: AbstractReviewRepository
@@ -115,24 +116,26 @@ def collect_reviews(
 
     # 映画IDごとにレビューデータを取得・登録していく
     count = 0
-    for movie_id in registered_movie_ids:
+    for i, movie_id in enumerate(registered_movie_ids, start=1):
         # ページは1固定とする
         movie_review_response = tmdb_client.fetch_movie_reviews(movie_id=movie_id, page=1)
         # 内部モデルに変換
         movie_review_list = [_map_review_model(review, movie_id)
             for review in movie_review_response.results
-            if review.id not in registered_review_ids  or force_update  # 登録済の物はスキップする(強制アップデートフラグがあればスキップしない)
+            if review.id not in registered_review_ids  # 登録済の物はスキップする(強制アップデートフラグがあればスキップしない)
         ]
 
         # 登録
         count += review_repository.save_review_list(movie_review_list)
+
+        if i % LOG_FREQUENCY == 0:
+            log.info(f"{i}件目の処理が完了しました.")
 
     log.info(f"レビューデータ収集バッチ実行終了.  登録数={count}")
 
 
 @batch_service
 def collect_similar_movies(
-    force_update: bool,
     tmdb_client: AbstractTmdbClient,
     movie_repository: AbstractMovieRepository
 ) -> None:
@@ -150,7 +153,7 @@ def collect_similar_movies(
     for i, movie_id in enumerate(registered_movies_id_set, start=1):
 
         # 登録している映画はスキップする
-        if movie_id in registered_similar_movie_map or force_update:
+        if movie_id in registered_similar_movie_map:
             continue
 
         # 最終ページまで全ての類似映画を取得する
@@ -187,7 +190,7 @@ def collect_similar_movies(
             similar_movie_list=similar_movie_list
         )
 
-        if i % 20 == 0:
+        if i % LOG_FREQUENCY == 0:
             log.info(f"{i}件目の処理が完了しました.")
 
     log.info(f"類似映画収集バッチ実行終了.  登録数={count}")

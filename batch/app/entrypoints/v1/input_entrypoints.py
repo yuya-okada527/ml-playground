@@ -51,7 +51,7 @@ def input_movies(page: int = 1, force_update: bool = False):
 
 
 @app.command("reviews")
-def input_reviews(force_update: bool = False):
+def input_reviews():
 
     # クライアントの初期化
     tmdb_client = TmdbClient(TmdbSettings())
@@ -62,7 +62,6 @@ def input_reviews(force_update: bool = False):
 
     # サービス実行
     collect_reviews(
-        force_update=force_update,
         tmdb_client=tmdb_client,
         movie_repository=movie_repository,
         review_repository=review_repository
@@ -70,7 +69,7 @@ def input_reviews(force_update: bool = False):
 
 
 @app.command("similar_movies")
-def input_similar_movies(force_update: bool = False):
+def input_similar_movies():
 
     # クライアントの初期化
     tmdb_client = TmdbClient(TmdbSettings())
@@ -80,7 +79,6 @@ def input_similar_movies(force_update: bool = False):
 
     # サービス実行
     collect_similar_movies(
-        force_update=force_update,
         tmdb_client=tmdb_client,
         movie_repository=movie_repository
     )

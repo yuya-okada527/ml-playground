@@ -1,6 +1,8 @@
 from typing import Protocol
-from domain.models.internal.movie import Review
 
+from sqlalchemy.exc import IntegrityError
+
+from domain.models.internal.movie import Review
 from infra.repository.input.base import ENGINE
 
 
@@ -49,10 +51,13 @@ class ReviewRepository:
         # トランザクション開始
         with ENGINE.begin() as conn:
             for review in review_list:
-                count += conn.execute(INSERT_REVIEW_STATEMENT, {
-                    "review_id": review.review_id,
-                    "movie_id": review.movie_id,
-                    "review": review.review
-                }).rowcount
+                try:
+                    count += conn.execute(INSERT_REVIEW_STATEMENT, {
+                        "review_id": review.review_id,
+                        "movie_id": review.movie_id,
+                        "review": review.review
+                    }).rowcount
+                except IntegrityError:
+                    pass
 
         return count

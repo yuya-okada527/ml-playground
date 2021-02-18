@@ -161,6 +161,7 @@ class MovieRepository:
                         "genre_id": genre.genre_id
                     }).rowcount
                 except IntegrityError:
+                    # 重複データの登録は無視する
                     pass
 
     def save_similar_movie_list(

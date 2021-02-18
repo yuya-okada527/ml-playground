@@ -6,10 +6,20 @@ if [ ! -e "./app/main.py" ]; then
   exit 1
 fi
 
-echo "入稿処理を開始します."
+FORCE_UPDATE=$1
+
+if [ $FORCE_UPDATE != "1" ]; then
+  echo "通常モードで、入稿処理を開始します."
+else
+  echo "強制アップデートモードで、入稿処理を開始します."
+fi
 
 # ジャンルマスタ更新バッチを実行
-python app/main.py input genre
+if [ $FORCE_UPDATE != "1" ]; then
+  python app/main.py input genre
+else
+  python app/main.py input genre --force-update
+fi
 if [ $? != 0 ]; then
   exit 1
 fi
@@ -18,7 +28,11 @@ fi
 start=1
 end=10
 for i in $(seq $start $end); do
-  python app/main.py input movies --page $i
+  if [ $FORCE_UPDATE != "1" ]; then
+    python app/main.py input movies --page $i
+  else
+    python app/main.py input movies --page $i --force-update
+  fi
   if [ $? != 0 ]; then
     exit 1
   fi
