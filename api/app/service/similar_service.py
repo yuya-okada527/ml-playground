@@ -23,7 +23,7 @@ def exec_search_similar_service(
     # 類似映画を取得していく
     similar_movie_list = []
     for similar_id in similar_movie_id_list:
-        
+
         # クエリを作成
         movie_id_query = build_search_by_id_query(movie_id=similar_id)
 
@@ -33,7 +33,7 @@ def exec_search_similar_service(
         # 取得件数を確認
         if len(search_result.response.docs) != 1:
             continue
-        
+
         # 内部モデルに変換
         similar_movie_list.append(map_movie(search_result.response.docs[0]))
 

@@ -48,7 +48,7 @@ def build_search_query(
 def build_search_by_id_query(movie_id: int) -> SolrQuery:
     return SolrQuery(
         q=SolrFilterQuery.exact_condition(
-            field=MovieField.MOVIE_ID, 
+            field=MovieField.MOVIE_ID,
             value=str(movie_id)
         ).get_query_string(),
         fl=DEFAULT_MOVIE_FLS,
@@ -64,8 +64,8 @@ def map_movie(movie: MovieSolrModel) -> MovieResponse:
         japanese_title=movie.japanese_title,
         overview=movie.overview,
         tagline=movie.tagline,
-        poster_url=IMAGE_URL_BASE+movie.poster_path if movie.poster_path else None,
-        backdrop_url=IMAGE_URL_BASE+movie.backdrop_path if movie.backdrop_path else None,
+        poster_url=IMAGE_URL_BASE + movie.poster_path if movie.poster_path else None,
+        backdrop_url=IMAGE_URL_BASE + movie.backdrop_path if movie.backdrop_path else None,
         popularity=movie.popularity,
         vote_average=movie.vote_average,
         release_date=movie.release_date,
@@ -75,13 +75,12 @@ def map_movie(movie: MovieSolrModel) -> MovieResponse:
     )
 
 
-
 def _build_free_word_query(q: List[str]) -> List[SolrFilterQuery]:
     if not q:
         return []
 
     return [SolrFilterQuery.exact_condition(
-        field=MovieField.FREE_WORD, 
-        value=value
-        ) for value in q
+        field=MovieField.FREE_WORD,
+        value=value)
+        for value in q
     ]

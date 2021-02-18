@@ -7,7 +7,7 @@ SPLIT_PATTERN = re.compile(r"[ 　,]")
 
 
 def split_query_params(
-    value: Optional[str], 
+    value: Optional[str],
     func: Callable[[str], Any] = str
 ) -> List[Any]:
 

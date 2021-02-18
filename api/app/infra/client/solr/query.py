@@ -24,9 +24,9 @@ class SolrFilterQuery(BaseModel):
 
         if not value:
             return None
-        
+
         return cls(field=field, condition=value)
-    
+
     def get_query_string(self) -> str:
         return f"{self.field.value}:{self.condition}"
 
@@ -63,8 +63,5 @@ class SolrQuery(BaseModel):
             params.append(f"fl={','.join([fl.value for fl in self.fl])}")
         if self.sort:
             params.append(f"sort={','.join([sort.get_query_string() for sort in self.sort])}")
-        
+
         return "&".join(params)
-
-
-

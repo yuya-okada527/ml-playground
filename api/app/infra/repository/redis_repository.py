@@ -12,23 +12,23 @@ REDIS_CLIENT = redis.Redis(host=REDIS_SETTINGS.redis_host, port=REDIS_SETTINGS.r
 
 
 class AbstractKvsRepository(Protocol):
-    
+
     def get_similar_movie_id_list(
-        self, 
-        movie_id: int, 
+        self,
+        movie_id: int,
         model_type: SimilarityModelType
     ) -> List[int]:
         ...
 
 
 class RedisRepository:
-    
+
     def get_similar_movie_id_list(
-        self, 
-        movie_id: int, 
+        self,
+        movie_id: int,
         model_type: SimilarityModelType
     ) -> List[int]:
-        
+
         # キー名を作成
         key = _make_sim_key(movie_id=movie_id, model_type=model_type)
 
@@ -36,7 +36,7 @@ class RedisRepository:
         response = REDIS_CLIENT.get(key)
         if not response:
             return []
-        
+
         return json.loads(response.decode("utf-8"))
 
 

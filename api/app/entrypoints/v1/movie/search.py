@@ -15,6 +15,7 @@ router = APIRouter(
     responses={}
 )
 
+
 @router.get(
     "",
     summary="映画検索API",

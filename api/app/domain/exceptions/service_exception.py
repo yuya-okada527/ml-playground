@@ -1,6 +1,6 @@
 class AppBaseException(Exception):
     """基底例外
-    
+
     アプリケーション内で明示的に投げられる例外は必ずこの基底クラスを継承する
     """
     pass

@@ -19,8 +19,8 @@ class SolrClient:
 
     def __init__(self, settings: SolrSettings) -> None:
         self.url = settings.get_url()
-        self.collection= settings.solr_collection
-    
+        self.collection = settings.solr_collection
+
     def search_movies(self, query: SolrQuery) -> SolrResultModel:
 
         # リクエスト条件を構築
