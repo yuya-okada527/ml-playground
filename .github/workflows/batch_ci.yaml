@@ -26,8 +26,8 @@ jobs:
       - name: Add path for Poetry
         run: echo "$HOME/.poetry/bin" >> $GITHUB_PATH
       - name: Install Dependencies
-        working-directory: ./backend
+        working-directory: ./batch
         run: poetry install
       - name: flake8
-        working-directory: ./backend
+        working-directory: ./batch
         run: flake8 app --ignore E501,E128
