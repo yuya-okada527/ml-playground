@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme: Theme) =>
     cardRoot: {
       display: "flex",
       marginTop: theme.spacing(5),
-      height: "400px",
+      height: "450px",
       width: "98%",
     },
     posterImage: {
@@ -24,8 +24,25 @@ const useStyles = makeStyles((theme: Theme) =>
     movieDescription: {
       flex: 2,
     },
+    movieTitle: {
+      marginBottom: theme.spacing(2),
+    },
   })
 );
+
+const MAX_OVERVIEW_LENGTH = 450;
+
+const cutLongOverview = (overview?: string) => {
+  if (!overview) {
+    return overview;
+  }
+
+  if (overview.length > MAX_OVERVIEW_LENGTH) {
+    return overview.substr(0, MAX_OVERVIEW_LENGTH) + "...";
+  }
+
+  return overview;
+};
 
 type MovieDetailProps = {
   movie_detail: Movie;
@@ -33,6 +50,7 @@ type MovieDetailProps = {
 
 const MovieDetail = ({ movie_detail }: MovieDetailProps) => {
   const classes = useStyles();
+  console.log(JSON.stringify(movie_detail));
   return (
     <Card className={classes.cardRoot}>
       <CardMedia
@@ -40,13 +58,15 @@ const MovieDetail = ({ movie_detail }: MovieDetailProps) => {
         image={movie_detail.poster_url}
       />
       <CardContent className={classes.movieDescription}>
-        <Typography>
+        <Typography variant="h6" className={classes.movieTitle}>
           {movie_detail.japanese_title}
           {movie_detail.release_year
             ? " (" + movie_detail.release_year + ") "
             : ""}
         </Typography>
-        <p>{movie_detail.overview}</p>
+        <Typography variant="body1">
+          {cutLongOverview(movie_detail.overview)}
+        </Typography>
       </CardContent>
     </Card>
   );
