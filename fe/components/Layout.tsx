@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: theme.spacing(2),
     },
     offset: {
-      marginTop: theme.spacing(13),
+      marginTop: theme.spacing(11.5),
     },
     sidebarIcon: {
       margin: theme.spacing(1),
