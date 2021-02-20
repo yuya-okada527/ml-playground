@@ -66,7 +66,7 @@ const Layout = ({ children, title = "This is the default title" }: Props) => {
       <header>
         <AppBar>
           <Typography variant="h4" component="h1" className={classes.title}>
-            Movie Recommender
+            ML Playground
           </Typography>
         </AppBar>
       </header>
@@ -109,7 +109,7 @@ const Layout = ({ children, title = "This is the default title" }: Props) => {
                 Contact: yuya.okada527@gmail.com
               </ListItem>
               <ListItem className={classes.footerListItem}>
-                Github: https://github.com/yuya-okada527/movie-recommender
+                Github: https://github.com/yuya-okada527/ml-playground
               </ListItem>
             </List>
           </Grid>
