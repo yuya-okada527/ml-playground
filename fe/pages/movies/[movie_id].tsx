@@ -73,7 +73,10 @@ const DetailPage = () => {
           {movie !== undefined && <MovieDetail movie_detail={movie} />}
         </Grid>
         <Grid item xs={4}>
-          <SimilarMovies similarMovies={similarMovies} />
+          <SimilarMovies
+            similarMovies={similarMovies}
+            movieTitle={movie ? movie.japanese_title : ""}
+          />
         </Grid>
       </Grid>
     </Layout>
