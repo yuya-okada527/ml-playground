@@ -7,7 +7,9 @@ import {
   makeStyles,
   Theme,
   Typography,
+  Box,
 } from "@material-ui/core";
+import Image from "next/image";
 import { Movie } from "../interfaces";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -17,6 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: theme.spacing(5),
       height: "450px",
       width: "98%",
+      position: "relative",
     },
     posterImage: {
       flex: 1.2,
@@ -27,10 +30,24 @@ const useStyles = makeStyles((theme: Theme) =>
     movieTitle: {
       marginBottom: theme.spacing(2),
     },
+    providerInfo: {
+      position: "absolute",
+      bottom: 0,
+      display: "flex",
+      alignItems: "center",
+    },
+    providerIcon: {
+      display: "inline",
+    },
+    providerComment: {
+      fontSize: "13px",
+      fontWeight: 300,
+      marginRight: theme.spacing(1),
+    },
   })
 );
 
-const MAX_OVERVIEW_LENGTH = 450;
+const MAX_OVERVIEW_LENGTH = 400;
 
 const cutLongOverview = (overview?: string) => {
   if (!overview) {
@@ -50,7 +67,6 @@ type MovieDetailProps = {
 
 const MovieDetail = ({ movie_detail }: MovieDetailProps) => {
   const classes = useStyles();
-  console.log(JSON.stringify(movie_detail));
   return (
     <Card className={classes.cardRoot}>
       <CardMedia
@@ -67,6 +83,19 @@ const MovieDetail = ({ movie_detail }: MovieDetailProps) => {
         <Typography variant="body1">
           {cutLongOverview(movie_detail.overview)}
         </Typography>
+        <Box className={classes.providerInfo}>
+          <Typography variant="subtitle2" className={classes.providerComment}>
+            This product uses the TMDb API but is not endorsed or certified by
+            TMDb.
+          </Typography>
+          <Image
+            src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_1-5bdc75aaebeb75dc7ae79426ddd9be3b2be1e342510f8202baf6bffa71d7f5c4.svg"
+            alt="Logo of Tmdb"
+            width={40}
+            height={40}
+            className={classes.providerIcon}
+          />
+        </Box>
       </CardContent>
     </Card>
   );

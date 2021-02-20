@@ -1,6 +1,5 @@
 import React, { ReactNode } from "react";
 import Head from "next/head";
-import Image from "next/image";
 import AppBar from "@material-ui/core/AppBar";
 import HomeIcon from "@material-ui/icons/Home";
 import InfoIcon from "@material-ui/icons/Info";
@@ -112,24 +111,6 @@ const Layout = ({ children, title = "This is the default title" }: Props) => {
                 Github: https://github.com/yuya-okada527/ml-playground
               </ListItem>
             </List>
-          </Grid>
-          <Grid item xs={5}>
-            <Grid container>
-              <Grid item xs={10}>
-                <p>
-                  This product uses the TMDb API but is not endorsed or
-                  certified by TMDb.
-                </p>
-              </Grid>
-              <Grid item xs={2}>
-                <Image
-                  src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_1-5bdc75aaebeb75dc7ae79426ddd9be3b2be1e342510f8202baf6bffa71d7f5c4.svg"
-                  alt="Logo of Tmdb"
-                  width={50}
-                  height={50}
-                />
-              </Grid>
-            </Grid>
           </Grid>
         </Grid>
       </footer>
