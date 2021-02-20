@@ -1,6 +1,6 @@
-# Movie Recommender FE
+# ML Playground FE
 
-Movie Recommender App 用のコンシューマ向け FE を提供します。
+ML Playground App 用のコンシューマ向け FE を提供します。
 
 ## 使用技術
 
