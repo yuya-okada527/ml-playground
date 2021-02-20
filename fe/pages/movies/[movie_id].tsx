@@ -62,7 +62,7 @@ const DetailPage = () => {
     initSimilarMovies();
   }, [movieId]);
   return (
-    <Layout title={`Movie_${movieId}`}>
+    <Layout title={`Movie Recommend ${movieId}`}>
       <Grid container>
         <Grid item xs={8}>
           <SearchBox

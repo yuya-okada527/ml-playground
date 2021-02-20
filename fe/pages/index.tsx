@@ -88,7 +88,7 @@ const IndexPage = () => {
     }
   }, []);
   return (
-    <Layout title="Movie Recommender">
+    <Layout title="ML Playground">
       <Grid container>
         <Grid item xs={8}>
           <SearchBox
