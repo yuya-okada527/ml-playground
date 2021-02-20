@@ -37,7 +37,7 @@ Flask==1.1.2
 fsspec==0.8.5
 gitdb==4.0.5
 GitPython==3.1.13
-google-api-core==1.26.0
+google-api-core>=1.23.0
 google-auth==1.26.1
 google-auth-oauthlib==0.4.2
 google-cloud-bigquery==2.8.0
