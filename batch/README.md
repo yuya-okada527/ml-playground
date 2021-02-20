@@ -1,6 +1,6 @@
-# Movie Recommender Batch
+# ML Playground Batch
 
-Movie Recommender App 用のバッチ処理を提供します。
+ML Playground App 用のバッチ処理を提供します。
 
 ## 使用技術
 

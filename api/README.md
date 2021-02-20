@@ -1,6 +1,6 @@
-# Movie Recommender API
+# ML Playground API
 
-Movie Recommender App 用のコア API を提供します。
+ML Playground App 用のコア API を提供します。
 
 ## 使用技術
 

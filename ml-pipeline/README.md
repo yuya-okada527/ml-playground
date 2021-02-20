@@ -1,4 +1,4 @@
-# Movie Recommender ML Pipeline
+# ML Playground ML Pipeline
 
 ## 使用技術
 
