@@ -2,9 +2,10 @@ import os
 from typing import Dict
 from pathlib import Path
 
+import redis
+import mlflow
 import pandas as pd
 from annoy import AnnoyIndex
-import mlflow
 from pandas.io import json
 
 
@@ -97,3 +98,11 @@ def evaluate_results(
 
         mlflow.log_metric("data_size", data_size)
         mlflow.log_metric("accuracy", accuracy)
+
+
+def feed_similar_movies(
+    similar_movies: pd.DataFrame,
+    parameters: Dict
+) -> pd.DataFrame:
+
+    redis_client = redis.Redis(host="localhost", port=6379)
