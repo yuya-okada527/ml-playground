@@ -106,3 +106,9 @@ def feed_similar_movies(
 ) -> pd.DataFrame:
 
     redis_client = redis.Redis(host="localhost", port=6379)
+
+    for row in similar_movies.itertuples():
+        # モデルキー名
+        key = f"{row.movie_id}_{parameters['model_name']}"
+
+        redis_client.set(key, row.similar_movie_ids)
