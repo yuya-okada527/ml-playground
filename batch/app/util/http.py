@@ -1,7 +1,7 @@
 import json
 import time
 from functools import wraps
-from typing import Any, Callable, Optional, Union
+from typing import Any, Optional, Union
 
 import requests
 from domain.exceptions.http_exception import ClientSideError, ServerSideError
