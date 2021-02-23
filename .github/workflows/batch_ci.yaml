@@ -37,3 +37,5 @@ jobs:
       - name: Unit test
         working-directory: ./batch
         run: poetry run pytest tests
+        env:
+          BATCH_LOG_LEVEL: info
