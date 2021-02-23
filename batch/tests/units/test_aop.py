@@ -1,7 +1,6 @@
 from enum import Enum
 
 from app.core.aop import _filter_params, _is_batch_args
-from app.infra.repository.input.genre_repository import GenreRepository
 
 
 def test_filter_params_basic_type_remains():
@@ -25,7 +24,7 @@ def test_filter_params_not_basic_type_removed():
 
     # テストデータ
     kwargs = {
-        "repository": GenreRepository()
+        "repository": SampleClass()
     }
 
     assert _filter_params(kwargs) == {}
@@ -45,8 +44,12 @@ def test_is_batch_args_basic_type():
 
 def test_is_batch_args_not_basic_type():
 
-    assert _is_batch_args(GenreRepository()) == False
+    assert _is_batch_args(SampleClass()) == False
 
 
 class SampleEnum(Enum):
     TEST = "test"
+
+
+class SampleClass():
+    ...
