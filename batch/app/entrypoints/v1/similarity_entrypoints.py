@@ -7,7 +7,7 @@ app = typer.Typer()
 
 
 @app.command("tmdb-sim")
-def construct_tmdb_similarity():
+def construct_tmdb_similarity() -> None:
 
     # リポジトリを初期化
     redis_repository = RedisRepository()

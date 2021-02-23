@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Optional
+from typing import Any, Optional
 
 from domain.models.internal.movie_model import RELEASE_DATE_FMT, Genre, Movie
 from pydantic import BaseModel
@@ -58,7 +58,7 @@ class TmdbSpokenLanguage(BaseModel):
 class TmdbMovieDetail(BaseModel):
     adult: bool
     backdrop_path: Optional[str]
-    belongs_to_collection: Optional[dict]
+    belongs_to_collection: Optional[dict[str, Any]]
     budget: int
     genres: list[TmdbMovieGenre]
     homepage: Optional[str]

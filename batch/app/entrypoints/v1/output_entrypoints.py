@@ -8,7 +8,7 @@ app = typer.Typer()
 
 
 @app.command("schema")
-def output_schema():
+def output_schema() -> None:
 
     # クライアントの初期化
     solr_client = SolrClient(SolrSettings())
@@ -18,7 +18,7 @@ def output_schema():
 
 
 @app.command("index")
-def output_index():
+def output_index() -> None:
 
     # クライアントの初期化
     solr_client = SolrClient(SolrSettings())

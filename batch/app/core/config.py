@@ -1,3 +1,5 @@
+from typing import Any
+
 from domain.enums.core_enums import LogLevel
 from pydantic import BaseSettings
 
@@ -26,7 +28,7 @@ class InputDbSettings(BaseSettings):
     database: str
     echo: bool
 
-    def get_connection_config(self):
+    def get_connection_config(self) -> dict[str, Any]:
         return {
             "default": {
                 "engine": self.engine,
@@ -50,7 +52,7 @@ class SolrSettings(BaseSettings):
     port: int
     collection: str
 
-    def get_url(self):
+    def get_url(self) -> str:
         return f"{self.protocol}://{self.host}:{self.port}"
 
     class Config:

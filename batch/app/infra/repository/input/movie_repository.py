@@ -4,6 +4,7 @@ from typing import Protocol
 
 from domain.models.internal.movie_model import RELEASE_DATE_FMT, Genre, Movie
 from infra.repository.input.base_repository import ENGINE
+from sqlalchemy.engine.result import RowProxy
 from sqlalchemy.exc import IntegrityError
 
 # ---------------------------
@@ -130,7 +131,7 @@ class AbstractMovieRepository(Protocol):
 
 class MovieRepository:
 
-    def save_movie_list(self, movie_list: list[Movie]):
+    def save_movie_list(self, movie_list: list[Movie]) -> None:
 
         movie_count = 0
         genre_count = 0
@@ -217,7 +218,7 @@ class MovieRepository:
         return similar_movies
 
 
-def _map_to_movie(result) -> Movie:
+def _map_to_movie(result: RowProxy) -> Movie:
     return Movie(
         movie_id=result.movie_id,
         imdb_id=result.imdb_id,
@@ -235,7 +236,7 @@ def _map_to_movie(result) -> Movie:
     )
 
 
-def _map_to_genre(result) -> Genre:
+def _map_to_genre(result: RowProxy) -> Genre:
     return Genre(
         genre_id=result.genre_id,
         name=result.name,

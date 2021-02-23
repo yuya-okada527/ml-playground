@@ -7,6 +7,6 @@ RESOURCES_PATH = os.path.join(
 )
 
 
-def get_resource(path: str, encoding="utf8"):
+def get_resource(path: str, encoding: str = "utf8") -> str:
     with open(os.path.join(RESOURCES_PATH, path), encoding=encoding) as f:
         return f.read()

@@ -20,7 +20,7 @@ class AbstractSolrClient(Protocol):
     def index_movies(self, movies: list[MovieSolrModel]) -> None:
         ...
 
-    def delete_old(self, exec_time) -> None:
+    def delete_old(self, exec_time: int) -> None:
         ...
 
     def commit(self) -> None:

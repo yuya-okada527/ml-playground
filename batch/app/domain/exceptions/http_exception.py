@@ -1,9 +1,9 @@
-from domain.exceptions.service_exception import BaseException
+from domain.exceptions.service_exception import BaseAppException
 
 
-class ClientSideError(BaseException):
+class ClientSideError(BaseAppException):
     pass
 
 
-class ServerSideError(BaseException):
+class ServerSideError(BaseAppException):
     pass

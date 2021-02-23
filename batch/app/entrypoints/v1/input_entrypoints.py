@@ -11,7 +11,7 @@ app = typer.Typer()
 
 
 @app.command("genre")
-def input_genre(force_update: bool = False):
+def input_genre(force_update: bool = False) -> None:
 
     # リポジトリの初期化
     genre_repository = GenreRepository()
@@ -27,7 +27,7 @@ def input_genre(force_update: bool = False):
 
 
 @app.command("movies")
-def input_movies(page: int = 1, force_update: bool = False):
+def input_movies(page: int = 1, force_update: bool = False) -> None:
 
     # クライアントの初期化
     tmdb_client = TmdbClient(TmdbSettings())
@@ -45,7 +45,7 @@ def input_movies(page: int = 1, force_update: bool = False):
 
 
 @app.command("reviews")
-def input_reviews():
+def input_reviews() -> None:
 
     # クライアントの初期化
     tmdb_client = TmdbClient(TmdbSettings())
@@ -63,7 +63,7 @@ def input_reviews():
 
 
 @app.command("similar_movies")
-def input_similar_movies():
+def input_similar_movies() -> None:
 
     # クライアントの初期化
     tmdb_client = TmdbClient(TmdbSettings())

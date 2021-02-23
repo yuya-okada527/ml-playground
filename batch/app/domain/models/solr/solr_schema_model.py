@@ -1,3 +1,5 @@
+from typing import Any
+
 from pydantic import BaseModel, Field
 
 
@@ -10,10 +12,10 @@ class SolrSchemaModel(BaseModel):
     name: str
     version: float
     uniqueKey: str
-    fieldTypes: list[dict]
-    fields_: list[dict] = Field(alias="fields")
-    dynamicFields: list[dict]
-    copyFields: list[dict]
+    fieldTypes: list[dict[str, Any]]
+    fields_: list[dict[str, Any]] = Field(alias="fields")
+    dynamicFields: list[dict[str, Any]]
+    copyFields: list[dict[str, Any]]
 
 
 class SolrSchemaResponseModel(BaseModel):

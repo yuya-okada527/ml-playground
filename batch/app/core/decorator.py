@@ -1,7 +1,7 @@
 import time
 from enum import Enum
 from functools import wraps
-from typing import Any, Dict
+from typing import Any, Callable, Dict, TypeVar, cast
 
 from core.logger import create_logger
 
@@ -19,10 +19,13 @@ BASIC_TYPES = [
     dict
 ]
 
+# 任意のシグネチャに対するデコレータ用の型定義を用意
+ServiceFunction = TypeVar("ServiceFunction", bound=Callable[..., Any])
 
-def batch_service(func):
+
+def batch_service(func: ServiceFunction) -> ServiceFunction:
     @wraps(func)
-    def wrapper(*args, **kwargs):
+    def wrapper(*args, **kwargs) -> Any:
         start = time.time()
         try:
             result = func(*args, **kwargs)
@@ -32,10 +35,10 @@ def batch_service(func):
         end = time.time()
         log.info(f"{wrapper.__name__}の実行完了. パラメータ={_filter_params(kwargs)}.  経過時間={end - start:.3f} sec")
         return result
-    return wrapper
+    return cast(ServiceFunction, wrapper)
 
 
-def _filter_params(kwargs: Dict) -> Dict:
+def _filter_params(kwargs: Dict[str, Any]) -> Dict[str, Any]:
     params = {}
     for key, value in kwargs.items():
         if _is_basic_type(value):

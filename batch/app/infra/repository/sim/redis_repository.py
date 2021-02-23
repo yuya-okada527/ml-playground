@@ -16,7 +16,7 @@ class AbstarctRedisRepository(Protocol):
         movie_id: int,
         similar_movies: list[int],
         model_type: SimilarityModelType
-    ):
+    ) -> None:
         ...
 
 
@@ -27,7 +27,7 @@ class RedisRepository:
         movie_id: int,
         similar_movies: list[int],
         model_type: SimilarityModelType
-    ):
+    ) -> None:
         # ガード
         assert model_type is not None
 

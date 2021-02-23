@@ -1,12 +1,13 @@
 import json
 import time
 from functools import wraps
-from typing import Optional, Union
+from typing import Any, Callable, Optional, Union
 
 import requests
 from domain.exceptions.http_exception import ClientSideError, ServerSideError
 from pydantic import BaseModel
 from requests.exceptions import Timeout
+from requests.models import Response
 
 WAIT_TIME_BASE = 5
 TIMEOUT = 3
@@ -31,7 +32,10 @@ def retry_exec(max_retry_num: int):
 
 
 @retry_exec(max_retry_num=3)
-def call_get_api(url: str, query: Optional[BaseModel]):
+def call_get_api(
+    url: str,
+    query: Optional[BaseModel]
+) -> Response:
 
     query_dict = query.dict() if query is not None else {}
 
@@ -47,7 +51,12 @@ def call_get_api(url: str, query: Optional[BaseModel]):
     return response
 
 
-def call_post_api(url: str, data: Union[str, dict, BaseModel] = "", headers: dict[str, str] = None):
+@retry_exec(max_retry_num=3)
+def call_post_api(
+    url: str,
+    data: Union[str, dict[str, Any], BaseModel] = "",
+    headers: Optional[dict[str, str]] = None
+) -> Response:
 
     # POSTデータを文字列に変換
     data_str = _to_string(data)
@@ -65,7 +74,7 @@ def call_post_api(url: str, data: Union[str, dict, BaseModel] = "", headers: dic
     return response
 
 
-def _to_string(data: Union[str, dict, BaseModel]):
+def _to_string(data: Union[str, dict[str, Any], BaseModel]) -> str:
     if isinstance(data, str):
         return data
     elif isinstance(data, dict):
@@ -77,7 +86,7 @@ def _to_string(data: Union[str, dict, BaseModel]):
     return None
 
 
-def __check_status_code(response) -> None:
+def __check_status_code(response: Response) -> None:
     # ステータスコードをチェック
     if response.status_code >= 500:
         raise ServerSideError()

@@ -1,5 +1,6 @@
 import json
 from time import time_ns
+from typing import Any
 
 from core.constants import HALF_SPACE
 from core.decorator import batch_service
@@ -90,7 +91,7 @@ def _map_to_solr_model(movie: Movie, exec_time: int) -> MovieSolrModel:
     )
 
 
-def _make_freeword(movie: Movie):
+def _make_freeword(movie: Movie) -> str:
 
     # フリーワードの要素を保持
     free_word_list = []
@@ -108,8 +109,8 @@ def _make_freeword(movie: Movie):
 
 def _calculate_difference(
     current_schema: SolrSchemaModel,
-    update_schema: dict
-) -> dict:
+    update_schema: dict[str, Any]
+) -> dict[str, Any]:
     """差分スキーマ計算関数
 
     現在のschemaと更新対象のスキーマの差分を計算する
