@@ -1,4 +1,4 @@
-from core.decorator import batch_service
+from core.aop import batch_service
 from core.logger import create_logger
 from domain.enums.movie_enums import MovieLanguage
 from domain.models.internal.movie_model import Genre, Review

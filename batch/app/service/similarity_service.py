@@ -1,4 +1,4 @@
-from core.decorator import batch_service
+from core.aop import batch_service
 from core.logger import create_logger
 from domain.enums.similarity_enums import SimilarityModelType
 from infra.repository.input.movie_repository import AbstractMovieRepository

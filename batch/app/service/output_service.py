@@ -2,8 +2,8 @@ import json
 from time import time_ns
 from typing import Any
 
+from core.aop import batch_service
 from core.constants import HALF_SPACE
-from core.decorator import batch_service
 from core.logger import create_logger
 from domain.models.internal.movie_model import Movie
 from domain.models.solr.solr_movie_model import MovieSolrModel

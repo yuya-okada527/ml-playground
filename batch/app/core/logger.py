@@ -1,3 +1,8 @@
+"""ロギングモジュール
+
+アプリケーション内のログ設定を定義するモジュール
+アプリケーションのログは必ずこのログを通してロギングする必要がある
+"""
 import logging
 
 from domain.enums.core_enums import LogLevel
@@ -8,6 +13,13 @@ settings = CoreSettings()
 
 
 def create_logger(log_name: str) -> logging.Logger:
+    """ロガー作成関数
+
+    ロガーを作成する
+
+    Args:
+        log_name: ロガー名
+    """
 
     # ロガーの作成
     log = logging.getLogger(log_name)

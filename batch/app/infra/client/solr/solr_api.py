@@ -34,7 +34,7 @@ class SolrClient:
 
     def __init__(self, settings: SolrSettings) -> None:
         self.url = settings.get_url()
-        self.collection = settings.collection
+        self.collection = settings.solr_collection
 
     def update_schema(self, schema_data: str) -> None:
 
