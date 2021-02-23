@@ -1,3 +1,7 @@
+"""サービス例外モジュール
+
+アプリケーション例外を記述するモジュール
+"""
 class BaseAppException(Exception):
     """基底例外
 

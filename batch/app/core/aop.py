@@ -7,6 +7,8 @@ from enum import Enum
 from functools import wraps
 from typing import Any, Callable, Dict, TypeVar, cast
 
+from domain.exceptions.service_exception import BaseAppException
+
 from core.logger import create_logger
 
 log = create_logger(__file__)
@@ -45,8 +47,11 @@ def batch_service(func: ServiceFunction) -> ServiceFunction:
         start = time.time()
         try:
             result = func(**kwargs)
-        except Exception as e:
+        except BaseAppException as e:
             log.exception(f"{wrapper.__name__}の実行に失敗しました.")
+            raise e
+        except Exception as e:
+            log.exception(f"予期せぬ例外で、{wrapper.__name__}の実行に失敗しました.")
             raise e
         end = time.time()
         log.info(f"{wrapper.__name__}の実行完了.  経過時間={end - start:.3f} sec")
