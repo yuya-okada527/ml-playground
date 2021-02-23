@@ -1,7 +1,7 @@
 from core.decorator import batch_service
-from core.logging import create_logger
+from core.logger import create_logger
 from domain.enums.similarity_enums import SimilarityModelType
-from infra.repository.input.movie import AbstractMovieRepository
+from infra.repository.input.movie_repository import AbstractMovieRepository
 from infra.repository.sim.redis_repository import AbstarctRedisRepository
 
 log = create_logger(__file__)

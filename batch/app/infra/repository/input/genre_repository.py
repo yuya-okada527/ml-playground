@@ -1,7 +1,7 @@
 from typing import Protocol
 
-from domain.models.internal.movie import Genre
-from infra.repository.input.base import ENGINE
+from domain.models.internal.movie_model import Genre
+from infra.repository.input.base_repository import ENGINE
 
 # ---------------------------
 # SQL

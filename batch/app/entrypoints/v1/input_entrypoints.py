@@ -1,8 +1,8 @@
 import typer
 from core.config import TmdbSettings
-from infra.client.tmdb.api import TmdbClient
-from infra.repository.input.genre import GenreRepository
-from infra.repository.input.movie import MovieRepository
+from infra.client.tmdb.tmdb_api import TmdbClient
+from infra.repository.input.genre_repository import GenreRepository
+from infra.repository.input.movie_repository import MovieRepository
 from infra.repository.input.review_repository import ReviewRepository
 from service.input_service import (collect_reviews, collect_similar_movies,
                                    update_genre_master, update_movies)

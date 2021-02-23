@@ -1,11 +1,11 @@
 from core.decorator import batch_service
-from core.logging import create_logger
+from core.logger import create_logger
 from domain.enums.movie_enums import MovieLanguage
-from domain.models.internal.movie import Genre, Review
-from domain.models.rest.tmdb import TmdbMovieReview
-from infra.client.tmdb.api import AbstractTmdbClient
-from infra.repository.input.genre import AbstractGenreRepository
-from infra.repository.input.movie import AbstractMovieRepository
+from domain.models.internal.movie_model import Genre, Review
+from domain.models.rest.tmdb_model import TmdbMovieReview
+from infra.client.tmdb.tmdb_api import AbstractTmdbClient
+from infra.repository.input.genre_repository import AbstractGenreRepository
+from infra.repository.input.movie_repository import AbstractMovieRepository
 from infra.repository.input.review_repository import AbstractReviewRepository
 
 # 最大類似映画数

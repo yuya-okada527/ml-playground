@@ -1,9 +1,9 @@
 import time
 from enum import Enum
 from functools import wraps
-from typing import Dict
+from typing import Any, Dict
 
-from core.logging import create_logger
+from core.logger import create_logger
 
 log = create_logger(__file__)
 
@@ -44,7 +44,7 @@ def _filter_params(kwargs: Dict) -> Dict:
     return params
 
 
-def _is_basic_type(value: any) -> bool:
+def _is_basic_type(value: Any) -> bool:
     for basic_type in BASIC_TYPES:
         if isinstance(value, basic_type):
             return True

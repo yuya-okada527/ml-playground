@@ -33,11 +33,11 @@ def retry_exec(max_retry_num: int):
 @retry_exec(max_retry_num=3)
 def call_get_api(url: str, query: Optional[BaseModel]):
 
-    query = query.dict() if query is not None else {}
+    query_dict = query.dict() if query is not None else {}
 
     # API実行
     try:
-        response = requests.get(url, query, timeout=TIMEOUT)
+        response = requests.get(url, query_dict, timeout=TIMEOUT)
     except Timeout:
         raise ServerSideError()
 

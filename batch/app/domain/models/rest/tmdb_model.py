@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Optional
 
-from domain.models.internal.movie import RELEASE_DATE_FMT, Genre, Movie
+from domain.models.internal.movie_model import RELEASE_DATE_FMT, Genre, Movie
 from pydantic import BaseModel
 
 

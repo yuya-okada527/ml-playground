@@ -3,12 +3,12 @@ from time import time_ns
 
 from core.constants import HALF_SPACE
 from core.decorator import batch_service
-from core.logging import create_logger
-from domain.models.internal.movie import Movie
-from domain.models.solr.movie import MovieSolrModel
-from domain.models.solr.schema import SolrSchemaModel
-from infra.client.solr.api import AbstractSolrClient
-from infra.repository.input.movie import AbstractMovieRepository
+from core.logger import create_logger
+from domain.models.internal.movie_model import Movie
+from domain.models.solr.solr_movie_model import MovieSolrModel
+from domain.models.solr.solr_schema_model import SolrSchemaModel
+from infra.client.solr.solr_api import AbstractSolrClient
+from infra.repository.input.movie_repository import AbstractMovieRepository
 from util.resource import get_resource
 
 log = create_logger(__file__)

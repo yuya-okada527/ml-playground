@@ -2,8 +2,8 @@ import json
 from typing import Protocol
 
 from core.config import SolrSettings
-from domain.models.solr.movie import MovieSolrModel
-from domain.models.solr.schema import SolrSchemaResponseModel
+from domain.models.solr.solr_movie_model import MovieSolrModel
+from domain.models.solr.solr_schema_model import SolrSchemaResponseModel
 from util.http import (APPLICATION_JSON, CONTENT_TYPE, call_get_api,
                        call_post_api)
 

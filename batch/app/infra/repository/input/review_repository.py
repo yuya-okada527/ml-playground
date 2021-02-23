@@ -1,6 +1,6 @@
 from typing import Protocol
 
-from domain.models.internal.movie import Review
+from domain.models.internal.movie_model import Review
 from infra.repository.input.base import ENGINE
 from sqlalchemy.exc import IntegrityError
 

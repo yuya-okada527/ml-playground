@@ -2,9 +2,10 @@ from typing import Optional, Protocol
 
 from core.config import TmdbSettings
 from domain.enums.movie_enums import MovieLanguage
-from domain.models.rest.tmdb import (TmdbMovieDetail, TmdbMovieGenreList,
-                                     TmdbMovieReviewList, TmdbPopularMovieList,
-                                     TmdbSimilarMovieList)
+from domain.models.rest.tmdb_model import (TmdbMovieDetail, TmdbMovieGenreList,
+                                           TmdbMovieReviewList,
+                                           TmdbPopularMovieList,
+                                           TmdbSimilarMovieList)
 from infra.client.tmdb.query import (MovieDetailQuery, MovieGenreQuery,
                                      MovieReviewQuery, PopularMovieQuery,
                                      SimilarMovieQuery)
