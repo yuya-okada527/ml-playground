@@ -1,9 +1,8 @@
-from typing import Optional
 from datetime import datetime
+from typing import Optional
 
+from domain.models.internal.movie import RELEASE_DATE_FMT, Genre, Movie
 from pydantic import BaseModel
-
-from domain.models.internal.movie import Genre, Movie, RELEASE_DATE_FMT
 
 
 class TmdbMovieGenre(BaseModel):

@@ -1,10 +1,8 @@
 from typing import Protocol
 
-from sqlalchemy.exc import IntegrityError
-
 from domain.models.internal.movie import Review
 from infra.repository.input.base import ENGINE
-
+from sqlalchemy.exc import IntegrityError
 
 # ---------------------------
 # SQL

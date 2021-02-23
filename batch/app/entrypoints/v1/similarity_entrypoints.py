@@ -1,9 +1,7 @@
 import typer
-
 from infra.repository.input.movie import MovieRepository
 from infra.repository.sim.redis_repository import RedisRepository
 from service.similarity_service import exec_construct_tmdb_similarity
-
 
 app = typer.Typer()
 

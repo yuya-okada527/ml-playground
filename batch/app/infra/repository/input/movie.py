@@ -1,12 +1,10 @@
-from typing import Protocol
-from datetime import datetime
 from collections import defaultdict
+from datetime import datetime
+from typing import Protocol
 
-from sqlalchemy.exc import IntegrityError
-
-from domain.models.internal.movie import Genre, Movie, RELEASE_DATE_FMT
+from domain.models.internal.movie import RELEASE_DATE_FMT, Genre, Movie
 from infra.repository.input.base import ENGINE
-
+from sqlalchemy.exc import IntegrityError
 
 # ---------------------------
 # SQL

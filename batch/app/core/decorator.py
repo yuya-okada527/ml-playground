@@ -5,7 +5,6 @@ from typing import Dict
 
 from core.logging import create_logger
 
-
 log = create_logger(__file__)
 
 # パラメータに渡すことのできる基本的な型の一覧

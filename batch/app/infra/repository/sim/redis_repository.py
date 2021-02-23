@@ -2,10 +2,8 @@ import json
 from typing import Protocol
 
 import redis
-
 from core.config import RedisSettings
 from domain.enums.similarity_enums import SimilarityModelType
-
 
 REDIS_SETTINGS = RedisSettings()
 REDIS_CLIENT = redis.Redis(host=REDIS_SETTINGS.redis_host, port=REDIS_SETTINGS.redis_port)

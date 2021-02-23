@@ -8,7 +8,6 @@ from infra.repository.input.genre import AbstractGenreRepository
 from infra.repository.input.movie import AbstractMovieRepository
 from infra.repository.input.review_repository import AbstractReviewRepository
 
-
 # 最大類似映画数
 MAX_SIMILAR_MOVIES = 5
 # ログ頻度

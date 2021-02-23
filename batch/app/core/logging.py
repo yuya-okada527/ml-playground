@@ -1,8 +1,8 @@
 import logging
 
-from core.config import CoreSettings
 from domain.enums.core_enums import LogLevel
 
+from core.config import CoreSettings
 
 settings = CoreSettings()
 

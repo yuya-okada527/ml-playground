@@ -1,22 +1,14 @@
-from typing import Protocol, Optional
+from typing import Optional, Protocol
 
 from core.config import TmdbSettings
 from domain.enums.movie_enums import MovieLanguage
-from domain.models.rest.tmdb import (
-    TmdbMovieDetail,
-    TmdbMovieGenreList,
-    TmdbMovieReviewList,
-    TmdbPopularMovieList,
-    TmdbSimilarMovieList
-)
-from infra.client.tmdb.query import (
-    MovieDetailQuery,
-    MovieGenreQuery, MovieReviewQuery,
-    PopularMovieQuery,
-    SimilarMovieQuery
-)
+from domain.models.rest.tmdb import (TmdbMovieDetail, TmdbMovieGenreList,
+                                     TmdbMovieReviewList, TmdbPopularMovieList,
+                                     TmdbSimilarMovieList)
+from infra.client.tmdb.query import (MovieDetailQuery, MovieGenreQuery,
+                                     MovieReviewQuery, PopularMovieQuery,
+                                     SimilarMovieQuery)
 from util.http import call_get_api
-
 
 # TMDb APIパス定義
 POPULAR_MOVIE_PATH = "/movie/popular"

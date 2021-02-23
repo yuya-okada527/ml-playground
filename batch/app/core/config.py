@@ -1,6 +1,5 @@
-from pydantic import BaseSettings
-
 from domain.enums.core_enums import LogLevel
+from pydantic import BaseSettings
 
 
 class CoreSettings(BaseSettings):

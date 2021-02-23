@@ -1,14 +1,12 @@
-import time
 import json
+import time
 from functools import wraps
 from typing import Optional, Union
 
 import requests
-from requests.exceptions import Timeout
+from domain.exceptions.http_exception import ClientSideError, ServerSideError
 from pydantic import BaseModel
-
-from domain.exceptions.http_exception import ServerSideError, ClientSideError
-
+from requests.exceptions import Timeout
 
 WAIT_TIME_BASE = 5
 TIMEOUT = 3

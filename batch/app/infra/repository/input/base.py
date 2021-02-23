@@ -1,6 +1,5 @@
-from sqlalchemy import create_engine
-
 from core.config import InputDbSettings
+from sqlalchemy import create_engine
 
 
 def create_input_engine(settings: InputDbSettings):

@@ -11,7 +11,6 @@ from infra.client.solr.api import AbstractSolrClient
 from infra.repository.input.movie import AbstractMovieRepository
 from util.resource import get_resource
 
-
 log = create_logger(__file__)
 
 

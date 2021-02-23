@@ -1,10 +1,7 @@
 import typer
 
-from entrypoints.v1 import (
-    input_entrypoints,
-    output_entrypoints,
-    similarity_entrypoints
-)
+from entrypoints.v1 import (input_entrypoints, output_entrypoints,
+                            similarity_entrypoints)
 
 # サブコマンドの追加
 app = typer.Typer()

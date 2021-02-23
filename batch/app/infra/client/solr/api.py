@@ -1,11 +1,11 @@
-from typing import Protocol
 import json
+from typing import Protocol
 
 from core.config import SolrSettings
 from domain.models.solr.movie import MovieSolrModel
 from domain.models.solr.schema import SolrSchemaResponseModel
-from util.http import APPLICATION_JSON, CONTENT_TYPE, call_get_api, call_post_api
-
+from util.http import (APPLICATION_JSON, CONTENT_TYPE, call_get_api,
+                       call_post_api)
 
 # APIパス
 SCHEMA_PATH = "/solr/{collection}/schema"

@@ -1,8 +1,7 @@
-from typing import Optional
 from datetime import date
+from typing import Optional
 
 from pydantic import BaseModel
-
 
 RELEASE_DATE_FMT = "%Y-%m-%d"
 
