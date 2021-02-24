@@ -1,4 +1,4 @@
-const BASE_URL = "localhost:8888/v1";
+const BASE_URL = "localhost:8999/v1";
 
 describe("CoreAPI スナップショットテスト", () => {
   context("映画検索API", () => {
