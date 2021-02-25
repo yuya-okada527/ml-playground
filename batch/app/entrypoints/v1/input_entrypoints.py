@@ -1,3 +1,7 @@
+"""入稿エントリポイントモジュール
+
+入稿DB(input_db)にデータを構築する際に使用するバッチのエントリポイントを記述するモジュール
+"""
 import typer
 from core.config import TmdbSettings
 from infra.client.tmdb.tmdb_api import TmdbClient
@@ -11,7 +15,14 @@ app = typer.Typer()
 
 
 @app.command("genre")
-def input_genre(force_update: bool = False) -> None:
+def update_genre_master_batch(force_update: bool = False) -> None:
+    """ジャンルマスタ更新バッチ
+
+    ジャンルマスタを最新の状態に更新します.
+
+    Args:
+        force_update: 強制アップデートフラグ(Trueの場合、登録済のレコードも更新します)
+    """
 
     # リポジトリの初期化
     genre_repository = GenreRepository()
@@ -27,7 +38,15 @@ def input_genre(force_update: bool = False) -> None:
 
 
 @app.command("movies")
-def input_movies(page: int = 1, force_update: bool = False) -> None:
+def update_popular_movies_batch(page: int = 1, force_update: bool = False) -> None:
+    """人気映画更新バッチ
+
+    TMDBの人気映画APIを元に映画テーブルを更新します.
+
+    Args:
+        page: 人気映画取得ページ
+        force_update: 強制アップデートフラグ(Trueの場合、登録済のレコードも更新します)
+    """
 
     # クライアントの初期化
     tmdb_client = TmdbClient(TmdbSettings())
@@ -45,7 +64,11 @@ def input_movies(page: int = 1, force_update: bool = False) -> None:
 
 
 @app.command("reviews")
-def input_reviews() -> None:
+def update_movie_reviews_batch() -> None:
+    """映画レビュー更新バッチ
+
+    映画レビューを更新します.
+    """
 
     # クライアントの初期化
     tmdb_client = TmdbClient(TmdbSettings())
@@ -63,7 +86,11 @@ def input_reviews() -> None:
 
 
 @app.command("similar_movies")
-def input_similar_movies() -> None:
+def update_similar_movie_batch() -> None:
+    """類似映画更新バッチ
+
+    類似映画を更新します.
+    """
 
     # クライアントの初期化
     tmdb_client = TmdbClient(TmdbSettings())

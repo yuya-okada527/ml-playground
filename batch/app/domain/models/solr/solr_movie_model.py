@@ -1,3 +1,7 @@
+"""Solr映画モデルモジュール
+
+Solr上のmoviesコレクションのスキーマを表すモデルを記述するモジュール
+"""
 from typing import Optional
 
 from pydantic import BaseModel

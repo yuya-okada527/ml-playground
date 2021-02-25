@@ -1,3 +1,7 @@
+"""出稿エントリポイントモジュール
+
+全文検索エンジンにインデックスを構築する際に使用するバッチのエントリポイントを記述するモジュール
+"""
 import typer
 from core.config import SolrSettings
 from infra.client.solr.solr_api import SolrClient
@@ -8,7 +12,11 @@ app = typer.Typer()
 
 
 @app.command("schema")
-def output_schema() -> None:
+def update_solr_schema_batch() -> None:
+    """Solrスキーマ更新バッチ
+
+    Solrのスキーマを更新します.
+    """
 
     # クライアントの初期化
     solr_client = SolrClient(SolrSettings())
@@ -18,7 +26,11 @@ def output_schema() -> None:
 
 
 @app.command("index")
-def output_index() -> None:
+def build_index_batch() -> None:
+    """インデックス構築バッチ
+
+    検索インデックスを構築します.
+    """
 
     # クライアントの初期化
     solr_client = SolrClient(SolrSettings())

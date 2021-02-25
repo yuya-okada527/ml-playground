@@ -1,3 +1,7 @@
+"""Solrスキーマモデルモジュール
+
+Solrのスキーマ変更APIのモデルを記述するモジュール
+"""
 from typing import Any
 
 from pydantic import BaseModel, Field
