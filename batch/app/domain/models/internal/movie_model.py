@@ -82,9 +82,9 @@ class Movie(BaseModel):
     imdb_id: Optional[str] = None
     original_title: str
     japanese_title: str
-    overview: str
-    tagline: str
-    poster_path: str
+    overview: Optional[str] = None
+    tagline: Optional[str] = None
+    poster_path: Optional[str] = None
     backdrop_path: Optional[str] = None
     popularity: float
     vote_average: float

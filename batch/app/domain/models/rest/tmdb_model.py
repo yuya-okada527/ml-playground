@@ -10,15 +10,18 @@ from pydantic import BaseModel
 
 
 class TmdbMovieGenre(BaseModel):
+    """TMDB映画ジャンルモデル"""
     id: int
     name: str
 
 
 class TmdbMovieGenreList(BaseModel):
+    """TMDB映画ジャンルリストモデル"""
     genres: list[TmdbMovieGenre]
 
 
 class TmdbMovie(BaseModel):
+    """TMDB映画モデル"""
     poster_path: Optional[str]
     adult: bool
     overview: str
@@ -36,6 +39,7 @@ class TmdbMovie(BaseModel):
 
 
 class TmdbPopularMovieList(BaseModel):
+    """人気映画モデルリスト"""
     pages: Optional[int]
     results: list[TmdbMovie]
     total_results: int
@@ -43,6 +47,7 @@ class TmdbPopularMovieList(BaseModel):
 
 
 class TmdbProductionCompany(BaseModel):
+    """TMDB制作会社モデル"""
     name: str
     id: int
     logo_path: Optional[str]
@@ -50,16 +55,19 @@ class TmdbProductionCompany(BaseModel):
 
 
 class TmdbProductionCountry(BaseModel):
+    """TMDB制作国家"""
     iso_3166_1: str
     name: str
 
 
 class TmdbSpokenLanguage(BaseModel):
+    """制作映画言語"""
     iso_639_1: str
     name: str
 
 
 class TmdbMovieDetail(BaseModel):
+    """TMDB映画詳細"""
     adult: bool
     backdrop_path: Optional[str]
     belongs_to_collection: Optional[dict[str, Any]]
@@ -87,6 +95,7 @@ class TmdbMovieDetail(BaseModel):
     vote_count: int
 
     def to_internal_movie(self) -> Movie:
+        """内部モデル変換関数"""
         return Movie(
             movie_id=self.id,
             imdb_id=self.imdb_id,
@@ -105,6 +114,7 @@ class TmdbMovieDetail(BaseModel):
 
 
 class TmdbSimilarMovieList(BaseModel):
+    """TMDB類似映画リスト"""
     page: int
     results: list[TmdbMovie]
     total_pages: int
@@ -112,6 +122,7 @@ class TmdbSimilarMovieList(BaseModel):
 
 
 class TmdbReviewAuthorDetail(BaseModel):
+    """TMDBレビュー者詳細"""
     name: str
     username: str
     avatar_path: Optional[str] = None
@@ -119,6 +130,7 @@ class TmdbReviewAuthorDetail(BaseModel):
 
 
 class TmdbMovieReview(BaseModel):
+    """TMDB映画レビュー"""
     author: str
     author_details: TmdbReviewAuthorDetail
     content: str
@@ -129,6 +141,7 @@ class TmdbMovieReview(BaseModel):
 
 
 class TmdbMovieReviewList(BaseModel):
+    """TMDB映画レビューリスト"""
     id: int
     page: int
     results: list[TmdbMovieReview]
