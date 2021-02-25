@@ -4,11 +4,13 @@ from pydantic import BaseModel, Field
 
 
 class SolrResponseHeader(BaseModel):
+    """Solrレスポンスヘッダー"""
     status: int
     QTime: int
 
 
 class SolrSchemaModel(BaseModel):
+    """Solrスキーマモデル"""
     name: str
     version: float
     uniqueKey: str
@@ -19,5 +21,6 @@ class SolrSchemaModel(BaseModel):
 
 
 class SolrSchemaResponseModel(BaseModel):
+    """Solrスキーマレスポンスモデル"""
     responseHeader: SolrResponseHeader
     schema_: SolrSchemaModel = Field(alias="schema")

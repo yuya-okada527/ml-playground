@@ -4,6 +4,7 @@ from pydantic import BaseModel
 
 
 class MovieSolrModel(BaseModel):
+    """検索用映画モデル"""
     movie_id: str
     free_word: str
     original_title: str
