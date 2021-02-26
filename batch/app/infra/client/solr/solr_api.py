@@ -1,3 +1,7 @@
+"""Solr APIクライアントモジュール
+
+Solrに対するHTTP通信を抽象化するモジュール
+"""
 import json
 from typing import Protocol
 
@@ -13,11 +17,26 @@ UPDATE_PATH = "/solr/{collection}/update"
 
 
 class AbstractSolrClient(Protocol):
+    """Solrクライアントインターフェース"""
 
     def update_schema(self, schema_data: str) -> None:
+        """スキーマ更新関数
+
+        Solrのスキーマを更新する.
+
+        Args:
+            schema_data: SolrのSchema APIでPOSTするJSONデータ
+        """
         ...
 
     def index_movies(self, movies: list[MovieSolrModel]) -> None:
+        """映画インデックス更新関数
+
+        Solrの映画インデックスと更新する.
+
+        Args:
+            movies: 映画モデルリスト
+        """
         ...
 
     def delete_old(self, exec_time: int) -> None:
