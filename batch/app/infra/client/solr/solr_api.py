@@ -40,12 +40,27 @@ class AbstractSolrClient(Protocol):
         ...
 
     def delete_old(self, exec_time: int) -> None:
+        """データ削除関数
+
+        Solrの古い映画インデックスを削除する.
+
+        Args:
+            exce_time: 実行日付(これ以前のデータを削除します)
+        """
         ...
 
     def commit(self) -> None:
+        """コミット関数
+
+        Solrに対する更新をコミットする.
+        """
         ...
 
     def get_schema(self) -> SolrSchemaResponseModel:
+        """スキーマ取得関数
+
+        Solrのスキーマを取得する.
+        """
         ...
 
 

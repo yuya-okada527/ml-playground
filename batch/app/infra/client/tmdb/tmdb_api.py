@@ -1,3 +1,7 @@
+"""TMDB APIクライアントモジュール
+
+TMDBに対するHTTP通信を抽象化するモジュール
+"""
 from typing import Optional, Protocol
 
 from core.config import TmdbSettings
@@ -6,9 +10,9 @@ from domain.models.rest.tmdb_model import (TmdbMovieDetail, TmdbMovieGenreList,
                                            TmdbMovieReviewList,
                                            TmdbPopularMovieList,
                                            TmdbSimilarMovieList)
-from infra.client.tmdb.query import (MovieDetailQuery, MovieGenreQuery,
-                                     MovieReviewQuery, PopularMovieQuery,
-                                     SimilarMovieQuery)
+from infra.client.tmdb.tmdb_query import (MovieDetailQuery, MovieGenreQuery,
+                                          MovieReviewQuery, PopularMovieQuery,
+                                          SimilarMovieQuery)
 from util.http import call_get_api
 
 # TMDb APIパス定義
@@ -22,6 +26,13 @@ MOVIE_REVIEW_PATH = "/movie/{movie_id}/reviews"
 class AbstractTmdbClient(Protocol):
 
     def fetch_genres(self, language: MovieLanguage) -> TmdbMovieGenreList:
+        """ジャンルリスト取得関数
+
+        TMDBから映画ジャンルを取得する.
+
+        Args:
+            language: 取得言語
+        """
         ...
 
     def fetch_popular_movies(
@@ -30,6 +41,15 @@ class AbstractTmdbClient(Protocol):
         region: Optional[str],
         language: Optional[MovieLanguage] = None
     ) -> TmdbPopularMovieList:
+        """人気映画リスト取得関数
+
+        TMDBから人気映画リストを取得します.
+
+        Args:
+            page: 取得ページ
+            region: 取得地域
+            language: 取得言語
+        """
         ...
 
     def fetch_movie_detail(
@@ -38,6 +58,15 @@ class AbstractTmdbClient(Protocol):
         language: Optional[MovieLanguage] = None,
         append_to_response: Optional[str] = None
     ) -> TmdbMovieDetail:
+        """映画詳細取得関数
+
+        TMDBから映画詳細を取得します.
+
+        Args:
+            movie_id: 映画ID
+            language: 取得言語
+            append_to_response: 追加レスポンス項目
+        """
         ...
 
     def fetch_movie_detail_list(
@@ -46,6 +75,15 @@ class AbstractTmdbClient(Protocol):
         language: Optional[MovieLanguage] = None,
         append_to_response: Optional[str] = None
     ) -> list[TmdbMovieDetail]:
+        """映画詳細リスト取得関数
+
+        TMDBから映画詳細リストを取得します.
+
+        Args:
+            movie_id_list: 映画IDリスト
+            language: 取得言語
+            append_to_response: 追加レスポンス項目
+        """
         ...
 
     def fetch_similar_movie_list(
@@ -54,12 +92,15 @@ class AbstractTmdbClient(Protocol):
         language: MovieLanguage = MovieLanguage.EN,
         page: int = 1
     ) -> TmdbSimilarMovieList:
-        ...
+        """類似映画リスト取得関数
 
-    def fetch_all_similar_movie_id(
-        self,
-        movie_id: int,
-    ) -> list[int]:
+        TMDBから類似映画リストを取得する.
+
+        Args:
+            movie_id: 映画ID
+            language: 取得言語
+            page: 取得ページ
+        """
         ...
 
     def fetch_movie_reviews(
@@ -68,6 +109,15 @@ class AbstractTmdbClient(Protocol):
         language: MovieLanguage = MovieLanguage.EN,
         page: int = 1
     ) -> TmdbMovieReviewList:
+        """映画レビュー取得関数
+
+        TMDBから映画レビューを取得する.
+
+        Args:
+            movie_id: 映画ID
+            language: 取得言語
+            page: 取得ページ
+        """
         ...
 
 
