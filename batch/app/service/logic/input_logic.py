@@ -62,6 +62,14 @@ def update_review_data(
     tmdb_client: AbstractTmdbClient,
     review_repository: AbstractReviewRepository,
 ) -> int:
+    """レビューデータを更新します.
+
+    Args:
+        registered_movie_ids: 登録済映画IDリスト
+        registered_review_ids: 登録済レビューIDリスト
+        tmdb_client: TMDBクライアント
+        review_repository: レビューリポジトリ
+    """
 
     # 映画IDごとにレビューデータを取得・登録していく
     count = 0
@@ -85,6 +93,7 @@ def update_review_data(
 
 
 def _map_review_model(movie_review: TmdbMovieReview, movie_id: int) -> Review:
+    """レビューモデルをマッピングする."""
     return Review(
         review_id=movie_review.id,
         movie_id=movie_id,
