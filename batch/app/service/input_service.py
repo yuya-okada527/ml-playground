@@ -9,7 +9,7 @@ Todo:
 from core.aop import batch_service
 from core.logger import create_logger
 from domain.enums.movie_enums import MovieLanguage
-from domain.models.internal.movie_model import Genre, Review
+from domain.models.internal.movie_model import Review
 from domain.models.rest.tmdb_model import TmdbMovieReview
 from infra.client.tmdb.tmdb_api import AbstractTmdbClient
 from infra.repository.input.genre_repository import AbstractGenreRepository

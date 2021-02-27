@@ -5,3 +5,4 @@ env/
 *__pycache__/
 experiment/
 .mypy_cache/
+.coverage

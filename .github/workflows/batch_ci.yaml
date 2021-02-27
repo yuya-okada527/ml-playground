@@ -36,6 +36,6 @@ jobs:
         run: poetry run mypy app --ignore-missing-imports --show-column-numbers --check-untyped-defs
       - name: Unit test
         working-directory: ./batch
-        run: poetry run pytest tests
+        run: poetry run pytest tests -v --cov=app
         env:
           BATCH_LOG_LEVEL: info
