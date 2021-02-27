@@ -9,14 +9,12 @@ Todo:
 from core.aop import batch_service
 from core.logger import create_logger
 from domain.enums.movie_enums import MovieLanguage
-from domain.models.internal.movie_model import Review
-from domain.models.rest.tmdb_model import TmdbMovieReview
 from infra.client.tmdb.tmdb_api import AbstractTmdbClient
 from infra.repository.input.genre_repository import AbstractGenreRepository
 from infra.repository.input.movie_repository import AbstractMovieRepository
 from infra.repository.input.review_repository import AbstractReviewRepository
 
-from service.logic.input_logic import map_genre_list
+from service.logic.input_logic import map_genre_list, update_review_data
 
 # 最大類似映画数
 MAX_SIMILAR_MOVIES = 5
@@ -71,6 +69,14 @@ def exec_update_popular_movies(
     tmdb_client: AbstractTmdbClient,
     movie_repository: AbstractMovieRepository
 ) -> None:
+    """人気映画更新を実行します.
+
+    Args:
+        page: 対象ページ
+        force_update: 強制アップデートフラグ
+        tmdb_client: TMDBクライアント
+        movie_repository: 映画リポジトリ
+    """
 
     # 登録済の映画IDを取得
     registered_movies = set(movie_repository.fetch_all_movie_id())
@@ -97,13 +103,18 @@ def exec_update_popular_movies(
 
 
 @batch_service
-def collect_reviews(
+def exec_update_movie_reviews(
     tmdb_client: AbstractTmdbClient,
     movie_repository: AbstractMovieRepository,
     review_repository: AbstractReviewRepository
 ) -> None:
+    """映画レビュー更新処理を実行します.
 
-    log.info("レビューデータ収集バッチ実行開始.")
+    Args:
+        tmdb_client: TMDBクライアント
+        movie_repository: 映画リポジトリ
+        review_repository: レビューリポジトリ
+    """
 
     # 登録済の映画IDを全て取得
     registered_movie_ids = movie_repository.fetch_all_movie_id()
@@ -112,22 +123,12 @@ def collect_reviews(
     registered_review_ids = review_repository.fetch_all_review_id()
 
     # 映画IDごとにレビューデータを取得・登録していく
-    count = 0
-    for i, movie_id in enumerate(registered_movie_ids, start=1):
-        # ページは1固定とする
-        movie_review_response = tmdb_client.fetch_movie_reviews(movie_id=movie_id, page=1)
-        # 内部モデルに変換
-        movie_review_list = [
-            _map_review_model(review, movie_id)
-            for review in movie_review_response.results
-            if review.id not in registered_review_ids  # 登録済の物はスキップする(強制アップデートフラグがあればスキップしない)
-        ]
-
-        # 登録
-        count += review_repository.save_review_list(movie_review_list)
-
-        if i % LOG_FREQUENCY == 0:
-            log.info(f"{i}件目の処理が完了しました.")
+    count = update_review_data(
+        registered_movie_ids=registered_movie_ids,
+        registered_review_ids=registered_review_ids,
+        tmdb_client=tmdb_client,
+        review_repository=review_repository
+    )
 
     log.info(f"レビューデータ収集バッチ実行終了.  登録数={count}")
 
@@ -192,11 +193,3 @@ def collect_similar_movies(
             log.info(f"{i}件目の処理が完了しました.")
 
     log.info(f"類似映画収集バッチ実行終了.  登録数={count}")
-
-
-def _map_review_model(movie_review: TmdbMovieReview, movie_id: int) -> Review:
-    return Review(
-        review_id=movie_review.id,
-        movie_id=movie_id,
-        review=movie_review.content
-    )

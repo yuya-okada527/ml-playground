@@ -8,8 +8,9 @@ from infra.client.tmdb.tmdb_api import TmdbClient
 from infra.repository.input.genre_repository import GenreRepository
 from infra.repository.input.movie_repository import MovieRepository
 from infra.repository.input.review_repository import ReviewRepository
-from service.input_service import (collect_reviews, collect_similar_movies,
+from service.input_service import (collect_similar_movies,
                                    exec_update_genre_master,
+                                   exec_update_movie_reviews,
                                    exec_update_popular_movies)
 
 app = typer.Typer()
@@ -79,7 +80,7 @@ def update_movie_reviews_batch() -> None:
     review_repository = ReviewRepository()
 
     # サービス実行
-    collect_reviews(
+    exec_update_movie_reviews(
         tmdb_client=tmdb_client,
         movie_repository=movie_repository,
         review_repository=review_repository
