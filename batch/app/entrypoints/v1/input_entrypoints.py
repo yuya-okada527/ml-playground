@@ -9,7 +9,8 @@ from infra.repository.input.genre_repository import GenreRepository
 from infra.repository.input.movie_repository import MovieRepository
 from infra.repository.input.review_repository import ReviewRepository
 from service.input_service import (collect_reviews, collect_similar_movies,
-                                   update_genre_master, update_movies)
+                                   exec_update_genre_master,
+                                   exec_update_popular_movies)
 
 app = typer.Typer()
 
@@ -30,7 +31,7 @@ def update_genre_master_batch(force_update: bool = False) -> None:
     tmdb_client = TmdbClient(TmdbSettings())
 
     # サービスの実行
-    update_genre_master(
+    exec_update_genre_master(
         force_update=force_update,
         genre_repository=genre_repository,
         tmdb_client=tmdb_client
@@ -55,7 +56,7 @@ def update_popular_movies_batch(page: int = 1, force_update: bool = False) -> No
     movie_repository = MovieRepository()
 
     # サービスの実行
-    update_movies(
+    exec_update_popular_movies(
         force_update=force_update,
         page=page,
         tmdb_client=tmdb_client,

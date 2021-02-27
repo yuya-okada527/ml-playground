@@ -1,3 +1,11 @@
+"""入稿サービスモジュール
+
+入稿バッチに関するサービス関数を記述するモジュール
+
+Todo:
+    * ロジックを切り出して、テスタビリティを向上する
+    * データストアに対するアクセスは、いったんサービス層で実行
+"""
 from core.aop import batch_service
 from core.logger import create_logger
 from domain.enums.movie_enums import MovieLanguage
@@ -7,6 +15,8 @@ from infra.client.tmdb.tmdb_api import AbstractTmdbClient
 from infra.repository.input.genre_repository import AbstractGenreRepository
 from infra.repository.input.movie_repository import AbstractMovieRepository
 from infra.repository.input.review_repository import AbstractReviewRepository
+
+from service.logic.input_logic import map_genre_list
 
 # 最大類似映画数
 MAX_SIMILAR_MOVIES = 5
@@ -18,13 +28,18 @@ log = create_logger(__file__)
 
 
 @batch_service
-def update_genre_master(
+def exec_update_genre_master(
     force_update: bool,
     genre_repository: AbstractGenreRepository,
     tmdb_client: AbstractTmdbClient
 ) -> None:
+    """ジャンルマスタ更新を実行します.
 
-    log.info("ジャンルマスタ更新バッチ実行開始")
+    Args:
+        force_update: 強制アップデートフラグ
+        genre_repository: ジャンルリポジトリ
+        tmdb_client: TMDBクライアント
+    """
 
     # 登録済のジャンルIDを全て取得
     genre_id_set = {genre.genre_id for genre in genre_repository.fetch_all()}
@@ -32,31 +47,16 @@ def update_genre_master(
     # 英語表記のジャンルを取得
     english_genres = tmdb_client.fetch_genres(MovieLanguage.EN)
 
-    # ジャンルIDで集計
-    genre_id_dict = {genre.id: genre for genre in english_genres.genres}
-
     # 日本語表記のジャンルを取得
-    # TODO APIだと日本語データを取得できない... (翻訳API?)
     japanese_genres = tmdb_client.fetch_genres(MovieLanguage.JP)
 
     # ジャンルモデルに詰め替える
-    genre_list = []
-    for jp_genre in japanese_genres.genres:
-
-        # 登録済のジャンルはスキップ(強制アップデートフラグありの場合は登録する)
-        if jp_genre.id in genre_id_set and not force_update:
-            continue
-
-        # 日本語表記と英語表記が一致しない場合はスキップ
-        en_genre = genre_id_dict.get(jp_genre.id)
-        if not en_genre:
-            continue
-
-        genre_list.append(Genre(
-            genre_id=en_genre.id,
-            name=en_genre.name,
-            japanese_name=jp_genre.name)
-        )
+    genre_list = map_genre_list(
+        genre_id_set,
+        english_genres.genres,
+        japanese_genres.genres,
+        force_update
+    )
 
     # モデルの永続化
     count = genre_repository.save(genre_list)
@@ -65,14 +65,12 @@ def update_genre_master(
 
 
 @batch_service
-def update_movies(
+def exec_update_popular_movies(
     page: int,
     force_update: bool,
     tmdb_client: AbstractTmdbClient,
     movie_repository: AbstractMovieRepository
 ) -> None:
-
-    log.info(f"人気映画情報取得バッチ実行開始. page={page}")
 
     # 登録済の映画IDを取得
     registered_movies = set(movie_repository.fetch_all_movie_id())
