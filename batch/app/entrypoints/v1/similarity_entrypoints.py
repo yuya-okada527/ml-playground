@@ -7,7 +7,7 @@ Todo:
 """
 import typer
 from infra.repository.input.movie_repository import MovieRepository
-from infra.repository.sim.redis_repository import RedisRepository
+from infra.repository.similarity.redis_repository import RedisRepository
 from service.similarity_service import exec_construct_tmdb_similarity
 
 app = typer.Typer()

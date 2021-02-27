@@ -46,7 +46,7 @@ def call_get_api(
         raise ServerSideError()
 
     # ステータスコードをチェック
-    __check_status_code(response)
+    _check_status_code(response)
 
     return response
 
@@ -69,7 +69,7 @@ def call_post_api(
         raise ServerSideError()
 
     # ステータスコードをチェック
-    __check_status_code(response)
+    _check_status_code(response)
 
     return response
 
@@ -86,7 +86,7 @@ def _to_string(data: Union[str, dict[str, Any], BaseModel]) -> str:
     return None
 
 
-def __check_status_code(response: Response) -> None:
+def _check_status_code(response: Response) -> None:
     # ステータスコードをチェック
     if response.status_code >= 500:
         raise ServerSideError()

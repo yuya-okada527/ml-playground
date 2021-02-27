@@ -1,3 +1,7 @@
+"""Redisリポジトリモジュール
+
+Redisに対するアクセス機能を提供するモジュール
+"""
 import json
 from typing import Protocol
 
@@ -17,10 +21,20 @@ class AbstarctRedisRepository(Protocol):
         similar_movies: list[int],
         model_type: SimilarityModelType
     ) -> None:
+        """映画類似度データを保存する.
+
+        Args:
+            movie_id: 映画ID
+            similar_movies: 類似映画IDリスト
+            model_type: 類似度判定モデルタイプ
+        """
         ...
 
 
 class RedisRepository:
+
+    def __init__(self, redis_client: redis.Redis = REDIS_CLIENT) -> None:
+        self.redis_client = redis_client
 
     def save_movie_similarity(
         self,
@@ -35,7 +49,7 @@ class RedisRepository:
         key = _make_sim_key(movie_id, model_type)
 
         # 類似映画を保存
-        REDIS_CLIENT.set(key, json.dumps(similar_movies))
+        self.redis_client.set(key, json.dumps(similar_movies))
 
 
 def _make_sim_key(movie_id: int, model_type: SimilarityModelType) -> str:
