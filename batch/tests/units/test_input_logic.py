@@ -1,5 +1,6 @@
-from domain.models.internal.movie_model import Genre
-from domain.models.rest.tmdb_model import TmdbMovieGenre
+from domain.enums.movie_enums import MovieLanguage
+from domain.models.internal.movie_model import Genre, Review
+from domain.models.rest.tmdb_model import TmdbMovieGenre, TmdbMovieReviewList
 from service.logic.input_logic import map_genre_list
 
 
@@ -63,6 +64,22 @@ def test_map_genre_list_mismatched_genre_is_not_target():
     assert actual == expected
 
 
-# TODO
 def test_update_review_data():
     pass
+
+
+class FakeTmdbClient:
+
+    def fetch_movie_reviews(
+        self,
+        movie_id: int,
+        language: MovieLanguage = MovieLanguage.EN,
+        page: int = 1
+    ) -> TmdbMovieReviewList:
+        return None
+
+
+class FakeReviewRepositry:
+
+    def save_review_list(self, review_list: list[Review]) -> int:
+        return 0

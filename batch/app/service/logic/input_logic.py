@@ -15,6 +15,7 @@ LOG_FREQUENCY = 20
 
 log = create_logger(__file__)
 
+
 def map_genre_list(
     registered_genre_id_set: set[int],
     english_genres: list[TmdbMovieGenre],
