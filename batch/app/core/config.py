@@ -53,12 +53,12 @@ class InputDbSettings(BaseSettings):
         input_db_password: パスワード
         input_db_database: データベース
     """
-    input_db_engine: str
-    input_db_host: str
-    input_db_port: int
-    input_db_user: str
-    input_db_password: str
-    input_db_database: str
+    input_db_engine: str = "mysql"
+    input_db_host: str = "localhost"
+    input_db_port: int = 3306
+    input_db_user: str = "user"
+    input_db_password: str = "password"
+    input_db_database: str = "input_db"
 
     def get_connection_config(self) -> dict[str, Any]:
         """DB接続情報取得関数
