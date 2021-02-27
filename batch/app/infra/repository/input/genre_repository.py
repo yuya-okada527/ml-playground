@@ -1,3 +1,7 @@
+"""ジャンルリポジトリモジュール
+
+映画ジャンルテーブルに対するアクセス機能を提供するモジュール
+"""
 from typing import Protocol
 
 from domain.models.internal.movie_model import Genre
@@ -29,9 +33,20 @@ FROM
 class AbstractGenreRepository(Protocol):
 
     def save(self, genre_list: list[Genre]) -> int:
+        """ジャンルリスト保存関数
+
+        ジャンルマスタを保存します.
+
+        Args:
+            genre_list: 保存対象ジャンル
+        """
         ...
 
     def fetch_all(self) -> list[Genre]:
+        """ジャンル取得関数
+
+        ジャンルマスタを全て取得します.
+        """
         ...
 
 

@@ -77,22 +77,24 @@ class Movie(BaseModel):
         reviews: レビューリスト
         genres: ジャンルリスト
         keywords: キーワードリスト
+        similar_movies: 類似映画リスト
     """
     movie_id: str
     imdb_id: Optional[str] = None
-    original_title: str
-    japanese_title: str
+    original_title: Optional[str] = None
+    japanese_title: Optional[str] = None
     overview: Optional[str] = None
     tagline: Optional[str] = None
     poster_path: Optional[str] = None
     backdrop_path: Optional[str] = None
-    popularity: float
-    vote_average: float
-    vote_count: int
+    popularity: Optional[float] = None
+    vote_average: Optional[float] = None
+    vote_count: Optional[int] = None
     release_date: Optional[date] = None
     reviews: list[Review] = []
     genres: list[Genre] = []
     keywords: list[Keyword] = []
+    similar_movies: list[int] = []
 
     @property
     def release_date_str(self) -> Optional[str]:
@@ -117,12 +119,17 @@ class Movie(BaseModel):
             インデックス構築可能ならTrue, 不可能ならFalse
         """
 
+        # タイトルのない場合出稿しない
+        if not self.original_title and not self.japanese_title:
+            return False
         # シナリオない場合出稿しない
         if not self.overview:
             return False
         # ポスタと背景の両方がない場合出稿しない
         if not self.poster_path and not self.backdrop_path:
             return False
-        # TODO 類似映画の数で絞る処理を追加
+        # 類似映画の数が5未満の場合、出稿しない
+        if len(self.similar_movies) < 5:
+            return False
 
         return True

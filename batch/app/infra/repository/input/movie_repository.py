@@ -1,9 +1,14 @@
+"""映画レポジトリモジュール
+
+映画テーブルに対するアクセス機能を提供するモジュール
+"""
 from collections import defaultdict
 from datetime import datetime
 from typing import Protocol
 
 from domain.models.internal.movie_model import RELEASE_DATE_FMT, Genre, Movie
 from infra.repository.input.base_repository import ENGINE
+from sqlalchemy.engine.base import Engine
 from sqlalchemy.engine.result import RowProxy
 from sqlalchemy.exc import IntegrityError
 
@@ -66,19 +71,21 @@ SELECT
     m.vote_average,
     m.vote_count,
     m.release_date,
-    mg.movie_id,
-    mg.genre_id,
     g.genre_id,
     g.name,
     g.japanese_name
+    sm.similar_movie_id
 FROM
     movies AS m
     INNER JOIN
         movie_genres AS mg
-    ON m.movie_id = mg.movie_id
+        ON m.movie_id = mg.movie_id
     INNER JOIN
         genres AS g
-    ON mg.genre_id = g.genre_id
+        ON mg.genre_id = g.genre_id
+    INNER JOIN
+        similar_movies AS sm
+        ON m.movie_id = sm.movie_id
 """
 
 SELECT_ALL_MOVIE_ID_STATEMENT = """\
@@ -110,6 +117,11 @@ FROM
 class AbstractMovieRepository(Protocol):
 
     def save_movie_list(self, movie_list: list[Movie]) -> None:
+        """映画リストを保存します.
+
+        Args:
+            movie_list: 映画リスト
+        """
         ...
 
     def save_similar_movie_list(
@@ -117,19 +129,35 @@ class AbstractMovieRepository(Protocol):
         movie_id: int,
         similar_movie_list: list[int]
     ) -> int:
+        """類似映画リストを保存します.
+
+        Args:
+            movie_id: 映画ID
+            similar_movie_list: 類似映画IDリスト
+        """
         ...
 
     def fetch_all(self) -> list[Movie]:
+        """全映画情報を取得します."""
         ...
 
     def fetch_all_movie_id(self) -> list[int]:
+        """全映画IDを取得します."""
         ...
 
     def fetch_all_similar_movie(self) -> dict[int, set[int]]:
+        """全映画とその類似映画を取得する
+
+        Returns:
+            類似映画dict(key: movie_id, value: set(similar_movie_id))
+        """
         ...
 
 
 class MovieRepository:
+
+    def __init__(self, engine: Engine = ENGINE) -> None:
+        self.engine: Engine = engine
 
     def save_movie_list(self, movie_list: list[Movie]) -> None:
 
@@ -138,7 +166,7 @@ class MovieRepository:
         for movie in movie_list:
             # TODO トランザクション
             # TODO リトライ
-            movie_count += ENGINE.execute(UPSERT_MOVIE_STATEMENT, {
+            movie_count += self.engine.execute(UPSERT_MOVIE_STATEMENT, {
                 "movie_id": movie.movie_id,
                 "imdb_id": movie.imdb_id,
                 "original_title": movie.original_title,
@@ -155,7 +183,7 @@ class MovieRepository:
 
             for genre in movie.genres:
                 try:
-                    genre_count += ENGINE.execute(INSERT_MOVIE_GENRE_STATEMENT, {
+                    genre_count += self.engine.execute(INSERT_MOVIE_GENRE_STATEMENT, {
                         "movie_id": movie.movie_id,
                         "genre_id": genre.genre_id
                     }).rowcount
@@ -170,7 +198,7 @@ class MovieRepository:
     ) -> int:
 
         count = 0
-        with ENGINE.begin() as conn:
+        with self.engine.begin() as conn:
             for similar_movie_id in similar_movie_list:
                 try:
                     count += conn.execute(INSERT_SIMILAR_MOVIE_STATEMENT, {
@@ -186,29 +214,30 @@ class MovieRepository:
     def fetch_all(self) -> list[Movie]:
 
         # SQL実行
-        result_proxy = ENGINE.execute(SELECT_ALL_MOVIE_STATEMENT)
+        result_proxy = self.engine.execute(SELECT_ALL_MOVIE_STATEMENT)
 
-        # movie_idごとに取得結果を管理、映画情報にジャンルリストを持たせる
+        # movie_idごとに取得結果を管理、映画情報にジャンルと類似映画を追加していく
         movie_map = {}
         for result in result_proxy:
             if result.movie_id not in movie_map:
                 movie_map[result.movie_id] = _map_to_movie(result)
             else:
                 movie_map[result.movie_id].genres.append(_map_to_genre(result))
+                movie_map[result.movie_id].similar_movies.append(int(result.similar_movie_id))
 
         return list(movie_map.values())
 
     def fetch_all_movie_id(self) -> list[int]:
 
         # SQL実行
-        result_proxy = ENGINE.execute(SELECT_ALL_MOVIE_ID_STATEMENT)
+        result_proxy = self.engine.execute(SELECT_ALL_MOVIE_ID_STATEMENT)
 
         return [int(movie.movie_id) for movie in result_proxy]
 
     def fetch_all_similar_movie(self) -> dict[int, list[int]]:
 
         # SQL実行
-        result_proxy = ENGINE.execute(SELECT_ALL_SIMILAR_MOVIE_STATEMENT)
+        result_proxy = self.engine.execute(SELECT_ALL_SIMILAR_MOVIE_STATEMENT)
 
         # 類似映画MAPを作成 (key: movie_id, value: list(similar_movie_id))
         similar_movies = defaultdict(list)
@@ -232,7 +261,8 @@ def _map_to_movie(result: RowProxy) -> Movie:
         vote_average=result.vote_average,
         vote_count=result.vote_count,
         release_date=datetime.strptime(result.release_date, RELEASE_DATE_FMT) if result.release_date else None,
-        genres=[_map_to_genre(result)]
+        genres=[_map_to_genre(result)],
+        similar_movies=[int(result.similar_movie_id)]
     )
 
 
