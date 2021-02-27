@@ -1,4 +1,3 @@
-import pytest
 from domain.models.internal.movie_model import Genre
 from infra.repository.input.genre_repository import GenreRepository
 from sqlalchemy.engine.base import Engine

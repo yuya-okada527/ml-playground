@@ -53,7 +53,7 @@ class InputDbSettings(BaseSettings):
         input_db_password: パスワード
         input_db_database: データベース
     """
-    input_db_engine: str = "mysql"
+    input_db_engine: str = "mysql+pymysql"
     input_db_host: str = "localhost"
     input_db_port: int = 3306
     input_db_user: str = "user"
