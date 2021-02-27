@@ -1,7 +1,12 @@
+"""レビューリポジトリモジュール
+
+レビューテーブルに対するアクセス機能を提供するモジュール
+"""
 from typing import Protocol
 
 from domain.models.internal.movie_model import Review
-from infra.repository.input.base import ENGINE
+from infra.repository.input.base_repository import ENGINE
+from sqlalchemy.engine.base import Engine
 from sqlalchemy.exc import IntegrityError
 
 # ---------------------------
@@ -29,18 +34,23 @@ VALUES
 class AbstractReviewRepository(Protocol):
 
     def fetch_all_review_id(self) -> list[str]:
+        """全てのレビューIDを取得する"""
         ...
 
     def save_review_list(self, review_list: list[Review]) -> int:
+        """レビューデータを保存する"""
         ...
 
 
 class ReviewRepository:
 
+    def __init__(self, engine: Engine = ENGINE) -> None:
+        self.engine: Engine = engine
+
     def fetch_all_review_id(self) -> list[str]:
 
         # SQL実行
-        result_proxy = ENGINE.execute(SELECT_ALL_REVIEW_ID_STATEMENT)
+        result_proxy = self.engine.execute(SELECT_ALL_REVIEW_ID_STATEMENT)
 
         return [review.review_id for review in result_proxy]
 
@@ -48,7 +58,7 @@ class ReviewRepository:
 
         count = 0
         # トランザクション開始
-        with ENGINE.begin() as conn:
+        with self.engine.begin() as conn:
             for review in review_list:
                 try:
                     count += conn.execute(INSERT_REVIEW_STATEMENT, {
