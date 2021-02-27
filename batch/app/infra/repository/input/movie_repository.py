@@ -73,7 +73,7 @@ SELECT
     m.release_date,
     g.genre_id,
     g.name,
-    g.japanese_name
+    g.japanese_name,
     sm.similar_movie_id
 FROM
     movies AS m
@@ -145,7 +145,7 @@ class AbstractMovieRepository(Protocol):
         """全映画IDを取得します."""
         ...
 
-    def fetch_all_similar_movie(self) -> dict[int, set[int]]:
+    def fetch_all_similar_movie(self) -> dict[int, list[int]]:
         """全映画とその類似映画を取得する
 
         Returns:
@@ -223,16 +223,21 @@ class MovieRepository:
                 movie_map[result.movie_id] = _map_to_movie(result)
             else:
                 movie_map[result.movie_id].genres.append(_map_to_genre(result))
-                movie_map[result.movie_id].similar_movies.append(int(result.similar_movie_id))
+                movie_map[result.movie_id].similar_movies.append(result.similar_movie_id)
 
-        return list(movie_map.values())
+        result = []
+        for movie in movie_map.values():
+            movie.genres = list(set(movie.genres))
+            movie.similar_movies = list(set(movie.similar_movies))
+            result.append(movie)
+        return result
 
     def fetch_all_movie_id(self) -> list[int]:
 
         # SQL実行
         result_proxy = self.engine.execute(SELECT_ALL_MOVIE_ID_STATEMENT)
 
-        return [int(movie.movie_id) for movie in result_proxy]
+        return [movie.movie_id for movie in result_proxy]
 
     def fetch_all_similar_movie(self) -> dict[int, list[int]]:
 

@@ -3,7 +3,7 @@
 内部用の映画に関するモデルを記述するモジュール
 """
 from datetime import date
-from typing import Optional
+from typing import Any, Optional
 
 from pydantic import BaseModel
 
@@ -24,6 +24,14 @@ class Genre(BaseModel):
     genre_id: int
     name: Optional[str]
     japanese_name: Optional[str]
+
+    def __hash__(self) -> int:
+        return hash(self.genre_id)
+
+    def __eq__(self, other: Any) -> bool:
+        if not isinstance(other, Genre):
+            return False
+        return self.genre_id == other.genre_id
 
 
 class Review(BaseModel):
@@ -79,7 +87,7 @@ class Movie(BaseModel):
         keywords: キーワードリスト
         similar_movies: 類似映画リスト
     """
-    movie_id: str
+    movie_id: int
     imdb_id: Optional[str] = None
     original_title: Optional[str] = None
     japanese_title: Optional[str] = None
