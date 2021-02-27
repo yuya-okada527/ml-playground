@@ -6,6 +6,7 @@ from typing import Protocol
 
 from domain.models.internal.movie_model import Genre
 from infra.repository.input.base_repository import ENGINE
+from sqlalchemy.engine.base import Engine
 
 # ---------------------------
 # SQL
@@ -52,11 +53,14 @@ class AbstractGenreRepository(Protocol):
 
 class GenreRepository:
 
+    def __init__(self, engine: Engine = ENGINE) -> None:
+        self.engine: Engine = engine
+
     def save(self, genre_list: list[Genre]) -> int:
 
         count = 0
         for genre in genre_list:
-            count += ENGINE.execute(UPSERT_GENRE_STATEMENT, {
+            count += self.engine.execute(UPSERT_GENRE_STATEMENT, {
                 "genre_id": genre.genre_id,
                 "name": genre.name,
                 "japanese_name": genre.japanese_name
@@ -67,7 +71,7 @@ class GenreRepository:
     def fetch_all(self) -> list[Genre]:
 
         # SQL実行
-        result = ENGINE.execute(SELECT_ALL_GENRE_STATEMENT)
+        result = self.engine.execute(SELECT_ALL_GENRE_STATEMENT)
 
         # 内部モデルに変換
         genre_list = []
