@@ -119,9 +119,9 @@ class RedisSettings(BaseSettings):
         redis_host: ホスト
         redis_port: ポート
     """
-    redis_protocol: str
-    redis_host: str
-    redis_port: int
+    redis_protocol: str = "http"
+    redis_host: str = "localhost"
+    redis_port: int = 6379
 
     class Config:
         env_file = "env/redis.env"
