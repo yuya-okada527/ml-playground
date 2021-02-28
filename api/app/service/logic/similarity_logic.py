@@ -16,6 +16,15 @@ def fetch_similar_movies(
     movie_ids: list[int],
     solr_client: AbstractSolrClient
 ) -> List[MovieResponse]:
+    """類似映画データを取得する
+
+    Args:
+        movie_ids (list[int]): 映画IDリスト
+        solr_client (AbstractSolrClient): Solrクライアント
+
+    Returns:
+        List[MovieResponse]: 映画レスポンスリスト
+    """
 
     # 類似映画を取得
     similar_movie_list = []
@@ -42,6 +51,16 @@ def map_similar_movies_response(
     model_type: SimilarityModelType,
     similar_movie_list: List[MovieResponse]
 ) -> SimilarMovieResponse:
+    """類似映画レスポンスをマッピングします.
+
+    Args:
+        movie_id (int): 映画ID
+        model_type (SimilarityModelType): 類似映画判定モデルタイプ
+        similar_movie_list (List[MovieResponse]): 類似映画リスト
+
+    Returns:
+        SimilarMovieResponse: 類似映画レスポンス
+    """
     return SimilarMovieResponse(
         target_id=movie_id,
         model_type=model_type,
