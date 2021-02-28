@@ -1,8 +1,9 @@
 from typing import List
 
 from domain.enums.movie_enums import MovieField
-from domain.models.solr.movies import MovieSolrModel
-from entrypoints.v1.movie.messages.movie_messages import MovieResponse
+from domain.models.solr.movies import MovieSolrModel, SolrResultModel
+from entrypoints.v1.movie.messages.movie_messages import (MovieResponse,
+                                                          SearchMovieResponse)
 from infra.client.solr.solr_query import (SolrFilterQuery, SolrQuery,
                                           SolrSortQuery, SortDirection)
 
@@ -72,6 +73,15 @@ def map_movie(movie: MovieSolrModel) -> MovieResponse:
         release_year=movie.release_year,
         genre_labels=movie.genre_labels,
         genres=movie.genres
+    )
+
+
+def map_movie_response(search_result: SolrResultModel) -> SearchMovieResponse:
+    return SearchMovieResponse(
+        start=search_result.response.start,
+        returned_num=len(search_result.response.docs),
+        available_num=search_result.response.numFound,
+        results=[map_movie(movie) for movie in search_result.response.docs]
     )
 
 

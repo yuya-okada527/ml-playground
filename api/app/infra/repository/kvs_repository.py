@@ -64,4 +64,13 @@ async def get_kvs_repository() -> AbstractKvsRepository:
 
 
 def _make_sim_key(movie_id: int, model_type: SimilarityModelType) -> str:
+    """類似データのキーを作成する
+
+    Args:
+        movie_id (int): 映画ID
+        model_type (SimilarityModelType): 類似映画判定モデル
+
+    Returns:
+        str: キー
+    """
     return f"{movie_id}_{model_type.value}"
