@@ -61,7 +61,10 @@ type SimilarMoviesProps = {
   movieTitle: string;
 };
 
-const SimilarMovies = ({ similarMovies, movieTitle }: SimilarMoviesProps) => {
+const SimilarMovies: React.FC<SimilarMoviesProps> = ({
+  similarMovies,
+  movieTitle,
+}) => {
   const classes = useStyles();
   return (
     <Box className={classes.root}>

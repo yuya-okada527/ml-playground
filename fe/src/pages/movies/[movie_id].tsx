@@ -9,7 +9,7 @@ import { Movie } from "../../interfaces";
 import config from "../../utils/config";
 import { callGetApi } from "../../utils/http";
 
-const DetailPage = () => {
+const DetailPage: React.FC = () => {
   const router = useRouter();
   const [movieId, setMovieId] = React.useState("");
   const [movie, setMovie] = React.useState<Movie>();

@@ -65,7 +65,7 @@ type MovieDetailProps = {
   movie_detail: Movie;
 };
 
-const MovieDetail = ({ movie_detail }: MovieDetailProps) => {
+const MovieDetail: React.FC<MovieDetailProps> = ({ movie_detail }) => {
   const classes = useStyles();
   return (
     <Card className={classes.cardRoot}>

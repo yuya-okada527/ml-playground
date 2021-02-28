@@ -24,11 +24,11 @@ type SearchBoxProps = {
   handleSearchButtonClick: (_event?: React.MouseEvent<unknown>) => void;
 };
 
-const SearchBox = ({
+const SearchBox: React.FC<SearchBoxProps> = ({
   searchTerm,
   handleSearchTermChange,
   handleSearchButtonClick,
-}: SearchBoxProps) => {
+}) => {
   const classes = useStyles();
   return (
     <>

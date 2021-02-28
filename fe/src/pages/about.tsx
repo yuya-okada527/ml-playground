@@ -2,7 +2,7 @@ import { Grid } from "@material-ui/core";
 import Link from "next/link";
 import Layout from "../components/Layout";
 
-const AboutPage = () => (
+const AboutPage: React.FC = () => (
   <Layout title="About This Site">
     <Grid container>
       <Grid item xs={8}>

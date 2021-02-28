@@ -40,7 +40,7 @@ const calcTotalPage = (hitNum: number) => {
   return Math.floor(hitNum / 5) + 1;
 };
 
-const IndexPage = () => {
+const IndexPage: React.FC = () => {
   const router = useRouter();
   const [searchTerm, setSearchTerm] = React.useState<string>(
     Array.isArray(router.query.searchTerm)

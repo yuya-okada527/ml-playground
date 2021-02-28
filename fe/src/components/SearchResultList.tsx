@@ -66,13 +66,13 @@ type SearchResultProps = {
   handlePageChange: (event: React.ChangeEvent<unknown>, page: number) => void;
 };
 
-const SearchResultList = ({
+const SearchResultList: React.FC<SearchResultProps> = ({
   movies,
   searchedTerm,
   page,
   pageCount,
   handlePageChange,
-}: SearchResultProps) => {
+}) => {
   const classes = useStyles();
   return (
     <>
