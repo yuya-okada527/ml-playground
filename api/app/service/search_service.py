@@ -5,17 +5,13 @@
 from typing import List
 
 from domain.exceptions.service_exception import NoTargetException
-from domain.models.solr.movies import SolrResultModel
 from entrypoints.v1.movie.messages.movie_messages import (MovieResponse,
                                                           SearchMovieResponse)
 from infra.client.solr.solr_api import AbstractSolrClient
 
 from service.logic.movie_logic import (build_search_by_id_query,
                                        build_search_query, map_movie,
-                                       map_movie_response)
-
-# TMDBの基盤画像URL
-IMAGE_URL_BASE = "https://image.tmdb.org/t/p/w500"
+                                       map_search_movie_response)
 
 
 def exec_search_service(
@@ -42,7 +38,7 @@ def exec_search_service(
     # 検索実行
     search_result = solr_client.search_movies(solr_query)
 
-    return map_movie_response(search_result)
+    return map_search_movie_response(search_result)
 
 
 def exec_search_by_id_service(
