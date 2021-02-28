@@ -33,7 +33,7 @@ jobs:
         run: poetry run flake8 src/app --ignore E501,E128
       - name: Check mypy
         working-directory: ./batch
-        run: poetry run mypy app --ignore-missing-imports --show-column-numbers --check-untyped-defs
+        run: poetry run mypy src/app --ignore-missing-imports --show-column-numbers --check-untyped-defs
       - name: Unit test
         working-directory: ./batch
         run: poetry run src/pytest tests -v --cov=src/app
