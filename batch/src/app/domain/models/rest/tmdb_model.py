@@ -70,7 +70,7 @@ class TmdbMovieDetail(BaseModel):
     """TMDB映画詳細"""
     adult: bool
     backdrop_path: Optional[str] = None
-    belongs_to_collection: dict[str, Any] = {}
+    belongs_to_collection: Optional[dict[str, Any]] = {}
     budget: int
     genres: list[TmdbMovieGenre] = []
     homepage: Optional[str] = None

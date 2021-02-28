@@ -74,7 +74,7 @@ INIT_DATABASE_SQL_LIST= [
 def test_engine():
 
     # sqliteのDBを作成
-    db_dir = "tests/data/temp"
+    db_dir = "src/tests/data/temp"
     os.makedirs(db_dir, exist_ok=True)
     db_name = f"{db_dir}/database.db"
     conn = sqlite3.connect(db_name)

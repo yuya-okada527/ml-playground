@@ -114,8 +114,12 @@ def update_similar_movies_data(
     """
 
     # 映画IDごとに全ての類似映画を取得
+    # TODO パフォーマンス改善
     count = 0
     for i, movie_id in enumerate(registered_movies_id_set, start=1):
+
+        if i % LOG_FREQUENCY == 0:
+            log.info(f"{i}件目の処理を実行中.")
 
         # 登録している映画はスキップする
         if movie_id in registered_similar_movie_map:
@@ -137,9 +141,6 @@ def update_similar_movies_data(
             movie_id=movie_id,
             similar_movie_list=similar_movie_list
         )
-
-        if i % LOG_FREQUENCY == 0:
-            log.info(f"{i}件目の処理が完了しました.")
 
     return count
 

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # main.pyが存在するか確認
-if [ ! -e "./app/main.py" ]; then
+if [ ! -e "./src/app/main.py" ]; then
   echo "main.py does not exist!"
   exit 1
 fi
@@ -16,9 +16,9 @@ fi
 
 # ジャンルマスタ更新バッチを実行
 if [ $FORCE_UPDATE != "1" ]; then
-  python app/main.py input genre
+  python src/app/main.py input genre
 else
-  python app/main.py input genre --force-update
+  python src/app/main.py input genre --force-update
 fi
 if [ $? != 0 ]; then
   exit 1
@@ -29,9 +29,9 @@ start=1
 end=10
 for i in $(seq $start $end); do
   if [ $FORCE_UPDATE != "1" ]; then
-    python app/main.py input movies --page $i
+    python src/app/main.py input movies --page $i
   else
-    python app/main.py input movies --page $i --force-update
+    python src/app/main.py input movies --page $i --force-update
   fi
   if [ $? != 0 ]; then
     exit 1
@@ -42,13 +42,13 @@ if [ $? != 0 ]; then
 fi
 
 # レビュー収集バッチを実行
-python app/main.py input reviews
+python src/app/main.py input reviews
 if [ $? != 0 ]; then
   exit 1
 fi
 
 # 類似映画収集バッチを実行
-python app/main.py input similar_movies
+python src/app/main.py input similar_movies
 if [ $? != 0 ]; then
   exit 1
 fi

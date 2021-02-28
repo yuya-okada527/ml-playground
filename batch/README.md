@@ -27,6 +27,8 @@ $ sh shells/exec_input.sh
 $ sh shells/exec_output.sh
 # 類似映画データ作成処理
 $ sh shells/exec_similarity.sh
+# 全実行
+$ sh shells/exec_all.sh 0
 ```
 
 ## 静的解析
