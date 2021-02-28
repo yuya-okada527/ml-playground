@@ -1,0 +1,17 @@
+{
+  "name": "e2e_v2",
+  "version": "1.0.0",
+  "description": "ML Playground App 用の e2e テストの V2 を提供します。 PlayWright の検証用に使用する",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest tests/test.js -c jest.e2e.config.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "No License",
+  "dependencies": {
+    "jest": "^26.6.3",
+    "jest-playwright-preset": "^1.4.7",
+    "playwright": "^1.9.1"
+  }
+}

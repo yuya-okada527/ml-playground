@@ -5,3 +5,4 @@
 *__pycache__/
 solr/data/
 redis/data/
+*node_modules/
