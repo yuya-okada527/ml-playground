@@ -4,14 +4,13 @@
   "description": "ML Playground App 用の e2e テストの V2 を提供します。 PlayWright の検証用に使用する",
   "main": "index.js",
   "scripts": {
-    "test": "jest tests -c jest.e2e.config.js"
+    "test": "npx folio -p browserName=chromium -p headful -p slowMo=1000"
   },
   "keywords": [],
   "author": "",
   "license": "No License",
   "dependencies": {
-    "jest": "^26.6.3",
-    "jest-playwright-preset": "^1.4.7",
+    "@playwright/test": "^0.191.0",
     "playwright": "^1.9.1"
   }
 }
