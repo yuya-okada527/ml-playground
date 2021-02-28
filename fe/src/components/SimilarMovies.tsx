@@ -11,8 +11,8 @@ import {
   Grid,
 } from "@material-ui/core";
 import Image from "material-ui-image";
-import { Movie } from "../interfaces";
 import Link from "next/link";
+import { Movie } from "../interfaces";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

@@ -24,11 +24,11 @@ const callGetApi = async (url: string, queries: QueriesType) => {
 };
 
 const makeQuery = (queries: QueriesType): string => {
-  let result = [];
-  for (let entry of Object.entries(queries)) {
-    let key = entry[0];
+  const result = [];
+  for (const entry of Object.entries(queries)) {
+    const key = entry[0];
     if (Array.isArray(entry[1])) {
-      for (let value of entry[1]) {
+      for (const value of entry[1]) {
         result.push(key + "=" + value);
       }
     } else {

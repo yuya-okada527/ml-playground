@@ -1,3 +1,4 @@
+import { ParsedUrlQuery } from "querystring";
 import React, { ChangeEvent } from "react";
 import { Grid } from "@material-ui/core";
 import { useRouter } from "next/router";
@@ -8,7 +9,6 @@ import SearchResultList from "../components/SearchResultList";
 import { Movie } from "../interfaces/index";
 import { callGetApi } from "../utils/http";
 import config from "../utils/config";
-import { ParsedUrlQuery } from "querystring";
 
 const fetchSearchResult = async (searchTerm: string, page?: number) => {
   const url = config.apiEndpoint + "/v1/movie/search";
