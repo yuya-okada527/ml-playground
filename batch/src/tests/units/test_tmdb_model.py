@@ -1,10 +1,10 @@
 from datetime import date
 
-from app.domain.models.rest.tmdb_model import (TmdbMovieDetail, TmdbMovieGenre,
-                                               TmdbProductionCompany,
-                                               TmdbProductionCountry,
-                                               TmdbSpokenLanguage)
 from domain.models.internal.movie_model import Genre, Movie
+from domain.models.rest.tmdb_model import (TmdbMovieDetail, TmdbMovieGenre,
+                                           TmdbProductionCompany,
+                                           TmdbProductionCountry,
+                                           TmdbSpokenLanguage)
 
 
 def test_tmdb_movie_detail_mapping():

@@ -7,15 +7,14 @@ if [ ! -e "./src/app/main.py" ]; then
 fi
 
 FORCE_UPDATE=$1
-
-if [ $FORCE_UPDATE != "1" ]; then
+if [ $FORCE_UPDATE != 1 ]; then
   echo "通常モードで、入稿処理を開始します."
 else
   echo "強制アップデートモードで、入稿処理を開始します."
 fi
 
 # ジャンルマスタ更新バッチを実行
-if [ $FORCE_UPDATE != "1" ]; then
+if [ $FORCE_UPDATE != 1 ]; then
   python src/app/main.py input genre
 else
   python src/app/main.py input genre --force-update

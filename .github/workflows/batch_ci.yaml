@@ -30,7 +30,7 @@ jobs:
         run: poetry install
       - name: Check flake8
         working-directory: ./batch
-        run: poetry run flake8 app --ignore E501,E128
+        run: poetry run flake8 src/app --ignore E501,E128
       - name: Check mypy
         working-directory: ./batch
         run: poetry run mypy app --ignore-missing-imports --show-column-numbers --check-untyped-defs

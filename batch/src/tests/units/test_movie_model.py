@@ -1,4 +1,4 @@
-from app.domain.models.internal.movie_model import Movie
+from domain.models.internal.movie_model import Movie
 
 
 def test_cannot_output_if_both_original_and_japanese_title_is_empty():

@@ -14,11 +14,7 @@ else
 fi
 
 # 入稿処理を開始
-if [ $FORCE_UPDATE != 1 ]; then
-  sh shells/exec_input.sh
-else
-  sh shells/exec_input.sh ${FORCE_UPDATE}
-fi
+sh shells/exec_input.sh ${FORCE_UPDATE}
 if [ $? != 0 ]; then
   exit 1
 fi
