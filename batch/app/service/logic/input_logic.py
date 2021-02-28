@@ -122,28 +122,11 @@ def update_similar_movies_data(
             continue
 
         # 最終ページまで全ての類似映画を取得する
-        similar_movie_list = []
-        current_page = 1
-        while True:
-            # 類似映画IDリストを更新
-            similar_movies_response = tmdb_client.fetch_similar_movie_list(
-                movie_id=movie_id,
-                page=current_page
-            )
-            similar_movie_list.extend(
-                [movie.id for movie in similar_movies_response.results if movie.id in registered_movies_id_set]
-            )
-
-            # 最終ページなら終了
-            if current_page == similar_movies_response.total_pages:
-                break
-
-            # 類似映画の数が閾値を超えたら打ち切り
-            if len(similar_movie_list) >= MAX_SIMILAR_MOVIES:
-                break
-
-            # ページを更新し、再度API実行
-            current_page += 1
+        similar_movie_list = _fetch_similar_movies(
+            movie_id=movie_id,
+            registered_movies_id_set=registered_movies_id_set,
+            tmdb_client=tmdb_client
+        )
 
         # 登録できる映画IDがない場合、スキップ
         if not similar_movie_list:
@@ -159,6 +142,49 @@ def update_similar_movies_data(
             log.info(f"{i}件目の処理が完了しました.")
 
     return count
+
+
+def _fetch_similar_movies(
+    movie_id: int,
+    registered_movies_id_set: set[int],
+    tmdb_client: AbstractTmdbClient
+) -> list[int]:
+    """類似映画リストを取得する
+
+    Args:
+        movie_id (int): 映画ID
+        registered_movies_id_set (set[int]): 登録済映画IDセット
+        tmdb_client (AbstractTmdbClient): TMDBクライアント
+
+    Returns:
+        list[int]: 類似映画リスト
+    """
+
+    # 最終ページまで全ての類似映画を取得する
+    similar_movie_list = []
+    current_page = 1
+    while True:
+        # 類似映画IDリストを更新
+        similar_movies_response = tmdb_client.fetch_similar_movie_list(
+            movie_id=movie_id,
+            page=current_page
+        )
+        similar_movie_list.extend(
+            [movie.id for movie in similar_movies_response.results if movie.id in registered_movies_id_set]
+        )
+
+        # 最終ページなら終了
+        if current_page == similar_movies_response.total_pages:
+            break
+
+        # 類似映画の数が閾値を超えたら打ち切り
+        if len(similar_movie_list) >= MAX_SIMILAR_MOVIES:
+            break
+
+        # ページを更新し、再度API実行
+        current_page += 1
+
+    return similar_movie_list
 
 
 def _map_review_model(movie_review: TmdbMovieReview, movie_id: int) -> Review:
