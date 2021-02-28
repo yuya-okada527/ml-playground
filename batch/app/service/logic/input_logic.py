@@ -7,8 +7,11 @@ from core.logger import create_logger
 from domain.models.internal.movie_model import Genre, Review
 from domain.models.rest.tmdb_model import TmdbMovieGenre, TmdbMovieReview
 from infra.client.tmdb.tmdb_api import AbstractTmdbClient
+from infra.repository.input.movie_repository import AbstractMovieRepository
 from infra.repository.input.review_repository import AbstractReviewRepository
 
+# 最大類似映画数
+MAX_SIMILAR_MOVIES = 5
 # ログ頻度
 LOG_FREQUENCY = 20
 
@@ -85,6 +88,72 @@ def update_review_data(
 
         # 登録
         count += review_repository.save_review_list(movie_review_list)
+
+        if i % LOG_FREQUENCY == 0:
+            log.info(f"{i}件目の処理が完了しました.")
+
+    return count
+
+
+def update_similar_movies_data(
+    registered_movies_id_set: set[int],
+    registered_similar_movie_map: dict[int, list[int]],
+    tmdb_client: AbstractTmdbClient,
+    movie_repository: AbstractMovieRepository
+) -> int:
+    """類似映画データを更新する
+
+    Args:
+        registered_movies_id_set (set[int]): 登録済映画IDセット
+        registered_similar_movie_map (dict[int, list[int]]): 登録済類似映画データ
+        tmdb_client (AbstractTmdbClient): TMDBクライアント
+        movie_repository (AbstractMovieRepository): 映画リポジトリ
+
+    Returns:
+        int: 更新数
+    """
+
+    # 映画IDごとに全ての類似映画を取得
+    count = 0
+    for i, movie_id in enumerate(registered_movies_id_set, start=1):
+
+        # 登録している映画はスキップする
+        if movie_id in registered_similar_movie_map:
+            continue
+
+        # 最終ページまで全ての類似映画を取得する
+        similar_movie_list = []
+        current_page = 1
+        while True:
+            # 類似映画IDリストを更新
+            similar_movies_response = tmdb_client.fetch_similar_movie_list(
+                movie_id=movie_id,
+                page=current_page
+            )
+            similar_movie_list.extend(
+                [movie.id for movie in similar_movies_response.results if movie.id in registered_movies_id_set]
+            )
+
+            # 最終ページなら終了
+            if current_page == similar_movies_response.total_pages:
+                break
+
+            # 類似映画の数が閾値を超えたら打ち切り
+            if len(similar_movie_list) >= MAX_SIMILAR_MOVIES:
+                break
+
+            # ページを更新し、再度API実行
+            current_page += 1
+
+        # 登録できる映画IDがない場合、スキップ
+        if not similar_movie_list:
+            continue
+
+        # UPSERT処理で登録
+        count += movie_repository.save_similar_movie_list(
+            movie_id=movie_id,
+            similar_movie_list=similar_movie_list
+        )
 
         if i % LOG_FREQUENCY == 0:
             log.info(f"{i}件目の処理が完了しました.")

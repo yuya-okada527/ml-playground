@@ -17,21 +17,21 @@ class TmdbMovieGenre(BaseModel):
 
 class TmdbMovieGenreList(BaseModel):
     """TMDB映画ジャンルリストモデル"""
-    genres: list[TmdbMovieGenre]
+    genres: list[TmdbMovieGenre] = []
 
 
 class TmdbMovie(BaseModel):
     """TMDB映画モデル"""
-    poster_path: Optional[str]
+    poster_path: Optional[str] = None
     adult: bool
     overview: str
-    release_date: Optional[str]
-    genre_ids: list[int]
+    release_date: Optional[str] = None
+    genre_ids: list[int] = []
     id: int
     original_title: str
     original_language: str
     title: str
-    backdrop_path: Optional[str]
+    backdrop_path: Optional[str] = None
     popularity: float
     vote_count: int
     video: bool
@@ -40,8 +40,8 @@ class TmdbMovie(BaseModel):
 
 class TmdbPopularMovieList(BaseModel):
     """人気映画モデルリスト"""
-    pages: Optional[int]
-    results: list[TmdbMovie]
+    pages: Optional[int] = None
+    results: list[TmdbMovie] = []
     total_results: int
     total_pages: int
 
@@ -50,7 +50,7 @@ class TmdbProductionCompany(BaseModel):
     """TMDB制作会社モデル"""
     name: str
     id: int
-    logo_path: Optional[str]
+    logo_path: Optional[str] = None
     origin_country: str
 
 
@@ -69,26 +69,26 @@ class TmdbSpokenLanguage(BaseModel):
 class TmdbMovieDetail(BaseModel):
     """TMDB映画詳細"""
     adult: bool
-    backdrop_path: Optional[str]
-    belongs_to_collection: Optional[dict[str, Any]]
+    backdrop_path: Optional[str] = None
+    belongs_to_collection: dict[str, Any] = {}
     budget: int
-    genres: list[TmdbMovieGenre]
-    homepage: Optional[str]
+    genres: list[TmdbMovieGenre] = []
+    homepage: Optional[str] = None
     id: int
-    imdb_id: Optional[str]
+    imdb_id: Optional[str] = None
     original_language: str
     original_title: str
-    overview: Optional[str]
+    overview: Optional[str] = None
     popularity: float
-    poster_path: Optional[str]
-    production_companies: list[TmdbProductionCompany]
-    production_countries: list[TmdbProductionCountry]
+    poster_path: Optional[str] = None
+    production_companies: list[TmdbProductionCompany] = []
+    production_countries: list[TmdbProductionCountry] = []
     release_date: str
     revenue: int
-    runtime: Optional[int]
-    spoken_languages: list[TmdbSpokenLanguage]
+    runtime: Optional[int] = None
+    spoken_languages: list[TmdbSpokenLanguage] = []
     status: str
-    tagline: Optional[str]
+    tagline: Optional[str] = None
     title: str
     video: bool
     vote_average: float
@@ -116,7 +116,7 @@ class TmdbMovieDetail(BaseModel):
 class TmdbSimilarMovieList(BaseModel):
     """TMDB類似映画リスト"""
     page: int
-    results: list[TmdbMovie]
+    results: list[TmdbMovie] = []
     total_pages: int
     total_results: int
 
@@ -144,6 +144,6 @@ class TmdbMovieReviewList(BaseModel):
     """TMDB映画レビューリスト"""
     id: int
     page: int
-    results: list[TmdbMovieReview]
+    results: list[TmdbMovieReview] = []
     total_pages: int
     total_results: int

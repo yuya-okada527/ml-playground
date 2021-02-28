@@ -8,10 +8,10 @@ from infra.client.tmdb.tmdb_api import TmdbClient
 from infra.repository.input.genre_repository import GenreRepository
 from infra.repository.input.movie_repository import MovieRepository
 from infra.repository.input.review_repository import ReviewRepository
-from service.input_service import (collect_similar_movies,
-                                   exec_update_genre_master,
+from service.input_service import (exec_update_genre_master,
                                    exec_update_movie_reviews,
-                                   exec_update_popular_movies)
+                                   exec_update_popular_movies,
+                                   exec_update_similar_movies)
 
 app = typer.Typer()
 
@@ -88,7 +88,7 @@ def update_movie_reviews_batch() -> None:
 
 
 @app.command("similar_movies")
-def update_similar_movie_batch() -> None:
+def update_similar_movies_batch() -> None:
     """類似映画更新バッチ
 
     類似映画を更新します.
@@ -101,7 +101,7 @@ def update_similar_movie_batch() -> None:
     movie_repository = MovieRepository()
 
     # サービス実行
-    collect_similar_movies(
+    exec_update_similar_movies(
         tmdb_client=tmdb_client,
         movie_repository=movie_repository
     )
