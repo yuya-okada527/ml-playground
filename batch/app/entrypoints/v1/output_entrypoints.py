@@ -6,7 +6,7 @@ import typer
 from core.config import SolrSettings
 from infra.client.solr.solr_api import SolrClient
 from infra.repository.input.movie_repository import MovieRepository
-from service.output_service import build_index, update_schema
+from service.output_service import exec_build_index, exec_update_solr_schema
 
 app = typer.Typer()
 
@@ -22,7 +22,7 @@ def update_solr_schema_batch() -> None:
     solr_client = SolrClient(SolrSettings())
 
     # サービスの実行
-    update_schema(solr_client)
+    exec_update_solr_schema(solr_client=solr_client)
 
 
 @app.command("index")
@@ -39,4 +39,4 @@ def build_index_batch() -> None:
     movie_repository = MovieRepository()
 
     # サービス実行
-    build_index(solr_client=solr_client, movie_repository=movie_repository)
+    exec_build_index(solr_client=solr_client, movie_repository=movie_repository)
