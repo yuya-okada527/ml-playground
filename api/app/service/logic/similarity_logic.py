@@ -13,7 +13,7 @@ from service.logic.movie_logic import build_search_by_id_query, map_movie
 
 
 def fetch_similar_movies(
-    movie_ids: list[int],
+    movie_ids: List[int],
     solr_client: AbstractSolrClient
 ) -> List[MovieResponse]:
     """類似映画データを取得する
