@@ -37,7 +37,7 @@ def retry_exec(max_retry_num: int, wait_time_base: int):
     def _retry_exec(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
-            for i in range(1, max_retry_num+1):
+            for i in range(1, max_retry_num + 1):
                 try:
                     return func(*args, **kwargs)
                 except ServerSideError as e:
