@@ -4,7 +4,7 @@
   "description": "ML Playground App 用の e2e テストの V2 を提供します。 PlayWright の検証用に使用する",
   "main": "index.js",
   "scripts": {
-    "test": "jest tests/test.js -c jest.e2e.config.js"
+    "test": "jest tests -c jest.e2e.config.js"
   },
   "keywords": [],
   "author": "",
