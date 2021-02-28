@@ -2,6 +2,8 @@
 
 サービスに関する例外を定義するモジュール
 """
+
+
 class AppBaseException(Exception):
     """基底例外
 

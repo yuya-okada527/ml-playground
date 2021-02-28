@@ -1,12 +1,16 @@
-from fastapi import APIRouter, Path, Query, Depends
+"""類似映画APIルーターモジュール
 
-from entrypoints.v1.movie.messages.movie_messages import SimilarMovieResponse
+類似映画APIのルーター定義を記述するモジュール
+"""
 from domain.enums.similarity_enums import SimilarityModelType
+from entrypoints.v1.movie.messages.movie_messages import SimilarMovieResponse
+from fastapi import APIRouter, Depends, Path, Query
 from infra.client.solr.api import AbstractSolrClient, get_solr_client
-from infra.repository.redis_repository import AbstractKvsRepository, get_kvs_repository
+from infra.repository.redis_repository import (AbstractKvsRepository,
+                                               get_kvs_repository)
 from service.similar_service import exec_search_similar_service
 
-
+# ルーター作成
 router = APIRouter(
     prefix="/v1/movie/similar",
     tags=["similar"],

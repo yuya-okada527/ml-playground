@@ -2,10 +2,12 @@ from typing import List
 
 from domain.exceptions.service_exception import NoTargetException
 from domain.models.solr.movies import SolrResultModel
-from entrypoints.v1.movie.messages.movie_messages import MovieResponse, SearchMovieResponse
-from service.logic.movie_logic import build_search_query, build_search_by_id_query, map_movie
+from entrypoints.v1.movie.messages.movie_messages import (MovieResponse,
+                                                          SearchMovieResponse)
 from infra.client.solr.api import AbstractSolrClient
 
+from service.logic.movie_logic import (build_search_by_id_query,
+                                       build_search_query, map_movie)
 
 IMAGE_URL_BASE = "https://image.tmdb.org/t/p/w500"
 

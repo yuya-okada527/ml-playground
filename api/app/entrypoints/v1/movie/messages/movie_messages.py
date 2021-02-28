@@ -1,11 +1,15 @@
+"""映画APIメッセージモジュール
+
+映画APIに対するIFメッセージを記述するモジュール
+"""
 from typing import List, Optional
 
-from pydantic import BaseModel, Field
-
 from domain.enums.similarity_enums import SimilarityModelType
+from pydantic import BaseModel, Field
 
 
 class MovieResponse(BaseModel):
+    """映画レスポンス"""
     movie_id: int = Field(..., description="MovieRecommender共通映画ID")
     original_title: str = Field(..., description="オリジナルの映画タイトル")
     japanese_title: str = Field(..., description="日本語タイトル")
@@ -22,6 +26,7 @@ class MovieResponse(BaseModel):
 
 
 class SearchMovieResponse(BaseModel):
+    """映画検索レスポンス"""
     start: int = Field(..., description="取得開始位置(0始まり)")
     returned_num: int = Field(..., description="実際に返却するリストの数を返します.")
     available_num: int = Field(..., description="検索条件にヒットした件数を返します.")
@@ -29,6 +34,7 @@ class SearchMovieResponse(BaseModel):
 
 
 class SimilarMovieResponse(BaseModel):
+    """類似映画レスポンス"""
     target_id: int = Field(..., description="類似検索対象映画ID")
     model_type: SimilarityModelType = Field(..., description="類似性判定モデル")
     results: List[MovieResponse] = Field(..., description="類似映画リスト")

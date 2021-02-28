@@ -1,13 +1,18 @@
+"""検索APIルーターモジュール
+
+検索APIのルーター定義を記述するモジュール
+"""
 from typing import Optional
 
-from fastapi import APIRouter, Path, Query, Depends
-
-from entrypoints.v1.movie.messages.movie_messages import SearchMovieResponse, MovieResponse
+from entrypoints.v1.movie.messages.movie_messages import (MovieResponse,
+                                                          SearchMovieResponse)
+from fastapi import APIRouter, Depends, Path, Query
 from infra.client.solr.api import AbstractSolrClient, get_solr_client
-from service.search import exec_search_by_id_service, exec_search_service
+from service.search_service import (exec_search_by_id_service,
+                                    exec_search_service)
 from util.query import split_query_params
 
-
+# ルーター作成
 router = APIRouter(
     prefix="/v1/movie/search",
     tags=["search"],
@@ -74,4 +79,7 @@ async def search_by_id(
 ) -> MovieResponse:
 
     # サービス実行
-    return exec_search_by_id_service(movie_id, solr_client)
+    return exec_search_by_id_service(
+        movie_id=movie_id,
+        solr_client=solr_client
+    )
