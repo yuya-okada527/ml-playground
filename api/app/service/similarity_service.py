@@ -2,7 +2,6 @@
 
 類似性データに関するサービス関数を記述するモジュール
 """
-from typing import List
 
 from domain.enums.similarity_enums import SimilarityModelType
 from entrypoints.v1.movie.messages.movie_messages import SimilarMovieResponse
