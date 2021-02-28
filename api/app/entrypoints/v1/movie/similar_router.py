@@ -8,7 +8,7 @@ from fastapi import APIRouter, Depends, Path, Query
 from infra.client.solr.solr_api import AbstractSolrClient, get_solr_client
 from infra.repository.kvs_repository import (AbstractKvsRepository,
                                              get_kvs_repository)
-from service.similar_service import exec_search_similar_service
+from service.similarity_service import exec_search_similar_service
 
 # ルーター作成
 router = APIRouter(

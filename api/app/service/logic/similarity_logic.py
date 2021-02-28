@@ -1,30 +1,25 @@
+"""類似性データロジックモジュール
+
+類似性データに関するロジックを記述するモジュール
+"""
+
 from typing import List
 
 from domain.enums.similarity_enums import SimilarityModelType
 from entrypoints.v1.movie.messages.movie_messages import (MovieResponse,
                                                           SimilarMovieResponse)
 from infra.client.solr.solr_api import AbstractSolrClient
-from infra.repository.kvs_repository import AbstractKvsRepository
-
 from service.logic.movie_logic import build_search_by_id_query, map_movie
 
 
-def exec_search_similar_service(
-    movie_id: int,
-    model_type: SimilarityModelType,
-    kvs_repository: AbstractKvsRepository,
+def fetch_similar_movies(
+    movie_ids: list[int],
     solr_client: AbstractSolrClient
-) -> SimilarMovieResponse:
+) -> List[MovieResponse]:
 
-    # KVSから類似映画IDを取得
-    similar_movie_id_list = kvs_repository.get_similar_movie_id_list(
-        movie_id=movie_id,
-        model_type=model_type
-    )
-
-    # 類似映画を取得していく
+    # 類似映画を取得
     similar_movie_list = []
-    for similar_id in similar_movie_id_list:
+    for similar_id in movie_ids:
 
         # クエリを作成
         movie_id_query = build_search_by_id_query(movie_id=similar_id)
@@ -39,14 +34,10 @@ def exec_search_similar_service(
         # 内部モデルに変換
         similar_movie_list.append(map_movie(search_result.response.docs[0]))
 
-    return _map_response(
-        movie_id=movie_id,
-        model_type=model_type,
-        similar_movie_list=similar_movie_list
-    )
+    return similar_movie_list
 
 
-def _map_response(
+def map_similar_movies_response(
     movie_id: int,
     model_type: SimilarityModelType,
     similar_movie_list: List[MovieResponse]
