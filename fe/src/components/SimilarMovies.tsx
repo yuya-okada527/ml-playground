@@ -67,7 +67,7 @@ const SimilarMovies = ({ similarMovies, movieTitle }: SimilarMoviesProps) => {
     <Box className={classes.root}>
       <Paper className={classes.similarMoviesHeader} variant="outlined">
         <Typography className={classes.similarMoviesHeaderText} variant="h6">
-          "{movieTitle}" が好きなあなたにおすすめ
+          &quot;{movieTitle}&quot; が好きなあなたにおすすめ
         </Typography>
       </Paper>
       <List>
