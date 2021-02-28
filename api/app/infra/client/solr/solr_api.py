@@ -1,3 +1,7 @@
+"""Solr APIクライアントモジュール
+
+Solr APIのクライアントを記述するモジュール
+"""
 from typing import Protocol
 
 from core.config import SolrSettings
@@ -11,6 +15,14 @@ SELECT_PATH = "/{collection}/select"
 class AbstractSolrClient(Protocol):
 
     def search_movies(self, query: SolrQuery) -> SolrResultModel:
+        """映画を検索する.
+
+        Args:
+            query (SolrQuery): Solrクエリ
+
+        Returns:
+            SolrResultModel: Solr検索結果
+        """
         ...
 
 
@@ -33,4 +45,9 @@ class SolrClient:
 
 
 async def get_solr_client() -> SolrClient:
+    """Solrクライアントを取得します.
+
+    Returns:
+        SolrClient: Solrクライアント
+    """
     return SolrClient(SolrSettings())

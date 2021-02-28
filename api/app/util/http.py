@@ -1,11 +1,10 @@
 import time
 from functools import wraps
-from typing import Dict, Union, Optional
+from typing import Dict, Optional, Union
 
 import requests
-from requests.exceptions import Timeout
 from pydantic import BaseModel
-
+from requests.exceptions import Timeout
 
 WAIT_TIME_BASE = 5
 TIMEOUT = 3
@@ -48,7 +47,7 @@ def call_get_api(
     if query_string:
         url += "?" + query_string
     if query:
-        query = query.dict()
+        query = query.dict()  # type: ignore
 
     # API実行
     try:
