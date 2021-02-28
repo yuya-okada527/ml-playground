@@ -24,4 +24,5 @@ jobs:
         working-directory: ./fe
         run: npm install
       - name: Eslint
+        working-directory: ./fe
         run: npm run lint
