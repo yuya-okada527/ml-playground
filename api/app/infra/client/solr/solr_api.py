@@ -1,10 +1,9 @@
 from typing import Protocol
+
 from core.config import SolrSettings
 from domain.models.solr.movies import SolrResultModel
-
-from infra.client.solr.query import SolrQuery
+from infra.client.solr.solr_query import SolrQuery
 from util.http import call_get_api
-
 
 SELECT_PATH = "/{collection}/select"
 

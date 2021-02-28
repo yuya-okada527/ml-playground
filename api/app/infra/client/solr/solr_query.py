@@ -1,10 +1,8 @@
 from enum import Enum
 from typing import List
 
+from domain.enums.movie_enums import MovieField
 from pydantic import BaseModel
-
-from domain.enums.movies import MovieField
-
 
 SEARCH_ALL = "*:*"
 

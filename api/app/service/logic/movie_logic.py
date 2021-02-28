@@ -1,10 +1,10 @@
 from typing import List
 
-from entrypoints.v1.movie.messages.movie_messages import MovieResponse
-from domain.enums.movies import MovieField
+from domain.enums.movie_enums import MovieField
 from domain.models.solr.movies import MovieSolrModel
-from infra.client.solr.query import SolrQuery, SolrFilterQuery, SolrSortQuery, SortDirection
-
+from entrypoints.v1.movie.messages.movie_messages import MovieResponse
+from infra.client.solr.solr_query import (SolrFilterQuery, SolrQuery,
+                                          SolrSortQuery, SortDirection)
 
 DEFAULT_MOVIE_FLS = [
     MovieField.MOVIE_ID,

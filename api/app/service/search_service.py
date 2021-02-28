@@ -4,7 +4,7 @@ from domain.exceptions.service_exception import NoTargetException
 from domain.models.solr.movies import SolrResultModel
 from entrypoints.v1.movie.messages.movie_messages import (MovieResponse,
                                                           SearchMovieResponse)
-from infra.client.solr.api import AbstractSolrClient
+from infra.client.solr.solr_api import AbstractSolrClient
 
 from service.logic.movie_logic import (build_search_by_id_query,
                                        build_search_query, map_movie)

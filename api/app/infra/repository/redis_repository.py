@@ -2,10 +2,8 @@ import json
 from typing import List, Protocol
 
 import redis
-
 from core.config import RedisSettings
 from domain.enums.similarity_enums import SimilarityModelType
-
 
 REDIS_SETTINGS = RedisSettings()
 REDIS_CLIENT = redis.Redis(host=REDIS_SETTINGS.redis_host, port=REDIS_SETTINGS.redis_port)
@@ -33,7 +31,7 @@ class RedisRepository:
         key = _make_sim_key(movie_id=movie_id, model_type=model_type)
 
         # 類似映画IDを取得
-        response = REDIS_CLIENT.get(key)
+        response: bytes = REDIS_CLIENT.get(key)  # type: ignore
         if not response:
             return []
 
