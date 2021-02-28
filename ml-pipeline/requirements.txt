@@ -37,10 +37,10 @@ Flask==1.1.2
 fsspec==0.8.5
 gitdb==4.0.5
 GitPython==3.1.13
-google-api-core>=1.23.0,<=1.26.0
+google-api-core==1.26.0
 google-auth==1.26.1
 google-auth-oauthlib==0.4.2
-google-cloud-bigquery>=2.6.0,<=2.9.0
+google-cloud-bigquery==2.8.0
 google-cloud-bigquery-storage==2.2.1
 google-cloud-core==1.6.0
 google-crc32c==1.1.2
@@ -72,6 +72,7 @@ jupyterlab-launcher==0.10.5
 jupyterlab-pygments==0.1.2
 jupyterlab-widgets==1.0.0
 kedro==0.17.0
+kedro-docker==0.2.2
 kedro-viz==3.8.1
 libcst==0.3.17
 Mako==1.1.4
@@ -112,7 +113,7 @@ proto-plus==1.13.0
 protobuf==3.14.0
 ptyprocess==0.7.0
 py==1.10.0
-pyarrow>=1.0.0
+pyarrow==3.0.0
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
 pycodestyle==2.6.0
