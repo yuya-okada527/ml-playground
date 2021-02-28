@@ -20,7 +20,7 @@ class AbstarctRedisRepository(Protocol):
         movie_id: int,
         similar_movies: list[int],
         model_type: SimilarityModelType
-    ) -> None:
+    ) -> int:
         """映画類似度データを保存する.
 
         Args:
@@ -41,7 +41,7 @@ class RedisRepository:
         movie_id: int,
         similar_movies: list[int],
         model_type: SimilarityModelType
-    ) -> None:
+    ) -> int:
         # ガード
         assert model_type is not None
 
@@ -50,6 +50,8 @@ class RedisRepository:
 
         # 類似映画を保存
         self.redis_client.set(key, json.dumps(similar_movies))
+
+        return len(similar_movies)
 
 
 def _make_sim_key(movie_id: int, model_type: SimilarityModelType) -> str:
