@@ -9,7 +9,7 @@ from core.aop import batch_service
 from core.logger import create_logger
 from infra.client.solr.solr_api import AbstractSolrClient
 from infra.repository.input.movie_repository import AbstractMovieRepository
-from util.resource import get_resource
+from util.resource_util import get_resource
 
 from service.logic.output_logic import calculate_difference, map_to_solr_model
 

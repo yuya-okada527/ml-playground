@@ -13,7 +13,7 @@ from domain.models.rest.tmdb_model import (TmdbMovieDetail, TmdbMovieGenreList,
 from infra.client.tmdb.tmdb_query import (MovieDetailQuery, MovieGenreQuery,
                                           MovieReviewQuery, PopularMovieQuery,
                                           SimilarMovieQuery)
-from util.http import call_get_api
+from util.http_util import call_get_api
 
 # TMDb APIパス定義
 POPULAR_MOVIE_PATH = "/movie/popular"
