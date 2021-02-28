@@ -10,7 +10,7 @@ from fastapi import APIRouter, Depends, Path, Query
 from infra.client.solr.solr_api import AbstractSolrClient, get_solr_client
 from service.search_service import (exec_search_by_id_service,
                                     exec_search_service)
-from util.query import split_query_params
+from util.query_util import split_query_params
 
 # ルーター作成
 router = APIRouter(

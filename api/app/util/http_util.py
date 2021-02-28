@@ -1,3 +1,11 @@
+"""HTTPユーティリティモジュール
+
+HTTP通信に関するユーティリティを提供するモジュール
+
+Todo:
+    * 共通モジュールから提供する
+    * バッチのモジュールをベースとする
+"""
 import time
 from functools import wraps
 from typing import Dict, Optional, Union

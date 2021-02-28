@@ -6,8 +6,8 @@ from domain.enums.similarity_enums import SimilarityModelType
 from entrypoints.v1.movie.messages.movie_messages import SimilarMovieResponse
 from fastapi import APIRouter, Depends, Path, Query
 from infra.client.solr.solr_api import AbstractSolrClient, get_solr_client
-from infra.repository.redis_repository import (AbstractKvsRepository,
-                                               get_kvs_repository)
+from infra.repository.kvs_repository import (AbstractKvsRepository,
+                                             get_kvs_repository)
 from service.similar_service import exec_search_similar_service
 
 # ルーター作成

@@ -1,3 +1,7 @@
+"""KVSリポジトリモジュール
+
+KVS(Key Value Store)に対するアクセス機能を提供するモジュール
+"""
 import json
 from typing import List, Protocol
 
@@ -16,10 +20,22 @@ class AbstractKvsRepository(Protocol):
         movie_id: int,
         model_type: SimilarityModelType
     ) -> List[int]:
+        """類似映画IDリストを取得する
+
+        Args:
+            movie_id (int): 映画ID
+            model_type (SimilarityModelType): 類似映画判定モデル
+
+        Returns:
+            List[int]: 類似映画IDリスト
+        """
         ...
 
 
 class RedisRepository:
+
+    def __init__(self, client: redis.Redis = REDIS_CLIENT) -> None:
+        self.client = client
 
     def get_similar_movie_id_list(
         self,
@@ -31,7 +47,7 @@ class RedisRepository:
         key = _make_sim_key(movie_id=movie_id, model_type=model_type)
 
         # 類似映画IDを取得
-        response: bytes = REDIS_CLIENT.get(key)  # type: ignore
+        response: bytes = self.client.get(key)  # type: ignore
         if not response:
             return []
 
@@ -39,6 +55,11 @@ class RedisRepository:
 
 
 async def get_kvs_repository() -> AbstractKvsRepository:
+    """KVSリポジトリを取得する
+
+    Returns:
+        AbstractKvsRepository: KVSリポジトリ
+    """
     return RedisRepository()
 
 
