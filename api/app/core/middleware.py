@@ -1,3 +1,7 @@
+"""ミドルウェア定義モジュール
+
+APIの実行前後で実行される処理を定義する
+"""
 from fastapi.middleware.cors import CORSMiddleware
 
 # CORSミドルウェア
@@ -9,10 +13,5 @@ CORS = {
     ],
     "allow_methods": ["*"],
     "allow_headers": ["*"],
-    "expose_headers": [
-        # 標準のファイル名
-        "Content-Disposition",
-        # ファイル名カスタムヘッダー
-        "X-File-Name"
-    ]
+    "expose_headers": []
 }
