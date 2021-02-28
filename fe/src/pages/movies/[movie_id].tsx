@@ -5,7 +5,7 @@ import Layout from "../../components/Layout";
 import SearchBox from "../../components/SearchBox";
 import MovieDetail from "../../components/MovieDetail";
 import SimilarMovies from "../../components/SimilarMovies";
-import { Movie } from "../../interfaces";
+import { Movie, SimilarMoviesResponse } from "../../interfaces";
 import config from "../../utils/config";
 import { callGetApi } from "../../utils/http";
 
@@ -47,7 +47,7 @@ const DetailPage: React.FC = () => {
     const initMovieData = async () => {
       const url = config.apiEndpoint + `/v1/movie/search/${movieId}`;
       const query = {};
-      const response = await callGetApi(url, query);
+      const response = await callGetApi<Movie>(url, query);
       setMovie(response);
     };
     const initSimilarMovies = async () => {
@@ -55,7 +55,7 @@ const DetailPage: React.FC = () => {
       const query = {
         model_type: "tmdb-sim",
       };
-      const response = await callGetApi(url, query);
+      const response = await callGetApi<SimilarMoviesResponse>(url, query);
       setSimilarMovies(response.results);
     };
     initMovieData();

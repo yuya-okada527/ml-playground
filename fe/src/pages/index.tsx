@@ -6,11 +6,14 @@ import { useRouter } from "next/router";
 import Layout from "../components/Layout";
 import SearchBox from "../components/SearchBox";
 import SearchResultList from "../components/SearchResultList";
-import { Movie } from "../interfaces/index";
+import { Movie, SearchMoviesResponse } from "../interfaces/index";
 import { callGetApi } from "../utils/http";
 import config from "../utils/config";
 
-const fetchSearchResult = async (searchTerm: string, page?: number) => {
+const fetchSearchResult = async (
+  searchTerm: string,
+  page?: number
+): Promise<SearchMoviesResponse> => {
   const url = config.apiEndpoint + "/v1/movie/search";
   const query = {
     query: searchTerm,
@@ -18,7 +21,7 @@ const fetchSearchResult = async (searchTerm: string, page?: number) => {
     rows: 5,
   };
 
-  const response = await callGetApi(url, query);
+  const response = await callGetApi<SearchMoviesResponse>(url, query);
   return response;
 };
 

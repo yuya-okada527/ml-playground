@@ -2,7 +2,7 @@ type QueriesType = {
   [key: string]: string | boolean | number | string[] | boolean[] | number[];
 };
 
-const callGetApi = async (url: string, queries: QueriesType) => {
+async function callGetApi<T>(url: string, queries: QueriesType): Promise<T> {
   // クエリ文字列を作成
   const queryStr = makeQuery(queries);
 
@@ -21,7 +21,7 @@ const callGetApi = async (url: string, queries: QueriesType) => {
       console.log(err);
       return;
     });
-};
+}
 
 const makeQuery = (queries: QueriesType): string => {
   const result = [];

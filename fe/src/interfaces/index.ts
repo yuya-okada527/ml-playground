@@ -13,3 +13,16 @@ export type Movie = {
   genre_labels: string[];
   genres: number[];
 };
+
+export type SearchMoviesResponse = {
+  start: number;
+  returned_num: number;
+  available_num: number;
+  results: Movie[];
+};
+
+export type SimilarMoviesResponse = {
+  target_id: number;
+  model_type: string;
+  results: Movie[];
+};

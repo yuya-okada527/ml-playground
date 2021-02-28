@@ -2,9 +2,10 @@ import React from "react";
 import Head from "next/head";
 import { ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import { AppProps } from "next/dist/next-server/lib/router/router";
 import theme from "../utils/theme";
 
-export default function MyApp(props: any) {
+const MyApp: React.FC<AppProps> = (props: AppProps) => {
   const { Component, pageProps } = props;
 
   React.useEffect(() => {
@@ -31,4 +32,6 @@ export default function MyApp(props: any) {
       </ThemeProvider>
     </React.Fragment>
   );
-}
+};
+
+export default MyApp;
