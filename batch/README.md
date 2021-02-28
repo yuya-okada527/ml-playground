@@ -29,6 +29,9 @@ $ sh shells/exec_output.sh
 $ sh shells/exec_similarity.sh
 # 全実行
 $ sh shells/exec_all.sh 0
+
+# コンテナ実行(通常モード)
+$ docker-compose run batch sh shells/exec_all.sh 0
 ```
 
 ## 静的解析

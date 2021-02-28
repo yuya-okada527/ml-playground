@@ -8,6 +8,15 @@ services:
     env_file:
       - api/env/solr-docker-compose.env
       - api/env/redis-docker-compose.env
+  batch:
+    build: ./batch
+    image: ml-playground-batch
+    env_file:
+      - batch/env/core.env
+      - batch/env/input_db-docker-compose.env
+      - batch/env/redis-docker-compose.env
+      - batch/env/solr-docker-compose.env
+      - batch/env/tmdb.env
   solr:
     image: solr:8.7.0
     ports:
