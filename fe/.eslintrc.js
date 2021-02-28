@@ -13,9 +13,6 @@ module.exports = {
     "plugin:jsx-a11y/recommended",
     "plugin:import/errors",
     "plugin:import/warnings",
-    "plugin:prettier/recommended",
-    "prettier/@typescript-eslint",
-    "prettier/react",
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
@@ -50,16 +47,5 @@ module.exports = {
     "react/react-in-jsx-scope": "off",
     "react/jsx-filename-extension": ["error", { extensions: [".jsx", ".tsx"] }],
     "import/order": ["error"],
-    "prettier/prettier": [
-      "error",
-      {
-        trailingComma: "all",
-        endOfLine: "lf",
-        semi: false,
-        singleQuote: true,
-        printWidth: 80,
-        tabWidth: 2,
-      },
-    ],
   },
 };
