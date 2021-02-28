@@ -1,3 +1,7 @@
+"""メインモジュール
+
+APIの基本機能を定義するモジュール
+"""
 from fastapi import FastAPI
 from core.middleware import CORS
 
@@ -5,9 +9,10 @@ from entrypoints.v1.movie import search as v1_search
 from entrypoints.v1.movie import similar_router as v1_similar
 
 
+# APP定義
 app = FastAPI(
-    title="Movie Recommender Core API",
-    description="Movie Recommenderに対するコア機能を提供するAPI.",
+    title="ML Playground Core API",
+    description="ML Playgroundに対するコア機能を提供するAPI.",
     version="0.1.0"
 )
 

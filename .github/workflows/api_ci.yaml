@@ -31,3 +31,9 @@ jobs:
       - name: flake8
         working-directory: ./api
         run: poetry run flake8 app --ignore E501
+      - name: Check mypy
+        working-directory: ./api
+        run: poetry run mypy app --ignore-missing-imports --show-column-numbers --check-untyped-defs
+      - name: Unit test
+        working-directory: ./api
+        run: poetry run pytest tests -v --cov=app

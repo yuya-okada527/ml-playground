@@ -1,3 +1,7 @@
+"""メインモジュール
+
+バッチコマンドを定義するモジュール
+"""
 import typer
 
 from entrypoints.v1 import (input_entrypoints, output_entrypoints,
