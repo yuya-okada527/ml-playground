@@ -106,4 +106,4 @@ def _make_freeword(movie: Movie) -> str:
     free_word_list.extend([genre.japanese_name for genre in movie.genres])
 
     # 半角スペース区切りで返す
-    return HALF_SPACE.join(free_word_list)
+    return HALF_SPACE.join([free_word for free_word in free_word_list if free_word])
