@@ -1,3 +1,7 @@
+"""サービス例外モジュール
+
+サービスに関する例外を定義するモジュール
+"""
 class AppBaseException(Exception):
     """基底例外
 
@@ -9,10 +13,14 @@ class AppBaseException(Exception):
 class AppWarningException(AppBaseException):
     """アプリケーション警告例外
 
-    アプリケーションの続行可能だが、注意が必要な例外が発生した場合に、投げる
+    アプリケーションの続行可能だが、注意が必要な例外が発生した場合に、発生する
     """
     pass
 
 
 class NoTargetException(AppBaseException):
+    """ノーデータ例外
+
+    処理対象データが存在しない場合に、発生する
+    """
     pass

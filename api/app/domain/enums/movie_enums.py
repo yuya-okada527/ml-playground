@@ -1,7 +1,12 @@
+"""映画Enumモジュール
+
+映画ドメインに関する区分値を定義するモジュール
+"""
 from enum import Enum
 
 
 class MovieField(Enum):
+    """Solrのフィールド名を定義する"""
     MOVIE_ID = "movie_id"
     FREE_WORD = "free_word"
     ORIGINAL_TITLE = "original_title"

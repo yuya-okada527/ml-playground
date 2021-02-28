@@ -1,15 +1,21 @@
-from typing import List, Dict, Optional
+"""Solr映画モデルモジュール
+
+Solr上に構築された映画情報に関するモデルを記述するモジュール
+"""
+from typing import Dict, List, Optional
 
 from pydantic import BaseModel
 
 
 class SolrResponseHeaderModel(BaseModel):
+    """Solrのレスポンスヘッダーモデル"""
     status: int
     QTime: int
     params: Dict[str, str]
 
 
 class MovieSolrModel(BaseModel):
+    """Solr映画モデル"""
     movie_id: str
     original_title: str
     japanese_title: str
@@ -28,6 +34,7 @@ class MovieSolrModel(BaseModel):
 
 
 class SolrResponseModel(BaseModel):
+    """Solrレスポンスモデル"""
     numFound: int
     start: int
     numFoundExact: bool
@@ -35,5 +42,6 @@ class SolrResponseModel(BaseModel):
 
 
 class SolrResultModel(BaseModel):
+    """Solrレスポンス結果モデル"""
     responseHeader: SolrResponseHeaderModel
     response: SolrResponseModel
