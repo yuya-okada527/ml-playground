@@ -39,4 +39,4 @@ const makeQuery = (queries: QueriesType): string => {
   return result.join("&");
 };
 
-export { callGetApi };
+export { callGetApi, makeQuery };

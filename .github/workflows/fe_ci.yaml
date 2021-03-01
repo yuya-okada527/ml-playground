@@ -26,3 +26,6 @@ jobs:
       - name: Eslint
         working-directory: ./fe
         run: npm run lint
+      - name: Unit test
+        working-directory: ./fe
+        run: npm run test
