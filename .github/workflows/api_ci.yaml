@@ -37,3 +37,7 @@ jobs:
       - name: Unit test
         working-directory: ./api
         run: poetry run pytest tests -v --cov=app
+        env:
+          REDIS_PROTOCOL: http
+          REDIS_HOST: localhost
+          REDIS_PORT: 6379
