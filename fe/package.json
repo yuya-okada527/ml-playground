@@ -8,7 +8,7 @@
     "type-check": "tsc",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx .",
     "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx --fix .",
-    "test": "jest",
+    "test": "jest --watch",
     "test:ci": "jest --coverage"
   },
   "dependencies": {

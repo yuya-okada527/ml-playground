@@ -1,4 +1,4 @@
-import { makeQuery } from "./http";
+import { makeQuery } from "../src/utils/http";
 
 describe("テスト: makeQuery", () => {
   it("1対1のクエリ", () => {

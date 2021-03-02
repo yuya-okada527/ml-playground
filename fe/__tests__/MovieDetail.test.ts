@@ -1,4 +1,4 @@
-import { makeOverview, makeTitle } from "./MovieDetail";
+import { makeOverview, makeTitle } from "../src/components/MovieDetail";
 
 describe("テスト: makeOverview", () => {
   it("シナリオが空", () => {
