@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Footer Snapshot Test 1`] = `
+<footer
+  className="makeStyles-footer-1"
+>
+  <WithStyles(ForwardRef(List))
+    className="makeStyles-footerList-2"
+  >
+    <WithStyles(ForwardRef(ListItem))
+      className="makeStyles-footerListItem-3"
+    >
+      Contact: 
+      yuya.okada527@gmail.com
+    </WithStyles(ForwardRef(ListItem))>
+    <WithStyles(ForwardRef(ListItem))
+      className="makeStyles-footerListItem-3"
+    >
+      Github: 
+      https://github.com/yuya-okada527/ml-playground
+    </WithStyles(ForwardRef(ListItem))>
+  </WithStyles(ForwardRef(List))>
+</footer>
+`;

@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SideBar Shapshot Test 1`] = `
+<WithStyles(ForwardRef(List))>
+  <WithStyles(ForwardRef(ListItem))>
+    <Link
+      href="/"
+    >
+      <WithStyles(ForwardRef(Grid))
+        container={true}
+      >
+        <Memo(ForwardRef(HomeIcon))
+          className="makeStyles-sidebarIcon-1"
+        />
+        <WithStyles(ForwardRef(Typography))
+          className="makeStyles-sidebarText-2"
+          variant="h6"
+        >
+          Home
+        </WithStyles(ForwardRef(Typography))>
+      </WithStyles(ForwardRef(Grid))>
+    </Link>
+  </WithStyles(ForwardRef(ListItem))>
+  <WithStyles(ForwardRef(ListItem))>
+    <Link
+      href="/about"
+    >
+      <WithStyles(ForwardRef(Grid))
+        container={true}
+      >
+        <Memo(ForwardRef(InfoIcon))
+          className="makeStyles-sidebarIcon-1"
+        />
+        <WithStyles(ForwardRef(Typography))
+          className="makeStyles-sidebarText-2"
+          variant="h6"
+        >
+          About
+        </WithStyles(ForwardRef(Typography))>
+      </WithStyles(ForwardRef(Grid))>
+    </Link>
+  </WithStyles(ForwardRef(ListItem))>
+</WithStyles(ForwardRef(List))>
+`;

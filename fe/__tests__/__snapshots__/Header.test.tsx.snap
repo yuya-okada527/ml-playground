@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header Snapshot Test 1`] = `
+<header>
+  <WithStyles(ForwardRef(AppBar))>
+    <WithStyles(ForwardRef(Typography))
+      className="makeStyles-title-1"
+      component="h1"
+      variant="h4"
+    >
+      ML Playground
+    </WithStyles(ForwardRef(Typography))>
+  </WithStyles(ForwardRef(AppBar))>
+</header>
+`;
