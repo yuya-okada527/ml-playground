@@ -12,9 +12,9 @@ import {
   Typography,
 } from "@material-ui/core";
 import Image from "material-ui-image";
-import Pagination from "@material-ui/lab/Pagination";
 import Link from "next/link";
 import { Movie } from "../interfaces/index";
+import SearchResultPagination from "./SearchResultPagination";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -39,15 +39,6 @@ const useStyles = makeStyles((theme: Theme) =>
         backgroundColor: "#eee",
         opacity: 0.8,
       },
-    },
-    paginationRoot: {
-      textAlign: "center",
-      "& > * + *": {
-        marginTop: theme.spacing(2),
-      },
-    },
-    pagination: {
-      display: "inline-block",
     },
   })
 );
@@ -117,15 +108,11 @@ const SearchResultList: React.FC<SearchResultProps> = ({
           </Link>
         ))}
       </List>
-      <div className={classes.paginationRoot}>
-        <Pagination
-          count={pageCount}
-          page={page}
-          color="primary"
-          className={classes.pagination}
-          onChange={handlePageChange}
-        />
-      </div>
+      <SearchResultPagination
+        totalPageCount={pageCount}
+        currentPage={page}
+        handlePageChange={handlePageChange}
+      />
     </>
   );
 };

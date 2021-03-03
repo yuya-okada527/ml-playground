@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchResultPagination Snapshot Test 1`] = `
+<div
+  className="makeStyles-paginationRoot-1"
+>
+  <WithStyles(ForwardRef(Pagination))
+    className="makeStyles-pagination-2"
+    color="primary"
+    count={10}
+    onChange={[MockFunction]}
+    page={1}
+  />
+</div>
+`;
