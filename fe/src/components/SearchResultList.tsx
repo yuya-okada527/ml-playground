@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const makeSearchTermView = (searchTerm: string) => {
+const makeSearchTermView = (searchTerm: string): string => {
   if (searchTerm) {
     return `"${searchTerm}"`;
   }
@@ -118,3 +118,4 @@ const SearchResultList: React.FC<SearchResultProps> = ({
 };
 
 export default SearchResultList;
+export { makeSearchTermView };
