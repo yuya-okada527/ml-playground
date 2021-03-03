@@ -3,7 +3,6 @@
 exports[`SearchResultItem Snapshot Test 1`] = `
 <Link
   href="/movies/0"
-  key="0"
 >
   <a
     className="makeStyles-link-2"
@@ -58,8 +57,7 @@ exports[`SearchResultItem Snapshot Test 1`] = `
               className="makeStyles-movieCardTitle-1"
               variant="h6"
             >
-              タイトル
-               (2000) 
+              タイトル (2000)
             </WithStyles(ForwardRef(Typography))>
           </WithStyles(ForwardRef(Grid))>
         </WithStyles(ForwardRef(Grid))>

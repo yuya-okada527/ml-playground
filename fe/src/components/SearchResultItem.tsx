@@ -12,6 +12,7 @@ import {
 import Link from "next/link";
 import Image from "material-ui-image";
 import React from "react";
+import { makeTitle } from "./MovieDetail";
 import { Movie } from "src/interfaces";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -48,7 +49,7 @@ type SearchResultItemProps = {
 const SearchResultItem: React.FC<SearchResultItemProps> = ({ movie }) => {
   const classes = useStyles();
   return (
-    <Link href={`/movies/${movie.movie_id}`} key={movie.movie_id}>
+    <Link href={`/movies/${movie.movie_id}`}>
       <a className={classes.link}>
         <ListItem className={classes.searchResultItem} key={movie.movie_id}>
           <Paper
@@ -62,10 +63,7 @@ const SearchResultItem: React.FC<SearchResultItemProps> = ({ movie }) => {
               </Grid>
               <Grid item xs={11}>
                 <Typography className={classes.movieCardTitle} variant="h6">
-                  {movie.japanese_title
-                    ? movie.japanese_title
-                    : movie.original_title}
-                  {movie.release_year ? " (" + movie.release_year + ") " : ""}
+                  {makeTitle(movie)}
                 </Typography>
               </Grid>
             </Grid>
