@@ -14,6 +14,14 @@ import React from "react";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    sideBarItem: {
+      color: theme.palette.primary.main,
+      cursor: "pointer",
+      borderRadius: "5px",
+      "&:hover": {
+        backgroundColor: "#eee",
+      },
+    },
     sidebarIcon: {
       margin: theme.spacing(1),
     },
@@ -32,7 +40,7 @@ const SideBar: React.FC = () => {
     <List>
       <ListItem>
         <Link href="/">
-          <Grid container>
+          <Grid container className={classes.sideBarItem}>
             <HomeIcon className={classes.sidebarIcon} />
             <Typography className={classes.sidebarText} variant="h6">
               Home
@@ -42,7 +50,7 @@ const SideBar: React.FC = () => {
       </ListItem>
       <ListItem>
         <Link href="/about">
-          <Grid container>
+          <Grid container className={classes.sideBarItem}>
             <InfoIcon className={classes.sidebarIcon} />
             <Typography className={classes.sidebarText} variant="h6">
               About
