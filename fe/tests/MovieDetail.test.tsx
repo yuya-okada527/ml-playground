@@ -4,6 +4,7 @@ import MovieDetail, {
   makeOverview,
   makeTitle,
 } from "../src/components/MovieDetail";
+import { emptyMovie } from "./TestUtil";
 
 describe("makeOverview", () => {
   it("シナリオが空", () => {
@@ -110,21 +111,3 @@ describe("MovieDetail", () => {
     expect(movieDetail).toMatchSnapshot();
   });
 });
-
-const emptyMovie = () => {
-  return {
-    movie_id: 0,
-    original_title: "",
-    japanese_title: "",
-    overview: "",
-    tagline: "",
-    poster_url: "",
-    backdrop_url: "",
-    popularity: 0,
-    vote_average: 0,
-    release_date: "",
-    release_year: 0,
-    genre_labels: [],
-    genres: [],
-  };
-};

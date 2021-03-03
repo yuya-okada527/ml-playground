@@ -1,44 +1,19 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-// TODO 暫定対応
 import React from "react";
 import {
   createStyles,
-  Grid,
   List,
-  ListItem,
   makeStyles,
-  Paper,
   Theme,
   Typography,
 } from "@material-ui/core";
-import Image from "material-ui-image";
-import Link from "next/link";
 import { Movie } from "../interfaces/index";
 import SearchResultPagination from "./SearchResultPagination";
+import SearchResultItem from "./SearchResultItem";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    movieCardTitle: {
-      margin: theme.spacing(1),
-    },
     underSearch: {
       marginBottom: theme.spacing(2),
-    },
-    link: {
-      textDecoration: "none",
-    },
-    searchResultItem: {
-      paddingLeft: 0,
-      paddingBottom: theme.spacing(1),
-      paddingTop: theme.spacing(0),
-    },
-    searchResultItemPaper: {
-      width: "100%",
-      transition: "0.2s",
-      "&:hover": {
-        backgroundColor: "#eee",
-        opacity: 0.8,
-      },
     },
   })
 );
@@ -59,6 +34,9 @@ type SearchResultProps = {
   handlePageChange: (event: React.ChangeEvent<unknown>, page: number) => void;
 };
 
+/**
+ * 検索結果リストを描画する
+ */
 const SearchResultList: React.FC<SearchResultProps> = ({
   movies,
   searchedTerm,
@@ -73,39 +51,7 @@ const SearchResultList: React.FC<SearchResultProps> = ({
       <Typography>Results for {makeSearchTermView(searchedTerm)}</Typography>
       <List>
         {movies.map((movie: Movie) => (
-          <Link href={`/movies/${movie.movie_id}`} key={movie.movie_id}>
-            <a className={classes.link}>
-              <ListItem
-                className={classes.searchResultItem}
-                key={movie.movie_id}
-              >
-                <Paper
-                  className={classes.searchResultItemPaper}
-                  variant="outlined"
-                  square
-                >
-                  <Grid container>
-                    <Grid item xs={1}>
-                      <Image src={movie.poster_url} aspectRatio={9 / 12} />
-                    </Grid>
-                    <Grid item xs={11}>
-                      <Typography
-                        className={classes.movieCardTitle}
-                        variant="h6"
-                      >
-                        {movie.japanese_title
-                          ? movie.japanese_title
-                          : movie.original_title}
-                        {movie.release_year
-                          ? " (" + movie.release_year + ") "
-                          : ""}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                </Paper>
-              </ListItem>
-            </a>
-          </Link>
+          <SearchResultItem key={movie.movie_id} movie={movie} />
         ))}
       </List>
       <SearchResultPagination
