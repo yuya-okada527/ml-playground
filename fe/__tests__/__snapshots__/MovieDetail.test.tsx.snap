@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MovieDetail Snapshot Test 1`] = `
+<WithStyles(ForwardRef(Card))
+  className="makeStyles-cardRoot-1"
+>
+  <WithStyles(ForwardRef(CardMedia))
+    className="makeStyles-posterImage-2"
+    image="https://image_url.png"
+  />
+  <WithStyles(ForwardRef(CardContent))
+    className="makeStyles-movieDescription-3"
+  >
+    <WithStyles(ForwardRef(Typography))
+      className="makeStyles-movieTitle-4"
+      variant="h6"
+    >
+      タイトル
+    </WithStyles(ForwardRef(Typography))>
+    <WithStyles(ForwardRef(Typography))
+      variant="body1"
+    >
+      シナリオ
+    </WithStyles(ForwardRef(Typography))>
+    <ProviderInfo />
+  </WithStyles(ForwardRef(CardContent))>
+</WithStyles(ForwardRef(Card))>
+`;

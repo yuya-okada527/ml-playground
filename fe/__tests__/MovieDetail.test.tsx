@@ -1,6 +1,11 @@
-import { makeOverview, makeTitle } from "../src/components/MovieDetail";
+import React from "react";
+import { shallow } from "enzyme";
+import MovieDetail, {
+  makeOverview,
+  makeTitle,
+} from "../src/components/MovieDetail";
 
-describe("テスト: makeOverview", () => {
+describe("makeOverview", () => {
   it("シナリオが空", () => {
     // テストデータ
     const overview = "";
@@ -37,7 +42,7 @@ describe("テスト: makeOverview", () => {
   });
 });
 
-describe("テスト: makeTitle", () => {
+describe("makeTitle", () => {
   it("タイトルが無い場合", () => {
     // テストデータ
     const movie = emptyMovie();
@@ -89,6 +94,20 @@ describe("テスト: makeTitle", () => {
     const actual = makeTitle(movie);
     const expected = "original title (2020)";
     expect(actual).toBe(expected);
+  });
+});
+
+describe("MovieDetail", () => {
+  it("Snapshot Test", () => {
+    // テストデータ
+    const movie = emptyMovie();
+    movie.japanese_title = "タイトル";
+    movie.overview = "シナリオ";
+    movie.poster_url = "https://image_url.png";
+
+    // 検証
+    const movieDetail = shallow(<MovieDetail movie_detail={movie} />);
+    expect(movieDetail).toMatchSnapshot();
   });
 });
 

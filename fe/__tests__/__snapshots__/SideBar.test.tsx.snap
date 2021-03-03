@@ -7,13 +7,14 @@ exports[`SideBar Shapshot Test 1`] = `
       href="/"
     >
       <WithStyles(ForwardRef(Grid))
+        className="makeStyles-sideBarItem-1"
         container={true}
       >
         <Memo(ForwardRef(HomeIcon))
-          className="makeStyles-sidebarIcon-1"
+          className="makeStyles-sidebarIcon-2"
         />
         <WithStyles(ForwardRef(Typography))
-          className="makeStyles-sidebarText-2"
+          className="makeStyles-sidebarText-3"
           variant="h6"
         >
           Home
@@ -26,13 +27,14 @@ exports[`SideBar Shapshot Test 1`] = `
       href="/about"
     >
       <WithStyles(ForwardRef(Grid))
+        className="makeStyles-sideBarItem-1"
         container={true}
       >
         <Memo(ForwardRef(InfoIcon))
-          className="makeStyles-sidebarIcon-1"
+          className="makeStyles-sidebarIcon-2"
         />
         <WithStyles(ForwardRef(Typography))
-          className="makeStyles-sidebarText-2"
+          className="makeStyles-sidebarText-3"
           variant="h6"
         >
           About

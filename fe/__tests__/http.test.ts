@@ -1,6 +1,6 @@
 import { makeQuery } from "../src/utils/http";
 
-describe("テスト: makeQuery", () => {
+describe("makeQuery", () => {
   it("1対1のクエリ", () => {
     // テストデータ
     const queries = {
