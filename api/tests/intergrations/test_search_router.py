@@ -4,7 +4,7 @@ from fastapi.testclient import TestClient
 from infra.client.solr.solr_api import get_solr_client
 from infra.client.solr.solr_query import SolrQuery
 from main import app
-from tests.utils import make_url
+from tests.utils import get_fake_solr_client, make_url
 
 # サーチAPIパス
 V1_SEARCH_API_PATH = "/v1/movie/search"
@@ -13,11 +13,7 @@ V1_SEARCH_BY_ID_API_PATH = "/v1/movie/search/{movie_id}"
 
 client = TestClient(app)
 
-
-async def get_fake_solr_client():
-    return FakeSolrClient()
-
-
+# DIのFake化
 app.dependency_overrides[get_solr_client] = get_fake_solr_client
 
 
@@ -82,25 +78,3 @@ def test_search_api_422():
         assert response.status_code == 422, f"params={params} test failed."
 
 # TODO 映画ID APIの空振りシナリオ
-
-class FakeSolrClient:
-
-    def search_movies(self, query: SolrQuery) -> SolrResultModel:
-        return SolrResultModel(
-            responseHeader=None,
-            response=SolrResponseModel(
-                numFound=1,
-                start=0,
-                numFoundExact=True,
-                docs=[
-                    MovieSolrModel(
-                        movie_id=0,
-                        original_title="original_title",
-                        japanese_title="japanese_title",
-                        poster_path="poster_path",
-                        popularity=0,
-                        vote_average=0
-                    )
-                ]
-            )
-        )
