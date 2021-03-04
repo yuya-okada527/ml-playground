@@ -1,8 +1,6 @@
-from domain.models.solr.movies import (MovieSolrModel, SolrResponseModel,
-                                       SolrResultModel)
+import pytest
 from fastapi.testclient import TestClient
 from infra.client.solr.solr_api import get_solr_client
-from infra.client.solr.solr_query import SolrQuery
 from main import app
 from tests.utils import get_fake_solr_client, make_url
 
@@ -17,11 +15,7 @@ client = TestClient(app)
 app.dependency_overrides[get_solr_client] = get_fake_solr_client
 
 
-def test_search_api_200():
-
-    # 正常ケースパラメータリスト
-    # TODO pytestのパラメータテスト使う？
-    param_list = [
+@pytest.mark.parametrize("params", [
         # queryなし
         [],
         # queryあり
@@ -44,11 +38,11 @@ def test_search_api_200():
         ["rows=50"],
         # start & rows
         ["query=test", "start=0", "rows=10"]
-    ]
-    for params in param_list:
-        url = make_url(V1_SEARCH_API_PATH, params)
-        response = client.get(url)
-        assert response.status_code == 200, f"params={params} test failed."
+    ])
+def test_search_api_200(params):
+    url = make_url(V1_SEARCH_API_PATH, params)
+    response = client.get(url)
+    assert response.status_code == 200, f"params={params} test failed."
 
 
 def test_search_by_id_api_200():
@@ -57,10 +51,7 @@ def test_search_by_id_api_200():
     assert response.status_code == 200
 
 
-def test_search_api_422():
-
-    # バリデーションエラーケースリスト
-    param_list = [
+@pytest.mark.parametrize("params", [
         # query max_length違反
         ["query=" + "a" * 101],
         # start < 0
@@ -71,10 +62,10 @@ def test_search_api_422():
         ["rows=0"],
         # rows > 50
         ["rows=51"]
-    ]
-    for params in param_list:
-        url = make_url(V1_SEARCH_API_PATH, params)
-        response = client.get(url)
-        assert response.status_code == 422, f"params={params} test failed."
+    ])
+def test_search_api_422(params):
+    url = make_url(V1_SEARCH_API_PATH, params)
+    response = client.get(url)
+    assert response.status_code == 422, f"params={params} test failed."
 
 # TODO 映画ID APIの空振りシナリオ

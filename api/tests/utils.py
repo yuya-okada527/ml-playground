@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from domain.enums.similarity_enums import SimilarityModelType
 from domain.models.solr.movies import (MovieSolrModel, SolrResponseModel,
@@ -6,7 +6,9 @@ from domain.models.solr.movies import (MovieSolrModel, SolrResponseModel,
 from infra.client.solr.solr_query import SolrQuery
 
 
-def make_url(path: str, queries: List[str] = None):
+def make_url(path: str, queries: Optional[List[str]] = None):
+    assert isinstance(queries, list) or queries is None
+
     # クエリがあれば、クエリつきでURL作成
     if queries:
         return path + "?" + "&".join(queries)
