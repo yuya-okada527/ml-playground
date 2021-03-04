@@ -43,5 +43,5 @@ class SolrResponseModel(BaseModel):
 
 class SolrResultModel(BaseModel):
     """Solrレスポンス結果モデル"""
-    responseHeader: SolrResponseHeaderModel
+    responseHeader: Optional[SolrResponseHeaderModel] = None
     response: SolrResponseModel
