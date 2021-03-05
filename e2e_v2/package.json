@@ -5,8 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "HEADFUL=1 folio tests/functional -p slowMo=1000 -p screenshotOnFailure -p browserName=chromium",
+    "test:all": "folio tests -p slowMo=1000 -p screenshotOnFailure --retries 3",
     "test:visual": "folio tests/visual -p slowMo=1000 --retries 3",
-    "test:update": "folio tests/visual -p slowMo=1000 --update-snapshots"
+    "test:update": "folio tests/visual -p slowMo=1000 --update-snapshots",
+    "test:codegen": "playwright codegen http://localhost:3000"
   },
   "keywords": [],
   "author": "",
