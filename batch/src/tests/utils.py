@@ -1,13 +1,80 @@
+from typing import Optional
+
 from domain.enums.movie_enums import MovieLanguage
 from domain.enums.similarity_enums import SimilarityModelType
-from domain.models.internal.movie_model import Review
-from domain.models.rest.tmdb_model import (TmdbMovie, TmdbMovieReview,
+from domain.models.internal.movie_model import Genre, Movie, Review
+from domain.models.rest.tmdb_model import (TmdbMovie, TmdbMovieDetail,
+                                           TmdbMovieGenre, TmdbMovieGenreList,
+                                           TmdbMovieReview,
                                            TmdbMovieReviewList,
+                                           TmdbPopularMovieList,
                                            TmdbReviewAuthorDetail,
                                            TmdbSimilarMovieList)
 
 
 class FakeTmdbClient:
+
+    def fetch_genres(self, language: MovieLanguage) -> TmdbMovieGenreList:
+        if language == MovieLanguage.EN:
+            return TmdbMovieGenreList(
+                genres=[
+                    TmdbMovieGenre(id=0, name="name")
+                ]
+            )
+        elif language == MovieLanguage.JP:
+            return TmdbMovieGenreList(
+                genres=[
+                    TmdbMovieGenre(id=0, name="japanese_name")
+                ]
+            )
+
+    def fetch_popular_movies(
+        self,
+        page: int,
+        region: Optional[str] = None,
+        language: Optional[MovieLanguage] = None
+    ) -> TmdbPopularMovieList:
+        return TmdbPopularMovieList(
+            pages=1,
+            results=[
+                TmdbMovie(
+                        adult=True,
+                        overview="overview",
+                        id=0,
+                        original_title="original_title",
+                        original_language="ja",
+                        title="title",
+                        popularity=0.1,
+                        vote_count=0,
+                        video=True,
+                        vote_average=0.1
+                    )
+            ],
+            total_results=1,
+            total_pages=1
+        )
+
+    def fetch_movie_detail_list(
+        self,
+        movie_id_list: list[int],
+        language: Optional[MovieLanguage] = None,
+        append_to_response: Optional[str] = None
+    ) -> list[TmdbMovieDetail]:
+        return [TmdbMovieDetail(
+            adult=True,
+            budget=0,
+            id=0,
+            original_language="original_language",
+            original_title="original_title",
+            popularity=0,
+            release_date="2020-01-01",
+            revenue=0,
+            status="status",
+            title="title",
+            video=True,
+            vote_average=0,
+            vote_count=0
+        )]
 
     def fetch_movie_reviews(
         self,
@@ -108,6 +175,9 @@ class FakeReviewRepositry:
     def save_review_list(self, review_list: list[Review]) -> int:
         return len(review_list)
 
+    def fetch_all_review_id(self) -> list[str]:
+        return ["review1"]
+
 
 class FakeMoviewRepository:
 
@@ -117,6 +187,27 @@ class FakeMoviewRepository:
         similar_movie_list: list[int]
     ) -> int:
         return len(similar_movie_list)
+
+    def fetch_all_movie_id(self) -> list[int]:
+        return [0]
+
+    def save_movie_list(self, movie_list: list[Movie]) -> None:
+        return
+
+    def fetch_all_similar_movie(self) -> dict[int, list[int]]:
+        return {
+            0: [2, 3]
+        }
+
+
+class FakeGenreRepository:
+
+    def fetch_all(self) -> list[Genre]:
+        return [Genre(genre_id=0, name="name", japanese_name="japanese_name")]
+
+    def save(self, genre_list: list[Genre]) -> int:
+        return len(genre_list)
+
 
 class FakeRedisRepository:
 

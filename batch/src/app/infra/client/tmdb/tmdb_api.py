@@ -38,7 +38,7 @@ class AbstractTmdbClient(Protocol):
     def fetch_popular_movies(
         self,
         page: int,
-        region: Optional[str],
+        region: Optional[str] = None,
         language: Optional[MovieLanguage] = None
     ) -> TmdbPopularMovieList:
         """人気映画リスト取得関数
