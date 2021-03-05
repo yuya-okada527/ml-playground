@@ -1,20 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`SideBar Shapshot Test 1`] = `
-<WithStyles(ForwardRef(List))>
+<WithStyles(ForwardRef(List))
+  className="makeStyles-root-1"
+>
   <WithStyles(ForwardRef(ListItem))>
     <Link
       href="/"
     >
       <WithStyles(ForwardRef(Grid))
-        className="makeStyles-sideBarItem-1"
+        className="makeStyles-sideBarItem-2"
         container={true}
       >
         <Memo(ForwardRef(HomeIcon))
-          className="makeStyles-sidebarIcon-2"
+          className="makeStyles-sidebarIcon-3"
         />
         <WithStyles(ForwardRef(Typography))
-          className="makeStyles-sidebarText-3"
+          className="makeStyles-sidebarText-4"
           variant="h6"
         >
           Home
@@ -27,14 +29,14 @@ exports[`SideBar Shapshot Test 1`] = `
       href="/about"
     >
       <WithStyles(ForwardRef(Grid))
-        className="makeStyles-sideBarItem-1"
+        className="makeStyles-sideBarItem-2"
         container={true}
       >
         <Memo(ForwardRef(InfoIcon))
-          className="makeStyles-sidebarIcon-2"
+          className="makeStyles-sidebarIcon-3"
         />
         <WithStyles(ForwardRef(Typography))
-          className="makeStyles-sidebarText-3"
+          className="makeStyles-sidebarText-4"
           variant="h6"
         >
           About

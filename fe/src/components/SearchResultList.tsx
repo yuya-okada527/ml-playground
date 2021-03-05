@@ -48,8 +48,10 @@ const SearchResultList: React.FC<SearchResultProps> = ({
   return (
     <>
       <div className={classes.underSearch} />
-      <Typography>Results for {makeSearchTermView(searchedTerm)}</Typography>
-      <List>
+      <Typography data-test="search-result-keyword">
+        Results for {makeSearchTermView(searchedTerm)}
+      </Typography>
+      <List data-test="search-result-list">
         {movies.map((movie: Movie) => (
           <SearchResultItem key={movie.movie_id} movie={movie} />
         ))}

@@ -12,8 +12,8 @@ import {
 import Link from "next/link";
 import Image from "material-ui-image";
 import React from "react";
+import { Movie } from "../interfaces";
 import { makeTitle } from "./MovieDetail";
-import { Movie } from "src/interfaces";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
