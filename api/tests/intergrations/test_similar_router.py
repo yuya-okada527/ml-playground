@@ -26,4 +26,4 @@ def test_similar_movie_api_200(params):
 
     url = make_url(SIMILAR_MOVIE_API_PATH.format(movie_id=0), params)
     response = client.get(url)
-    assert response.status_code == 200, f"params={params} test failed."
+    assert response.status_code == 200, f"params={params} test failed. url={url}"

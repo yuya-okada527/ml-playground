@@ -42,7 +42,7 @@ app.dependency_overrides[get_solr_client] = get_fake_solr_client
 def test_search_api_200(params):
     url = make_url(V1_SEARCH_API_PATH, params)
     response = client.get(url)
-    assert response.status_code == 200, f"params={params} test failed."
+    assert response.status_code == 200, f"params={params} test failed. url={url}"
 
 
 def test_search_by_id_api_200():
@@ -66,6 +66,6 @@ def test_search_by_id_api_200():
 def test_search_api_422(params):
     url = make_url(V1_SEARCH_API_PATH, params)
     response = client.get(url)
-    assert response.status_code == 422, f"params={params} test failed."
+    assert response.status_code == 422, f"params={params} test failed. url={url}"
 
 # TODO 映画ID APIの空振りシナリオ
