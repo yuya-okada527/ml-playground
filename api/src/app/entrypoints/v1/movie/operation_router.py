@@ -2,6 +2,7 @@
 
 運用で使用するAPIのルーター定義を記述するモジュール
 """
+from typing import Dict
 from fastapi import APIRouter
 
 # ルーター作成
@@ -18,7 +19,7 @@ router = APIRouter(
     summary="ヘルスチェック",
     description="ヘルスチェック機能を提供するAPI."
 )
-async def ping() -> dict[str, str]:
+async def ping() -> Dict[str, str]:
     return {
         "health": "ok"
     }
