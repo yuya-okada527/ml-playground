@@ -75,7 +75,7 @@ const SimilarMovies: React.FC<SimilarMoviesProps> = ({
           &quot;{movieTitle}&quot; が好きなあなたにおすすめ
         </Typography>
       </Paper>
-      <List>
+      <List data-test="similar-movie-list">
         {similarMovies.map((movie: Movie) => (
           <Link href={`/movies/${movie.movie_id}`} key={movie.movie_id}>
             <a className={classes.link}>
