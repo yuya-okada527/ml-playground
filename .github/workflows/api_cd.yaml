@@ -1,0 +1,20 @@
+name: CD Pipeline for API
+
+# apiディレクトリ配下のコードの変更がdevelopブランチにプッシュされたら実行
+on:
+  push:
+    branches:
+      - develop
+    paths:
+      - api/**
+      - .github/workflows/api_cd.yaml
+
+jobs:
+  check:
+    name: Check the source code
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Docker Build
+        run: docker build -t ml_pipeline/core_api:dev ./api
