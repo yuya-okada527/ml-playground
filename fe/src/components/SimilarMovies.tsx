@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-// TODO 暫定対応
 import React from "react";
 import {
   Box,
@@ -9,12 +7,9 @@ import {
   List,
   Theme,
   Typography,
-  ListItem,
-  Grid,
 } from "@material-ui/core";
-import Image from "material-ui-image";
-import Link from "next/link";
 import { Movie } from "../interfaces";
+import SimilarMovieItem from "./SimilarMovieItem";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -63,6 +58,9 @@ type SimilarMoviesProps = {
   movieTitle: string;
 };
 
+/**
+ * 類似映画リストを描画する
+ */
 const SimilarMovies: React.FC<SimilarMoviesProps> = ({
   similarMovies,
   movieTitle,
@@ -77,39 +75,7 @@ const SimilarMovies: React.FC<SimilarMoviesProps> = ({
       </Paper>
       <List data-test="similar-movie-list">
         {similarMovies.map((movie: Movie) => (
-          <Link href={`/movies/${movie.movie_id}`} key={movie.movie_id}>
-            <a className={classes.link}>
-              <ListItem
-                className={classes.similarMovieItem}
-                key={movie.movie_id}
-              >
-                <Paper
-                  className={classes.similarMovieItemPaper}
-                  variant="outlined"
-                  square
-                >
-                  <Grid container>
-                    <Grid item xs={2}>
-                      <Image src={movie.poster_url} aspectRatio={9 / 12} />
-                    </Grid>
-                    <Grid item xs={10}>
-                      <Typography
-                        className={classes.similarMovieTitle}
-                        variant="h6"
-                      >
-                        {movie.japanese_title
-                          ? movie.japanese_title
-                          : movie.original_title}
-                        {movie.release_year
-                          ? " (" + movie.release_year + ") "
-                          : ""}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                </Paper>
-              </ListItem>
-            </a>
-          </Link>
+          <SimilarMovieItem key={movie.movie_id} movie={movie} />
         ))}
       </List>
     </Box>

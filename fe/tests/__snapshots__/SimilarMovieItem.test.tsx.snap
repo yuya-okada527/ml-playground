@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SimilarMovieItem Snapshot Test 1`] = `
+<Link
+  href="/movies/0"
+  key="0"
+>
+  <a
+    className="makeStyles-link-1"
+  >
+    <WithStyles(ForwardRef(ListItem))
+      className="makeStyles-similarMovieItem-2"
+      key="0"
+    >
+      <WithStyles(ForwardRef(Paper))
+        className="makeStyles-similarMovieItemPaper-3"
+        square={true}
+        variant="outlined"
+      >
+        <WithStyles(ForwardRef(Grid))
+          container={true}
+        >
+          <WithStyles(ForwardRef(Grid))
+            item={true}
+            xs={2}
+          >
+            <Image
+              animationDuration={3000}
+              aspectRatio={0.75}
+              color="#fff"
+              disableError={false}
+              disableSpinner={false}
+              disableTransition={false}
+              errorIcon={
+                <Memo
+                  style={
+                    Object {
+                      "color": "#e0e0e0",
+                      "height": 48,
+                      "width": 48,
+                    }
+                  }
+                />
+              }
+              loading={
+                <WithStyles(ForwardRef(CircularProgress))
+                  size={48}
+                />
+              }
+              src=""
+            />
+          </WithStyles(ForwardRef(Grid))>
+          <WithStyles(ForwardRef(Grid))
+            item={true}
+            xs={10}
+          >
+            <WithStyles(ForwardRef(Typography))
+              className="makeStyles-similarMovieTitle-4"
+              variant="h6"
+            >
+              申し訳ありません。タイトルが表示できません。
+            </WithStyles(ForwardRef(Typography))>
+          </WithStyles(ForwardRef(Grid))>
+        </WithStyles(ForwardRef(Grid))>
+      </WithStyles(ForwardRef(Paper))>
+    </WithStyles(ForwardRef(ListItem))>
+  </a>
+</Link>
+`;

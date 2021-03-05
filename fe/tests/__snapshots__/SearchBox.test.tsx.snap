@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchBox Snapshot Test 1`] = `
+<Fragment>
+  <WithStyles(ForwardRef(Typography))
+    component="h2"
+    variant="h6"
+  >
+    Search Your Favorite Movies!!
+  </WithStyles(ForwardRef(Typography))>
+  <WithStyles(ForwardRef(Grid))
+    container={true}
+  >
+    <WithStyles(ForwardRef(Grid))
+      item={true}
+      xs={10}
+    >
+      <WithStyles(ForwardRef(TextField))
+        fullWidth={true}
+        id="search-movie"
+        label="Search Movies!!"
+        onChange={[MockFunction]}
+        type="search"
+        value="searchTerm"
+      />
+    </WithStyles(ForwardRef(Grid))>
+    <WithStyles(ForwardRef(Grid))
+      item={true}
+      xs={2}
+    >
+      <WithStyles(ForwardRef(Button))
+        className="makeStyles-searchButton-1"
+        color="primary"
+        onClick={[MockFunction]}
+        variant="contained"
+      >
+        Search
+      </WithStyles(ForwardRef(Button))>
+    </WithStyles(ForwardRef(Grid))>
+  </WithStyles(ForwardRef(Grid))>
+</Fragment>
+`;

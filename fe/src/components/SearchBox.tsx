@@ -24,6 +24,9 @@ type SearchBoxProps = {
   handleSearchButtonClick: (_event?: React.MouseEvent<unknown>) => void;
 };
 
+/**
+ * 検索ボックスを描画する
+ */
 const SearchBox: React.FC<SearchBoxProps> = ({
   searchTerm,
   handleSearchTermChange,
