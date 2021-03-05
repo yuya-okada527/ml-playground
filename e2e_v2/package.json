@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "HEADFUL=1 folio tests/functional -p slowMo=1000 -p screenshotOnFailure -p browserName=chromium",
-    "test:visual": "folio tests/visual",
-    "test:update": "folio tests/visual --update-snapshots"
+    "test:visual": "folio tests/visual -p slowMo=1000 --retries 3",
+    "test:update": "folio tests/visual -p slowMo=1000 --update-snapshots"
   },
   "keywords": [],
   "author": "",
