@@ -4,7 +4,9 @@
   "description": "ML Playground App 用の e2e テストの V2 を提供します。 PlayWright の検証用に使用する",
   "main": "index.js",
   "scripts": {
-    "test": "DEBUG=pw:api folio -p headful=false -p slowMo=1000 -p screenshotOnFailure"
+    "test": "HEADFUL=1 folio tests/functional -p slowMo=1000 -p screenshotOnFailure -p browserName=chromium",
+    "test:visual": "folio tests/visual",
+    "test:update": "folio tests/visual --update-snapshots"
   },
   "keywords": [],
   "author": "",
