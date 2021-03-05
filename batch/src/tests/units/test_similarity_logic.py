@@ -1,5 +1,5 @@
-from domain.enums.similarity_enums import SimilarityModelType
 from service.logic.similarity_logic import save_tmdb_similarity_data
+from tests.utils import FakeRedisRepository
 
 
 def test_save_tmdb_similarity_data():
@@ -19,14 +19,3 @@ def test_save_tmdb_similarity_data():
     )
 
     assert actual == 8
-
-
-class FakeRedisRepository:
-
-    def save_movie_similarity(
-        self,
-        movie_id: int,
-        similar_movies: list[int],
-        model_type: SimilarityModelType
-    ) -> int:
-        return len(similar_movies)
