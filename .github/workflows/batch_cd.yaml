@@ -1,0 +1,20 @@
+name: CD Pipeline for Batch
+
+# batchディレクトリ配下のコードの変更がdevelopブランチにプッシュされたら実行
+on:
+  push:
+    branches:
+      - develop
+    paths:
+      - batch/**
+      - .github/workflows/batch_cd.yaml
+
+jobs:
+  check:
+    name: Build Container
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Docker Build
+        run: docker build -t ml_pipeline/batch:dev ./batch

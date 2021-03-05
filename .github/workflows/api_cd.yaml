@@ -11,7 +11,7 @@ on:
 
 jobs:
   check:
-    name: Check the source code
+    name: Build Container
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
