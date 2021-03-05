@@ -10,6 +10,10 @@ from domain.models.rest.tmdb_model import (TmdbMovie, TmdbMovieDetail,
                                            TmdbPopularMovieList,
                                            TmdbReviewAuthorDetail,
                                            TmdbSimilarMovieList)
+from domain.models.solr.solr_movie_model import MovieSolrModel
+from domain.models.solr.solr_schema_model import (SolrResponseHeader,
+                                                  SolrSchemaModel,
+                                                  SolrSchemaResponseModel)
 
 
 class FakeTmdbClient:
@@ -199,6 +203,13 @@ class FakeMoviewRepository:
             0: [2, 3]
         }
 
+    def fetch_all(self) -> list[Movie]:
+        return [
+            Movie(
+                movie_id=0
+            )
+        ]
+
 
 class FakeGenreRepository:
 
@@ -218,3 +229,28 @@ class FakeRedisRepository:
         model_type: SimilarityModelType
     ) -> int:
         return len(similar_movies)
+
+
+class FakeSolrClient:
+
+    def update_schema(self, schema_data: str) -> None:
+        return
+
+    def get_schema(self) -> SolrSchemaResponseModel:
+        return SolrSchemaResponseModel(
+            responseHeader=SolrResponseHeader(status=0, QTime=0),
+            schema=SolrSchemaModel(
+                name="name",
+                version=0,
+                uniqueKey="uniqueKey"
+            )
+        )
+
+    def index_movies(self, movies: list[MovieSolrModel]) -> None:
+        return
+
+    def delete_old(self, exec_time: int) -> None:
+        return
+
+    def commit(self) -> None:
+        return
