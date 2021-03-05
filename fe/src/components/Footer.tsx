@@ -14,9 +14,9 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     footer: {
       width: "100%",
-      position: "absolute",
-      bottom: 0,
+      height: "65px",
       borderTop: "1px solid black",
+      marginTop: theme.spacing(2),
     },
     footerList: {
       paddingTop: theme.spacing(0.5),

@@ -14,6 +14,9 @@ import React from "react";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    root: {
+      height: "calc(100vh - 170px)",
+    },
     sideBarItem: {
       color: theme.palette.primary.main,
       cursor: "pointer",
@@ -37,7 +40,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const SideBar: React.FC = () => {
   const classes = useStyles();
   return (
-    <List>
+    <List className={classes.root}>
       <ListItem>
         <Link href="/">
           <Grid container className={classes.sideBarItem}>
