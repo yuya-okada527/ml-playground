@@ -9,6 +9,11 @@ on:
       - batch/**
       - .github/workflows/batch_cd.yaml
 
+env:
+  GCP_PROJECT: ${{ secrets.GCP_PROJECT_ID }}
+  GCP_REGION: ${{ secrets.GCP_REGION }}
+  IMAGE: asia.gcr.io/${{ secrets.GCP_PROJECT_ID }}/batch:dev-${{ github.sha }}
+
 jobs:
   check:
     name: Build Container
@@ -16,5 +21,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Docker Build
-        run: docker build -t ml_pipeline/batch:dev ./batch
+      - name: Setup GCP
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          service_account_key: ${{ secrets.GCP_DEVOPS_SA_KEY }}
+          export_default_credentials: true
+      - name: Configure docker to use the gcloud cli
+        run: gcloud auth configure-docker --quiet
+      - name: Build Image
+        run: docker build -t $IMAGE ./batch
+      - name: Push Image
+        run: docker push $IMAGE
