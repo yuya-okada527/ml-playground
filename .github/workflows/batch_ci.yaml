@@ -1,4 +1,4 @@
-name: CI Pipeline for Batch
+name: "CI Pipeline for Batch"
 
 # batchディレクトリ配下のコードの変更がdevelopブランチにプッシュされたら実行
 on:

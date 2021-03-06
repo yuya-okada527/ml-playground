@@ -1,4 +1,4 @@
-name: CI Pipeline for API
+name: "CI Pipeline for API"
 
 # apiディレクトリ配下のコードの変更がdevelopブランチにプッシュされたら実行
 on:

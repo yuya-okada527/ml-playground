@@ -8,6 +8,7 @@ ML Playground App 用のバッチ処理を提供します。
 - フレームワーク: typer
 - ORM: sqlalchemy(ORM 部分は未使用)
 - ミドルウェア: MySQL, Apache Solr, Redis
+- インフラ: Docker
 - テストフレームワーク: pytest
 - 静的解析ツール: flake8
 - 型チェッカー: mypy
