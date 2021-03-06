@@ -9,6 +9,10 @@ ML Playground App 用のコア API を提供します。
 - サーバ: uvicorn
 - ミドルウェア: Apache Solr, Redis
 - インフラ: Docker
+- テストフレームワーク: pytest
+- 静的解析ツール: flake8
+- 型チェッカー: mypy
+- CI ツール: Github Actions
 - 主要ライブラリ
   - requests
   - pydantic

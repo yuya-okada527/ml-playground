@@ -10,6 +10,7 @@ ML Playground App 用のバッチ処理を提供します。
 - ミドルウェア: MySQL, Apache Solr, Redis
 - テストフレームワーク: pytest
 - 静的解析ツール: flake8
+- 型チェッカー: mypy
 - CI ツール: Github Actions
 - 主要ライブラリ:
   - requests
