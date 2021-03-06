@@ -1,13 +1,12 @@
 name: CD Pipeline for API
 
-# apiディレクトリ配下のコードの変更がdevelopブランチにプッシュされたら実行
+# CIパイプライン実行完了をトリガーとする。
 on:
-  push:
-    branches:
-      - develop
-    paths:
-      - api/**
-      - .github/workflows/api_cd.yaml
+  workflow_run:
+    workflows: ["CI Pipeline for API"]
+    branches: [dev]
+    types:
+      - completed
 
 env:
   GCP_PROJECT: ${{ secrets.GCP_PROJECT_ID }}
