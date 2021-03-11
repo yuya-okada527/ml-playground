@@ -17,7 +17,7 @@ def create_input_engine(settings: InputDbSettings) -> Engine:
     入稿DBエンジンを作成する
     """
     url = f"{settings.input_db_engine}://{settings.input_db_user}:{settings.input_db_password}@{settings.input_db_host}:{settings.input_db_port}/{settings.input_db_database}"
-    log.error(base64.encode(url))
+    log.error(base64.encode(url.encode("utf-8")))
     return create_engine(
 
     )
