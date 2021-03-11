@@ -4,8 +4,8 @@
 """
 import base64
 
-from app.core.logger import create_logger
 from core.config import InputDbSettings
+from core.logger import create_logger
 from sqlalchemy import create_engine
 from sqlalchemy.engine.base import Engine
 
