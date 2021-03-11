@@ -2,11 +2,17 @@ name: CD Pipeline for Batch
 
 # CIパイプライン実行完了をトリガーとする。
 on:
-  workflow_run:
-    workflows: ["CI Pipeline for Batch"]
-    branches: [dev]
-    types:
-      - completed
+  push:
+    branches:
+      - develop
+    paths:
+      - batch/**
+      - .github/workflows/batch_ci.yaml
+  # workflow_run:
+  #   workflows: ["CI Pipeline for Batch"]
+  #   branches: [dev]
+  #   types:
+  #     - completed
 
 env:
   GCP_PROJECT: ${{ secrets.GCP_PROJECT_ID }}
