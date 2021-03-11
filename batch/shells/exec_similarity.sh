@@ -6,6 +6,8 @@ if [ ! -e "./src/app/main.py" ]; then
   exit 1
 fi
 
+sleep 30
+
 echo "類似映画情報作成処理を開始します."
 
 # TMDB-APIに基づく、類似映画情報をセットする
