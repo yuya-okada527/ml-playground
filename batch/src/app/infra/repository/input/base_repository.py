@@ -9,7 +9,7 @@ from core.config import InputDbSettings
 from sqlalchemy import create_engine
 from sqlalchemy.engine.base import Engine
 
-log = create_logger()
+log = create_logger(__file__)
 
 
 def create_input_engine(settings: InputDbSettings) -> Engine:
