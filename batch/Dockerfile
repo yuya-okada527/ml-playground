@@ -15,4 +15,5 @@ RUN poetry install --no-root --no-dev
 
 # コピーバッチ
 COPY ./src/app /app/src/app
+COPY ./src/resources /app/src/resources
 COPY ./shells /app/shells/
