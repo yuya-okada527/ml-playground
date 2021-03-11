@@ -8,4 +8,4 @@
 
 ## 関連リポジトリ
 
-- ![FE](https://github.com/yuya-okada527/ml-playground-fe)
+- [FE](https://github.com/yuya-okada527/ml-playground-fe)
