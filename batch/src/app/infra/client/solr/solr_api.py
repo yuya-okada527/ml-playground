@@ -76,7 +76,7 @@ class SolrClient:
         url = self.url + SCHEMA_PATH.format(collection=self.collection)
 
         # POSTメソッドでAPIを実行
-        call_post_api(url=url, data=schema_data)
+        call_post_api(url=url, data=schema_data, timeout=60)
 
     def index_movies(self, movies: list[MovieSolrModel]) -> None:
 

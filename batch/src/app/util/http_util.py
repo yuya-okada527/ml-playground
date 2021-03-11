@@ -89,7 +89,8 @@ def call_get_api(
 def call_post_api(
     url: str,
     data: Union[str, dict[str, Any], BaseModel] = "",
-    headers: Optional[dict[str, str]] = None
+    headers: Optional[dict[str, str]] = None,
+    timeout: int = TIMEOUT
 ) -> Response:
     """POSTメソッドでAPIを実行する.
 
@@ -97,6 +98,7 @@ def call_post_api(
         url (str): URL
         data (Union[str, dict[str, Any], BaseModel], optional): POSTデータ. Defaults to "".
         headers (Optional[dict[str, str]], optional): HTTPヘッダー. Defaults to None.
+        timeout (int): タイムアウト時間(sec). Defaults to 3.
 
     Raises:
         ServerSideError:
@@ -113,7 +115,7 @@ def call_post_api(
 
     # API実行
     try:
-        response = requests.post(url=url, data=data_str, timeout=TIMEOUT, headers=headers)
+        response = requests.post(url=url, data=data_str, timeout=timeout, headers=headers)
     except Timeout:
         log.warning(f"HTTP通信でタイムアウトが発生しました. url={url}")
         raise ServerSideError()
