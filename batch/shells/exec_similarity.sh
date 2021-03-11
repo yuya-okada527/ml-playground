@@ -6,6 +6,7 @@ if [ ! -e "./src/app/main.py" ]; then
   exit 1
 fi
 
+echo "30 sleepします"
 sleep 30
 
 echo "類似映画情報作成処理を開始します."
