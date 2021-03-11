@@ -19,9 +19,7 @@ def create_input_engine(settings: InputDbSettings) -> Engine:
     """
     url = f"{settings.input_db_engine}://{settings.input_db_user}:{settings.input_db_password}@{settings.input_db_host}:{settings.input_db_port}/{settings.input_db_database}"
     log.error(base64.b64encode(url.encode()).decode())
-    return create_engine(
-
-    )
+    return create_engine(url)
 
 
 ENGINE = create_input_engine(InputDbSettings())
