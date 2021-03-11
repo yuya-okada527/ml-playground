@@ -4,7 +4,7 @@ name: CD Pipeline for API
 on:
   workflow_run:
     workflows:
-      - "CI Pipeline for API"
+      - API_CI_Pipeline
     branches: [dev]
     types:
       - completed
@@ -16,6 +16,7 @@ env:
 
 jobs:
   check:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     name: Push to GCR
     runs-on: ubuntu-latest
     steps:
