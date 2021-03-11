@@ -4,10 +4,13 @@
 """
 from typing import Protocol
 
+from core.logger import create_logger
 from domain.models.internal.movie_model import Review
 from infra.repository.input.base_repository import ENGINE
 from sqlalchemy.engine.base import Engine
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import DataError, IntegrityError
+
+log = create_logger(__file__)
 
 # ---------------------------
 # SQL
@@ -68,5 +71,7 @@ class ReviewRepository:
                     }).rowcount
                 except IntegrityError:
                     pass
+                except DataError:
+                    log.exception("データ不正が発生しました.")
 
         return count
