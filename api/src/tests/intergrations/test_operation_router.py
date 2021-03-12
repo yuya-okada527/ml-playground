@@ -1,7 +1,7 @@
 from fastapi.testclient import TestClient
 from main import app
 
-HEALTH_CHECK_API_PATH = "/v1/operation/health"
+HEALTH_CHECK_API_PATH = "/"
 
 client = TestClient(app)
 
