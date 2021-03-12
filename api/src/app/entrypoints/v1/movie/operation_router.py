@@ -9,7 +9,7 @@ from fastapi import APIRouter
 # ルーター作成
 router = APIRouter(
     # TODO 暫定対応: GKEのIngressがルートでヘルスチェックしてくるため
-    prefix="/",
+    prefix="",
     tags=["operation"],
     # TODO 共通レスポンス
     responses={}
@@ -17,7 +17,7 @@ router = APIRouter(
 
 
 @router.get(
-    "",
+    "/",
     summary="ヘルスチェック",
     description="ヘルスチェック機能を提供するAPI."
 )
