@@ -7,7 +7,7 @@ on:
       - develop
     paths:
       - batch/**
-      - .github/workflows/batch_ci.yaml
+      - .github/workflows/batch_cd.yaml
   # workflow_run:
   #   workflows: ["CI Pipeline for Batch"]
   #   branches: [dev]
