@@ -21,8 +21,8 @@ env:
   IMAGE: asia.gcr.io/${{ secrets.GCP_PROJECT_ID }}/core_api:dev-${{ github.sha }}
 
 jobs:
-  check:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+  push:
+    # if: ${{ github.event.workflow_run.conclusion == 'success' }}
     name: Push to GCR
     runs-on: ubuntu-latest
     steps:

@@ -20,7 +20,7 @@ env:
   IMAGE: asia.gcr.io/${{ secrets.GCP_PROJECT_ID }}/batch:dev-${{ github.sha }}
 
 jobs:
-  check:
+  push:
     name: Build Container
     runs-on: ubuntu-latest
     steps:
