@@ -2,12 +2,18 @@ name: CD Pipeline for API
 
 # CIパイプライン実行完了をトリガーとする。
 on:
-  workflow_run:
-    workflows:
-      - API_CI_Pipeline
-    branches: [dev]
-    types:
-      - completed
+  push:
+    branches:
+      - develop
+    paths:
+      - api/**
+      - .github/workflows/api_ci.yaml
+  # workflow_run:
+  #   workflows:
+  #     - API_CI_Pipeline
+  #   branches: [dev]
+  #   types:
+  #     - completed
 
 env:
   GCP_PROJECT: ${{ secrets.GCP_PROJECT_ID }}
