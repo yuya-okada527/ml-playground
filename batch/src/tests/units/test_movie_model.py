@@ -1,4 +1,5 @@
-from domain.models.internal.movie_model import Movie, Review, _remove_emoji
+from domain.models.internal.movie_model import (Genre, Movie, Review,
+                                                _remove_emoji)
 
 
 def test_cannot_output_if_both_original_and_japanese_title_is_empty():
@@ -109,6 +110,60 @@ def test_review_includes_emoji():
     )
 
     assert review.review_without_emoji == "beforeafter"
+
+
+def test_genre_equal_if_genre_id_is_same():
+    """ジャンルIDが同じなら同じジャンル"""
+
+    # テストデータ
+    genre1 = Genre(
+        genre_id=0,
+        name="name",
+        japanese_name="japanese_name"
+    )
+    genre2 = Genre(
+        genre_id=0,
+        name="different name",
+        japanese_name="different japanese_name"
+    )
+
+    assert genre1 == genre2
+
+
+def test_genre_not_equal_if_genre_id_is_different():
+    """ジャンルIDが同じなら同じジャンル"""
+
+    # テストデータ
+    genre1 = Genre(
+        genre_id=0,
+        name="name",
+        japanese_name="japanese_name"
+    )
+    genre2 = Genre(
+        genre_id=1,
+        name="name",
+        japanese_name="japanese_name"
+    )
+
+    assert genre1 != genre2
+
+
+def test_genre_can_manage_same_genres():
+
+    # テストデータ
+    genre1 = Genre(
+        genre_id=0,
+        name="name",
+        japanese_name="japanese_name"
+    )
+    genre2 = Genre(
+        genre_id=0,
+        name="different name",
+        japanese_name="different japanese_name"
+    )
+    genre_set = set([genre1, genre2])
+
+    assert len(genre_set) == 1
 
 
 def _make_movie_model():
