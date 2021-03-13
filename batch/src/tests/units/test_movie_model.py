@@ -1,4 +1,4 @@
-from domain.models.internal.movie_model import Movie
+from domain.models.internal.movie_model import Movie, Review, _remove_emoji
 
 
 def test_cannot_output_if_both_original_and_japanese_title_is_empty():
@@ -60,6 +60,55 @@ def test_can_output_movie():
     movie = _make_movie_model()
 
     assert movie.can_output()
+
+
+def test_remove_emoji_src_is_none():
+    """ソース文字列がNoneの場合"""
+
+    # テストデータ
+    src = None
+
+    assert _remove_emoji(src) == ""
+
+
+def test_remove_emoji_src_is_empty():
+    """ソース文字列が空文字の場合"""
+
+    # テストデータ
+    src = ""
+
+    assert _remove_emoji(src) == ""
+
+
+def test_remove_emoji_src_includes_emoji():
+    """ソース文字列に絵文字を含む場合"""
+
+    # テストデータ
+    src = "before🤗⭕🤓🤔🤘🦁⭐🆗🆖🈲🤐🤗🤖🤑🆙⏩after"
+
+    assert _remove_emoji(src) == "beforeafter"
+
+
+def test_remove_emoji_src_not_includes_emoji():
+    """ソース文字列に絵文字を含まない場合"""
+
+    # テストデータ
+    src = "beforeafter"
+
+    assert _remove_emoji(src) == "beforeafter"
+
+
+def test_review_includes_emoji():
+    """レビューデータに絵文字を含む場合"""
+
+    # テストデータ
+    review = Review(
+        review_id="review",
+        movie_id=0,
+        review="before🤗⭕🤓🤔🤘🦁⭐🆗🆖🈲🤐🤗🤖🤑🆙⏩after"
+    )
+
+    assert review.review_without_emoji == "beforeafter"
 
 
 def _make_movie_model():

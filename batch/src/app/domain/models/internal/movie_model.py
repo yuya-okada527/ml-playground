@@ -5,6 +5,7 @@
 from datetime import date
 from typing import Any, Optional
 
+import emoji
 from pydantic import BaseModel
 
 # 映画公開日付の文字列フォーマット
@@ -43,10 +44,29 @@ class Review(BaseModel):
         review_id: レビューID (TMDBのレビューIDと一致)
         movie_id: 映画ID
         review: レビュー中身
+        review_without_emoji: 絵文字を除いたレビューデータ
     """
     review_id: str
     movie_id: int
     review: str
+
+    @property
+    def review_without_emoji(self) -> str:
+        return _remove_emoji(self.review)
+
+
+def _remove_emoji(src: str) -> str:
+    """絵文字を除去する
+
+    Args:
+        src (str): ソース文字列
+
+    Returns:
+        str: 除去済文字列
+    """
+    if not src:
+        return ""
+    return ''.join(c for c in src if c not in emoji.UNICODE_EMOJI["en"])
 
 
 class Keyword(BaseModel):
