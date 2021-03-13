@@ -67,7 +67,7 @@ class ReviewRepository:
                     count += conn.execute(INSERT_REVIEW_STATEMENT, {
                         "review_id": review.review_id,
                         "movie_id": review.movie_id,
-                        "review": review.review
+                        "review": review.review_without_emoji
                     }).rowcount
                 except IntegrityError:
                     pass
