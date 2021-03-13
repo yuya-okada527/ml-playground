@@ -57,6 +57,8 @@ def call_get_api(
     if query:
         query = query.dict()  # type: ignore
 
+    print(query_string)
+
     # API実行
     try:
         response = requests.get(url, query, timeout=TIMEOUT)

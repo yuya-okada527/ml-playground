@@ -8,8 +8,8 @@ from domain.enums.movie_enums import MovieField
 from domain.models.solr.movies import MovieSolrModel, SolrResultModel
 from entrypoints.v1.movie.messages.movie_messages import (MovieResponse,
                                                           SearchMovieResponse)
-from infra.client.solr.solr_query import (SolrFilterQuery, SolrQuery,
-                                          SolrSortQuery, SortDirection)
+from infra.client.solr.solr_query import (SEARCH_ALL, QueryParserType,
+                                          SolrFilterQuery, SolrQuery)
 
 # デフォルトの検索フィールド
 DEFAULT_MOVIE_FLS = [
@@ -30,10 +30,6 @@ DEFAULT_MOVIE_FLS = [
     MovieField.KEYWORD_LABELS
 ]
 
-# デフォルトソート
-DEFAULT_SORT = [
-    SolrSortQuery(field=MovieField.POPULARITY, direction=SortDirection.DESC)
-]
 
 # TMDBの基盤画像URL
 IMAGE_URL_BASE = "https://image.tmdb.org/t/p/w500"
@@ -55,11 +51,12 @@ def build_search_query(
         SolrQuery: 検索クエリ
     """
     return SolrQuery(
-        fq=_build_free_word_query(q),
+        q=_build_free_word_query(q),
         fl=DEFAULT_MOVIE_FLS,
         start=start,
         rows=rows,
-        sort=DEFAULT_SORT
+        defType=QueryParserType.EXTENDED_DISMAX,
+        boost=MovieField.POPULARITY.value
     )
 
 
@@ -126,20 +123,18 @@ def map_search_movie_response(search_result: SolrResultModel) -> SearchMovieResp
     )
 
 
-def _build_free_word_query(q: List[str]) -> List[SolrFilterQuery]:
+def _build_free_word_query(q: List[str]) -> str:
     """フリーワードフィールドに対するクエリを作成する
 
     Args:
         q (List[str]): 検索クエリリスト
 
     Returns:
-        List[SolrFilterQuery]: クエリリスト
+        str: クエリ文字列
     """
+    # 未指定の場合、全検索
     if not q:
-        return []
+        return SEARCH_ALL
 
-    return [SolrFilterQuery.exact_condition(
-        field=MovieField.FREE_WORD,
-        value=value)
-        for value in q
-    ]
+    # 指定ありの場合、フリーワードのAND検索を構築する
+    return " AND ".join(f"{MovieField.FREE_WORD.value}:{query}" for query in q)

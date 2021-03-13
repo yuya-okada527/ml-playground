@@ -20,6 +20,16 @@ class SortDirection(Enum):
     DESC = "desc"
 
 
+class QueryParserType(Enum):
+    """クエリパーサのタイプ"""
+    # Standardパーサ
+    STANDARD = "lucene"
+    # DisMaxパーサ
+    DISMAX = "dismax"
+    # Extended DisMaxパーサ
+    EXTENDED_DISMAX = "edismax"
+
+
 class SolrFilterQuery(BaseModel):
     """Solrのフィルタクエリ(fl)を表す"""
     field: MovieField
@@ -89,6 +99,8 @@ class SolrQuery(BaseModel):
     start: int
     rows: int
     sort: List[SolrSortQuery] = []
+    defType: Optional[QueryParserType] = None
+    boost: Optional[str] = None
 
     def get_query_string(self) -> str:
         """クエリ文字列を取得する
@@ -99,8 +111,12 @@ class SolrQuery(BaseModel):
         # クエリパラメータをリストで保持
         params = []
 
+        # qパラメータを設定
+        if self.q:
+            params.append(f"q={self.q}")
+        else:
+            params.append(f"q={SEARCH_ALL}")
         # 必須要素をセット
-        params.append(f"q={self.q}")
         params.append(f"start={self.start}")
         params.append(f"rows={self.rows}")
 
@@ -111,5 +127,9 @@ class SolrQuery(BaseModel):
             params.append(f"fl={','.join([fl.value for fl in self.fl if fl])}")
         if self.sort:
             params.append(f"sort={','.join([sort.get_query_string() for sort in self.sort if sort])}")
+        if self.defType:
+            params.append(f"defType={self.defType.value}")
+        if self.defType == QueryParserType.EXTENDED_DISMAX and self.boost:
+            params.append(f"boost={self.boost}")
 
         return "&".join(params)
