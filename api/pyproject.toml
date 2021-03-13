@@ -20,6 +20,7 @@ autopep8 = "^1.5.5"
 rope = "^0.18.0"
 pytest-cov = "^2.11.1"
 fakeredis = "^1.4.5"
+pytest-watch = "^4.2.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
