@@ -7,6 +7,10 @@
 from pydantic import BaseSettings
 
 
+class CoreSettings(BaseSettings):
+    fe_domain: str
+
+
 class SolrSettings(BaseSettings):
     solr_host: str
     solr_port: int
