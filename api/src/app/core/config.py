@@ -8,7 +8,8 @@ from pydantic import BaseSettings
 
 
 class CoreSettings(BaseSettings):
-    fe_domain: str
+    # カンマ区切りで設定可能FEドメイン
+    fe_domain: str = "http://localhost:3000"
 
 
 class SolrSettings(BaseSettings):
