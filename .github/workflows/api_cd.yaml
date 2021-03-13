@@ -4,25 +4,15 @@ name: CD Pipeline for API
 on:
   push:
     branches:
-      - develop
-    paths:
-      - api/**
-      - .github/workflows/api_cd.yaml
-  # workflow_run:
-  #   workflows:
-  #     - API_CI_Pipeline
-  #   branches: [dev]
-  #   types:
-  #     - completed
+      - release
 
 env:
   GCP_PROJECT: ${{ secrets.GCP_PROJECT_ID }}
   GCP_REGION: ${{ secrets.GCP_REGION }}
-  IMAGE: asia.gcr.io/${{ secrets.GCP_PROJECT_ID }}/core_api:dev-${{ github.sha }}
+  IMAGE: asia.gcr.io/${{ secrets.GCP_PROJECT_ID }}/core_api/stg:${{ github.sha }}
 
 jobs:
   push:
-    # if: ${{ github.event.workflow_run.conclusion == 'success' }}
     name: Push to GCR
     runs-on: ubuntu-latest
     steps:

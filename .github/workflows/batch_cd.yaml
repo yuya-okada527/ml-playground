@@ -4,20 +4,12 @@ name: CD Pipeline for Batch
 on:
   push:
     branches:
-      - develop
-    paths:
-      - batch/**
-      - .github/workflows/batch_cd.yaml
-  # workflow_run:
-  #   workflows: ["CI Pipeline for Batch"]
-  #   branches: [dev]
-  #   types:
-  #     - completed
+      - release
 
 env:
   GCP_PROJECT: ${{ secrets.GCP_PROJECT_ID }}
   GCP_REGION: ${{ secrets.GCP_REGION }}
-  IMAGE: asia.gcr.io/${{ secrets.GCP_PROJECT_ID }}/batch:dev-${{ github.sha }}
+  IMAGE: asia.gcr.io/${{ secrets.GCP_PROJECT_ID }}/batch/stg:${{ github.sha }}
 
 jobs:
   push:
