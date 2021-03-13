@@ -1,7 +1,7 @@
 {
   "fieldTypes": [
     {
-      "name": "text_bigram",
+      "name": "text_trigram",
       "class": "solr.TextField",
       "positionIncrementGap": 100,
       "autoGeneratePhraseQueries": true,
@@ -9,7 +9,7 @@
         "tokenizer": {
           "class": "solr.NGramTokenizerFactory",
           "minGramSize": 2,
-          "maxGramSize": 2
+          "maxGramSize": 3
         },
         "filters": [
           {
@@ -32,7 +32,7 @@
     },
     {
       "name": "free_word",
-      "type": "text_bigram",
+      "type": "text_trigram",
       "indexed": true,
       "stored": false,
       "multiValued": false
