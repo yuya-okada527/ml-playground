@@ -2,6 +2,8 @@
 
 ML Playground App 用のコア API を提供します。
 
+- 本番環境: https://yuya-okada.com/docs
+
 ## 使用技術
 
 - 言語: Python3.8
