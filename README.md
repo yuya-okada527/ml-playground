@@ -13,7 +13,7 @@
 - [オブザーバビリティ](https://github.com/yuya-okada527/ml-playground/blob/develop/docs/phase1/obserbability.md)
 - 継続的改善性
 - コストパフォーマンス
-- ビジネス的価値の可視性(KPI)
+- ビジネス的価値の可視性
 
 ## 全体構成
 
