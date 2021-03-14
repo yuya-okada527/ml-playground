@@ -9,7 +9,7 @@
 機械学習を実社会におけるサービスで運用・改善できるシステムを構築する。<br>
 そのために下記の 5 つの指標を重視し、改善していきます。
 
-- [スケーラビリティ](https://github.com/yuya-okada527/ml-playground/blob/develop/docs/scalability.md)
+- [スケーラビリティ](https://github.com/yuya-okada527/ml-playground/blob/develop/docs/phase1/scalability.md)
 - [オブザーバビリティ](https://github.com/yuya-okada527/ml-playground/blob/develop/docs/phase1/obserbability.md)
 - 継続的改善性
 - コストパフォーマンス
