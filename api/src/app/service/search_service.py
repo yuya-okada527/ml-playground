@@ -5,11 +5,13 @@
 from typing import List
 
 from domain.exceptions.service_exception import NoTargetException
-from entrypoints.v1.movie.messages.movie_messages import (MovieResponse,
+from entrypoints.v1.movie.messages.movie_messages import (MovieIdResponse,
+                                                          MovieResponse,
                                                           SearchMovieResponse)
 from infra.client.solr.solr_api import AbstractSolrClient
 
 from service.logic.movie_logic import (build_search_by_id_query,
+                                       build_search_movie_id_query,
                                        build_search_query, map_movie,
                                        map_search_movie_response)
 
@@ -69,3 +71,27 @@ def exec_search_by_id_service(
         raise NoTargetException()
 
     return map_movie(search_result.response.docs[0])
+
+
+def exec_search_movie_ids(solr_client: AbstractSolrClient) -> MovieIdResponse:
+
+    # 映画IDリストを初期化
+    movie_ids = []
+
+    # startを0で初期化
+    start = 0
+    while True:
+        # クエリを作成
+        query = build_search_movie_id_query(start=start)
+
+        # 検索実行
+        movies = solr_client.search_movies(query=query)
+
+        # 映画IDリストを更新
+        movie_ids.extend([movie.movie_id for movie in movies.response.docs])
+
+        # 最後まで取得できたか判定
+        if len(movie_ids) >= movies.response.numFound:
+            break
+
+    return MovieIdResponse(movie_ids=movie_ids)

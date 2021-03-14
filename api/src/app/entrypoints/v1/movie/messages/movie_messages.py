@@ -38,3 +38,8 @@ class SimilarMovieResponse(BaseModel):
     target_id: int = Field(..., description="類似検索対象映画ID")
     model_type: SimilarityModelType = Field(..., description="類似性判定モデル")
     results: List[MovieResponse] = Field(..., description="類似映画リスト")
+
+
+class MovieIdResponse(BaseModel):
+    """映画IDレスポンス"""
+    movie_ids: List[int] = Field(..., description="映画IDリスト")

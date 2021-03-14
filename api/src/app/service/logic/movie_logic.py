@@ -80,6 +80,23 @@ def build_search_by_id_query(movie_id: int) -> SolrQuery:
     )
 
 
+def build_search_movie_id_query(start: int) -> SolrQuery:
+    """全映画ID取得用のクエリを作成する.
+
+    Args:
+        start (int): 開始位置
+
+    Returns:
+        SolrQuery: 検索クエリ
+    """
+    return SolrQuery(
+        q=SEARCH_ALL,
+        fl=[MovieField.MOVIE_ID],
+        start=start,
+        rows=10
+    )
+
+
 def map_movie(movie: MovieSolrModel) -> MovieResponse:
     """映画レスポンスにマッピングする
 

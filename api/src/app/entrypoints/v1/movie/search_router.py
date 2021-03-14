@@ -4,12 +4,13 @@
 """
 from typing import Optional
 
-from entrypoints.v1.movie.messages.movie_messages import (MovieResponse,
+from entrypoints.v1.movie.messages.movie_messages import (MovieIdResponse,
+                                                          MovieResponse,
                                                           SearchMovieResponse)
 from fastapi import APIRouter, Depends, Path, Query
 from infra.client.solr.solr_api import AbstractSolrClient, get_solr_client
 from service.search_service import (exec_search_by_id_service,
-                                    exec_search_service)
+                                    exec_search_movie_ids, exec_search_service)
 from util.query_util import split_query_params
 
 # ルーター作成
@@ -83,3 +84,18 @@ async def search_by_id(
         movie_id=movie_id,
         solr_client=solr_client
     )
+
+
+@router.get(
+    "/id/all",
+    summary="全映画ID取得API",
+    description="全映画IDを取得するAPI",
+    response_model=MovieIdResponse,
+    response_description="全映画IDリスト"
+)
+async def search_movie_ids(
+    solr_client: AbstractSolrClient = Depends(get_solr_client)
+) -> MovieIdResponse:
+
+    # サービス実行
+    return exec_search_movie_ids(solr_client=solr_client)

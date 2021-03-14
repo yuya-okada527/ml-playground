@@ -6,8 +6,10 @@ from tests.utils import get_fake_solr_client, make_url
 
 # サーチAPIパス
 V1_SEARCH_API_PATH = "/v1/movie/search"
-# 映画ID APIパス
+# サーチ BY ID APIパス
 V1_SEARCH_BY_ID_API_PATH = "/v1/movie/search/{movie_id}"
+# 映画ID APIパス
+V1_SEARCH_MOVIE_ID_API_PATH = "/v1/movie/search/id/all"
 
 client = TestClient(app)
 
@@ -47,6 +49,12 @@ def test_search_api_200(params):
 
 def test_search_by_id_api_200():
     url = V1_SEARCH_BY_ID_API_PATH.format(movie_id=0)
+    response = client.get(url)
+    assert response.status_code == 200
+
+
+def test_search_movie_ids():
+    url = V1_SEARCH_MOVIE_ID_API_PATH
     response = client.get(url)
     assert response.status_code == 200
 

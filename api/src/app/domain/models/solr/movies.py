@@ -17,14 +17,14 @@ class SolrResponseHeaderModel(BaseModel):
 class MovieSolrModel(BaseModel):
     """Solr映画モデル"""
     movie_id: str
-    original_title: str
-    japanese_title: str
+    original_title: Optional[str] = None
+    japanese_title: Optional[str] = None
     overview: Optional[str] = None
     tagline: Optional[str] = None
-    poster_path: str
+    poster_path: Optional[str] = None
     backdrop_path: Optional[str] = None
-    popularity: float
-    vote_average: float
+    popularity: Optional[float] = None
+    vote_average: Optional[float] = None
     release_date: Optional[str] = None
     release_year: Optional[int] = None
     genres: List[int] = []
