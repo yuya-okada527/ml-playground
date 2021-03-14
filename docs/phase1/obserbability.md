@@ -20,7 +20,7 @@ TODO
 
 #### Vercel Analytics
 
-![Vercel Analitics](https://github.com/yuya-okada527/ml-playground/blob/develop/docs/phase1/%20image/vercel_analitics.png)
+![Vercel Analytics](https://github.com/yuya-okada527/ml-playground/blob/develop/docs/phase1/%20image/vercel_analytics.png)
 
 ### アクセス解析
 
