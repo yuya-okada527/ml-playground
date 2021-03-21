@@ -28,3 +28,7 @@ kedro jupyter notebook
 # kedro viz起動
 kedro viz
 ```
+
+## パイプライン概要
+
+!(パイプライン概要)[https://github.com/yuya-okada527/ml-playground/blob/develop/docs/phase1/%20image/kedro_viz.png]
