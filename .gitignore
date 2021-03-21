@@ -7,3 +7,4 @@ solr/data/
 redis/data/
 *node_modules/
 .DS_Store
+airflow/logs/
