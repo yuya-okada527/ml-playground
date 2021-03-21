@@ -11,3 +11,20 @@
   - pandas
   - spaCy (自然言語処理)
   - Annoy (近似最近傍探索)
+
+## コマンド
+
+```bash
+# 仮想環境起動
+source .venv/bin/activate
+# 仮想環境無効化
+deactivate
+# 実行(準備)
+cd movie-recommender-ml-pipeline
+# Kedro起動
+kedro run
+# jupyter notebook起動
+kedro jupyter notebook
+# kedro viz起動
+kedro viz
+```
