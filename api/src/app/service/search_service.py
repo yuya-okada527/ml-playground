@@ -90,6 +90,9 @@ def exec_search_movie_ids(solr_client: AbstractSolrClient) -> MovieIdResponse:
         # 映画IDリストを更新
         movie_ids.extend([movie.movie_id for movie in movies.response.docs])
 
+        # 取得開始位置を更新
+        start = len(movie_ids)
+
         # 最後まで取得できたか判定
         if len(movie_ids) >= movies.response.numFound:
             break
