@@ -9,14 +9,14 @@ services:
       - ../ml-playground-core-api/env/solr-docker-compose.env
       - ../ml-playground-core-api/env/redis-docker-compose.env
   batch:
-    build: ./batch
+    build: ../ml-playground-batch
     image: ml-playground-batch
     env_file:
-      - batch/env/core.env
-      - batch/env/input_db-docker-compose.env
-      - batch/env/redis-docker-compose.env
-      - batch/env/solr-docker-compose.env
-      - batch/env/tmdb.env
+      - ../ml-playground-batch/env/core.env
+      - ../ml-playground-batch/env/input_db-docker-compose.env
+      - ../ml-playground-batch/env/redis-docker-compose.env
+      - ../ml-playground-batch/env/solr-docker-compose.env
+      - ../ml-playground-batch/env/tmdb.env
   solr:
     image: solr:8.7.0
     ports:
