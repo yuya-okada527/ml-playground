@@ -20,7 +20,14 @@
 ![全体構成図](https://github.com/yuya-okada527/ml-playground/blob/develop/docs/phase1/%20image/%E3%83%95%E3%82%A7%E3%83%BC%E3%82%BA1%E5%85%A8%E4%BD%93%E6%A7%8B%E6%88%90%E5%9B%B3.png)
 (矢印は、データの流れを記載)
 
-## 使用技術 (概要 詳細は各コンポーネントの README を参照)
+## コンポーネント
+
+- [FE](https://github.com/yuya-okada527/ml-playground-fe)
+  - ML Playground のフロントエンドアプリ
+- [Core API](https://github.com/yuya-okada527/ml-playground-core-api)
+  - ML Playground のメイン機能 API
+
+## 使用技術概要 (詳細は各コンポーネントの README を参照)
 
 - プラットフォーム:
   - GCP (バックエンドで利用)
@@ -58,5 +65,4 @@
 
 ## 関連リポジトリ
 
-- [FE](https://github.com/yuya-okada527/ml-playground-fe)
 - [FE E2E](https://github.com/yuya-okada527/ml-playground-fe-e2e)
