@@ -1,6 +1,7 @@
 # ML Playground App
 
-機械学習を利用するデモ環境を提供するアプリ。
+機械学習を利用したアプリのデモ環境を提供します。<br>
+本リポジトリでは、ドキュメントとローカル開発用の docker-compose ファイルを管理する。
 
 - 本番環境: https://ml-playground-fe.vercel.app/
 

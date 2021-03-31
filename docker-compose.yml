@@ -1,13 +1,13 @@
 version: "3.7"
 services:
   api:
-    build: ./api
+    build: ../ml-playground-core-api
     image: movie-recommender-api
     ports:
       - "8999:80"
     env_file:
-      - api/env/solr-docker-compose.env
-      - api/env/redis-docker-compose.env
+      - ../ml-playground-core-api/env/solr-docker-compose.env
+      - ../ml-playground-core-api/env/redis-docker-compose.env
   batch:
     build: ./batch
     image: ml-playground-batch
