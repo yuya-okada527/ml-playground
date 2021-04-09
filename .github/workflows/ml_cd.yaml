@@ -3,7 +3,7 @@ name: Push Image
 on:
   push:
     branches:
-      - release
+      - develop
 
 env:
   GCP_PROJECT: ${{ secrets.GCP_PROJECT_ID }}
