@@ -32,3 +32,12 @@ kedro viz
 ## パイプライン概要
 
 <img src="https://github.com/yuya-okada527/ml-playground/blob/develop/docs/phase1/%20image/kedro_viz.png" width="480">
+
+## コマンド
+
+```bash
+# ローカル用
+$ kedro run
+# k8s上
+$ kedro run --env k8s
+```

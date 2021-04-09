@@ -20,4 +20,4 @@ RUN chmod -R a+w /home/kedro
 
 EXPOSE 8888
 
-CMD ["kedro", "run"]
+# CMD ["kedro", "run", "--env", "k8s"]
