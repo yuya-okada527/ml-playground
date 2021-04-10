@@ -8,6 +8,8 @@ services:
     env_file:
       - ../ml-playground-core-api/env/solr-docker-compose.env
       - ../ml-playground-core-api/env/redis-docker-compose.env
+      - ../ml-playground-core-api/env/core.env
+      - ../ml-playground-core-api/env/gcp.env
   batch:
     build: ../ml-playground-batch
     image: ml-playground-batch
