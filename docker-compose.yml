@@ -51,4 +51,4 @@ services:
     command: redis-server --appendonly yes
   ml-pipeline:
     image: ml-pipeline
-    build: ml-pipeline/movie-recommeder-ml-pipeline
+    build: ml-pipeline/movie-recommender-ml-pipeline

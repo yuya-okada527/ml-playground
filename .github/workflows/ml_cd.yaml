@@ -30,9 +30,6 @@ jobs:
           export_default_credentials: true
       - name: Configure docker to use the gcloud cli
         run: gcloud auth configure-docker --quiet
-      - name: ls
-        working-directory: ./ml-pipeline
-        run: ls
       - name: Build Image
         working-directory: ./ml-pipeline/movie-recommender-ml-pipeline
         run: docker build -t $IMAGE .
