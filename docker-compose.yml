@@ -52,3 +52,5 @@ services:
   ml-pipeline:
     image: ml-pipeline
     build: ml-pipeline/movie-recommender-ml-pipeline
+    env_file:
+      - ./ml-pipeline/movie-recommender-ml-pipeline/.env

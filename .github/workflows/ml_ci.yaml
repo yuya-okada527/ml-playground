@@ -25,4 +25,4 @@ jobs:
         run: pip install -r requirements.txt
       - name: flake8
         working-directory: ./ml-pipeline
-        run: flake8 movie-recommeder-ml-pipeline --ignore E501,E128 --exclude movie-recommeder-ml-pipeline/.ipython
+        run: flake8 movie-recommender-ml-pipeline --ignore E501,E128 --exclude movie-recommender-ml-pipeline/.ipython
