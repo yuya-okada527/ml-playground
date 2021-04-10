@@ -31,6 +31,6 @@ jobs:
       - name: Configure docker to use the gcloud cli
         run: gcloud auth configure-docker --quiet
       - name: Build Image
-        run: docker build -t $IMAGE ./ml-pipeline/movie-recommender-ml-pipeline
+        run: docker build -t $IMAGE ./ml-pipeline/movie-recommender-ml-pipeline/Dockerfile
       - name: Push Image
         run: docker push $IMAGE
