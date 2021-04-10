@@ -6,7 +6,7 @@ on:
       - develop
     paths:
       - ml-pipeline/**
-      - .github/workflows/ml_ci.yaml
+      - .github/workflows/ml_cd.yaml
 
 env:
   GCP_PROJECT: ${{ secrets.GCP_PROJECT_ID }}
