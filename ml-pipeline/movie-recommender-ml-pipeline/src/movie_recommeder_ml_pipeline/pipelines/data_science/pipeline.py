@@ -19,12 +19,12 @@ def create_pipeline(**kwargs):
                 outputs="test_data",
                 name="make_test_data"
             ),
-            node(
-                func=evaluate_results,
-                inputs=["similar_movies", "test_data"],
-                outputs=None,
-                name="evaluate_results"
-            ),
+            # node(
+            #     func=evaluate_results,
+            #     inputs=["similar_movies", "test_data"],
+            #     outputs=None,
+            #     name="evaluate_results"
+            # ),
             node(
                 func=feed_similar_movies,
                 inputs=["similar_movies", "parameters"],

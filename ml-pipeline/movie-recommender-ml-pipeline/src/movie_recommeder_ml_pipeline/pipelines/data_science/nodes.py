@@ -22,7 +22,7 @@ def predict_similar_movies(
 ) -> pd.DataFrame:
 
     # 近似最近傍探索モデルを初期化
-    vector_size = review_vectors["vector"][0].size
+    vector_size = review_vectors.iat[0, 1].size
     annoy_index = AnnoyIndex(vector_size, parameters["similarity_metrics"])
     annoy_index.set_seed(parameters["random_seed"])
 
@@ -105,10 +105,10 @@ def feed_similar_movies(
     parameters: Dict
 ) -> pd.DataFrame:
 
-    redis_client = redis.Redis(host="localhost", port=6379)
+    redis_client = redis.Redis(host=os.environ.get("REDIS_HOST", "localhost"), port=6379)
 
     for row in similar_movies.itertuples():
         # モデルキー名
         key = f"{row.movie_id}_{parameters['model_name']}"
 
-        redis_client.set(key, row.similar_movie_ids)
+        redis_client.set(key, json.dumps(row.similar_movie_ids))
