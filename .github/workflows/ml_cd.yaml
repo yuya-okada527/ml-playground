@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - develop
+    paths:
+      - ml-pipeline/**
+      - .github/workflows/ml_ci.yaml
 
 env:
   GCP_PROJECT: ${{ secrets.GCP_PROJECT_ID }}
