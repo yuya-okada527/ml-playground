@@ -1,0 +1,6 @@
+spacy_model: en_core_web_md
+similarity_metrics: angular
+random_seed: 42
+n_tree: 10
+predict_num: 5
+model_name: glove-sim
