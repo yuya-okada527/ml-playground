@@ -5,21 +5,9 @@
 
 normalized_reviews:
   type: MemoryDataSet
-  save_args:
-    sep: "\t"
-  load_args:
-    sep: "\t"
 review_vectors:
   type: MemoryDataSet
 similar_movies:
   type: MemoryDataSet
-  save_args:
-    sep: "\t"
-  load_args:
-    sep: "\t"
 test_data:
   type: MemoryDataSet
-  save_args:
-    sep: "\t"
-  load_args:
-    sep: "\t"
