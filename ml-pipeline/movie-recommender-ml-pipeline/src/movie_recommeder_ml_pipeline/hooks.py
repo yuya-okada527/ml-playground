@@ -27,6 +27,7 @@
 # limitations under the License.
 
 """Project hooks."""
+import os
 from typing import Any, Dict, Iterable, Optional
 
 from kedro.config import ConfigLoader
@@ -71,6 +72,10 @@ class ProjectHooks:
         save_version: str,
         journal: Journal,
     ) -> DataCatalog:
+        if "input_db_credentials" not in credentials:
+            credentials["input_db_credentials"] = {
+                "con": os.environ.get("INPUT_DB_CREDENTIALS")
+            }
         return DataCatalog.from_config(
             catalog, credentials, load_versions, save_version, journal
         )
