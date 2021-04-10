@@ -1,5 +1,5 @@
 ARG BASE_IMAGE=python:3.8-buster
-FROM $BASE_IMAGE
+FROM python:3.8-buster
 
 # install project requirements
 COPY src/requirements.txt /tmp/requirements.txt
