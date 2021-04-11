@@ -1,6 +1,6 @@
 from kedro.pipeline import node, Pipeline
 from movie_recommeder_ml_pipeline.pipelines.data_science.nodes import (
-    evaluate_results, make_test_data, predict_similar_movies, feed_similar_movies
+    make_test_data, predict_similar_movies, feed_similar_movies
 )
 
 
