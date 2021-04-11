@@ -26,11 +26,18 @@ def predict_similar_movies(
     annoy_index = AnnoyIndex(vector_size, parameters["similarity_metrics"])
     annoy_index.set_seed(parameters["random_seed"])
 
+    # TODO ログ
+    print(f"review size: {len(review_vectors)}")
+
     # インデックスの構築
     idx2movie = {}
     for i, row in enumerate(review_vectors.itertuples()):
         idx2movie[i] = row.movie_id
         annoy_index.add_item(i, row.vector)
+
+        # TODO ログ
+        if i % 10 == 0:
+            print(f"{i}番目のインデックスを構築完了")
     annoy_index.build(parameters["n_tree"])
 
     # 類似映画トップNを予測
@@ -38,6 +45,9 @@ def predict_similar_movies(
     for j in range(len(review_vectors)):
         # 同じ映画が最も近くなるため、1つずらす
         similar_movies[idx2movie[j]] = annoy_index.get_nns_by_item(j, parameters["predict_num"] + 1)[1:]
+
+        if j % 10 == 0:
+            print(f"{j}番目の推論完了")
 
     return pd.DataFrame({
         "movie_id": similar_movies.keys(),
