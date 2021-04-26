@@ -21,6 +21,10 @@
 ![全体構成図](https://github.com/yuya-okada527/ml-playground/blob/develop/docs/phase1/%20image/%E3%83%95%E3%82%A7%E3%83%BC%E3%82%BA1%E5%85%A8%E4%BD%93%E6%A7%8B%E6%88%90%E5%9B%B3.png)
 (矢印は、データの流れを記載)
 
+## データ分析パイプライン
+
+![データ分析パイプライン](https://github.com/yuya-okada527/ml-playground/blob/develop/docs/phase2/images/data_pipeline_design.png)
+
 ## コンポーネント
 
 - [FE](https://github.com/yuya-okada527/ml-playground-fe)
