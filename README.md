@@ -40,12 +40,16 @@
 
 - プラットフォーム:
   - GCP (バックエンドで利用)
+    - Cloud Functions
   - Vercel (フロントエンドで利用)
   - Kubernetes (GKE Autopilot)
 - ミドルウェア
   - MySQL (Cloud SQL)
   - Apache Solr
   - Redis
+  - Cloud Pub/Sub
+  - Cloud Storage
+  - BigQuery
 - 言語:
   - Python (3.8, 3.9)
   - Node.js (v14)
@@ -55,6 +59,7 @@
     - FastAPI (Web フレームワーク)
     - Typer (バッチアプリ フレームワーク)
     - SQLAlchemy
+    - Serverless Framework
   - フロントエンド:
     - React.js
     - Next.js
