@@ -35,11 +35,11 @@ services:
       - "3306:3306"
     volumes:
       # 初期データを投入するSQLが格納されているdir
-      - ./rdb/mysql_init:/docker-entrypoint-initdb.d
+      - ./rdb_v2/mysql_init:/docker-entrypoint-initdb.d
       # 永続化するときにマウントするdir
-      - ./rdb/mysql_data:/var/lib/mysql
+      - ./rdb_v2/mysql_data:/var/lib/mysql
       # 設定ファイルをマウント
-      - ./rdb/mysql_conf/:/etc/mysql/conf.d
+      - ./rdb_v2/mysql_conf/:/etc/mysql/conf.d
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_USER: test
