@@ -33,7 +33,7 @@
   - コア機能 API
 - [Batch](https://github.com/yuya-okada527/ml-playground-batch)
   - Batch 処理(データの作成とフィード処理を担う)
-- [Log ETL](httpETLs://github.com/yuya-okada527/ml-playground-stream)
+- [Log ETL](https://github.com/yuya-okada527/ml-playground-stream)
   - Log ETL 処理
 
 ## 使用技術概要 (詳細は各コンポーネントの README を参照)
