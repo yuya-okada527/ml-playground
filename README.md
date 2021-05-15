@@ -12,9 +12,9 @@
 
 - [スケーラビリティ](https://github.com/yuya-okada527/ml-playground/blob/develop/docs/phase1/scalability.md)
 - [オブザーバビリティ](https://github.com/yuya-okada527/ml-playground/blob/develop/docs/phase1/obserbability.md)
-- 継続的改善性
+- [継続的改善性](https://github.com/yuya-okada527/ml-playground/blob/develop/docs/phase1/continuous_improvements.md)
 - コストパフォーマンス
-- ビジネス的価値の可視性
+- エンド to エンドの評価
 
 ## 全体構成(移行中)
 
@@ -25,7 +25,7 @@
 
 ![データ分析パイプライン](https://github.com/yuya-okada527/ml-playground/blob/develop/docs/phase2/images/data_pipeline_design.png)
 
-## コンポーネント
+## コンポーネント (詳細は各コンポーネントの README を参照)
 
 - [FE](https://github.com/yuya-okada527/ml-playground-fe)
   - フロントエンドアプリ
@@ -45,8 +45,8 @@
   - Kubernetes (GKE Autopilot)
 - ミドルウェア
   - MySQL (Cloud SQL)
-  - Apache Solr
-  - Redis
+  - Apache Solr (フェーズ 1 のみ)
+  - Redis (フェーズ 1 のみ)
   - Cloud Pub/Sub
   - Cloud Storage
   - BigQuery
@@ -57,7 +57,7 @@
 - フレームワーク / ライブラリ
   - バックエンド:
     - FastAPI (Web フレームワーク)
-    - Typer (バッチアプリ フレームワーク)
+    - Typer (バッチアプリ フレームワーク) (フェーズ 1 のみ)
     - SQLAlchemy
     - Serverless Framework
   - フロントエンド:
