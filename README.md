@@ -19,7 +19,7 @@
 ## 全体構成(移行中)
 
 ![全体構成](https://github.com/yuya-okada527/ml-playground/blob/develop/docs/phase2/images/phase2.png)
-(上記は、現在移行中のアーキテクチャです。現在の構成は、[こちら](https://github.com/yuya-okada527/ml-playground/blob/develop/docs/phase1/%20image/%E3%83%95%E3%82%A7%E3%83%BC%E3%82%BA1%E5%85%A8%E4%BD%93%E6%A7%8B%E6%88%90%E5%9B%B3.png)をご覧ください。)
+(上記は、[こちらの構成](https://github.com/yuya-okada527/ml-playground/blob/develop/docs/phase1/%20image/%E3%83%95%E3%82%A7%E3%83%BC%E3%82%BA1%E5%85%A8%E4%BD%93%E6%A7%8B%E6%88%90%E5%9B%B3.png)から移行中のアーキテクチャです。)
 
 ## データ分析パイプライン
 
