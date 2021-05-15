@@ -1,11 +1,9 @@
-
 CREATE DATABASE input_db;
 use input_db;
 
 -- 映画テーブル
 CREATE TABLE IF NOT EXISTS `movies` (
-  `movie_id`        INT NOT NULL PRIMARY KEY,
-  `imdb_id`         VARCHAR(64),
+  `movie_id`        CHAR(36) NOT NULL PRIMARY KEY,
   `original_title`  VARCHAR(256),
   `japanese_title`  VARCHAR(256),
   `overview`        TEXT,
@@ -18,9 +16,15 @@ CREATE TABLE IF NOT EXISTS `movies` (
   `release_date`    CHAR(10)
 );
 
+-- 映画IDテーブル
+CREATE TABLE IF NOT EXISTS `movie_ids` (
+  `movie_id`        CHAR(36) PRIMARY KEY,
+  `tmdb_id`         INT
+);
+
 -- 映画ジャンルテーブル
 CREATE TABLE IF NOT EXISTS `movie_genres` (
-  `movie_id`        INT NOT NULL,
+  `movie_id`        CHAR(36) NOT NULL,
   `genre_id`        INT NOT NULL,
   PRIMARY KEY(`movie_id`, `genre_id`)
 );
@@ -35,13 +39,14 @@ CREATE TABLE IF NOT EXISTS `genres` (
 -- レビューテーブル
 CREATE TABLE IF NOT EXISTS `reviews` (
   `review_id`   VARCHAR(64) NOT NULL PRIMARY KEY,
-  `movie_id`    INT NOT NULL,
+  `movie_id`    CHAR(36) NOT NULL,
   `review`      TEXT
 );
 
 -- 類似映画テーブル
 CREATE TABLE IF NOT EXISTS `similar_movies` (
-  `movie_id`          INT NOT NULL,
-  `similar_movie_id`  INT NOT NULL,
-  PRIMARY KEY(`movie_id`, `similar_movie_id`)
+  `movie_id`          CHAR(36) NOT NULL,
+  `model_type`        VARCHAR(64) NOT NULL,
+  `similar_movie_id`  CHAR(36) NOT NULL,
+  PRIMARY KEY(`movie_id`, `model_type`, `similar_movie_id`)
 );
