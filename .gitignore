@@ -8,3 +8,4 @@ redis/data/
 *node_modules/
 .DS_Store
 airflow/logs/
+rdb_v2/mysql_data/

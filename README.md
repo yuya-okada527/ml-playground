@@ -3,7 +3,7 @@
 機械学習を利用したアプリのデモ環境を提供します。<br>
 本リポジトリでは、ドキュメントとローカル開発用の docker-compose ファイルを管理する。
 
-- 本番環境: https://ml-playground-fe.vercel.app/
+- 本番環境: ~~https://ml-playground-fe.vercel.app/~~ (現在移行作業中)
 
 ## コンセプト
 
