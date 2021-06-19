@@ -20,7 +20,8 @@ CREATE TABLE IF NOT EXISTS `movies` (
 CREATE TABLE IF NOT EXISTS `movie_ids` (
   `movie_id`        CHAR(36) PRIMARY KEY,
   `tmdb_id`         INT,
-  `imdb_id`         INT
+  `imdb_id`         INT,
+  INDEX `tmdb_id_index` (`tmdb_id`)
 );
 
 -- 映画ジャンルテーブル
