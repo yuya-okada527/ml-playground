@@ -9,3 +9,5 @@ redis/data/
 .DS_Store
 airflow/logs/
 rdb_v2/mysql_data/
+elasticsearch/
+kibana/
