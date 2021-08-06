@@ -18,7 +18,7 @@
 
 ## 全体構成(移行中)
 
-![全体構成](https://github.com/yuya-okada527/ml-playground/blob/develop/docs/as_is/images/as_is.png)
+![全体構成](https://github.com/yuya-okada527/ml-playground/blob/develop/docs/as_is/images/AS_IS.png)
 
 ## データ分析パイプライン
 
