@@ -1,4 +1,3 @@
-
 CREATE DATABASE input_db;
 use input_db;
 

@@ -16,43 +16,30 @@ services:
     env_file:
       - ../ml-playground-batch/env/core.env
       - ../ml-playground-batch/env/input_db-docker-compose.env
-      # - ../ml-playground-batch/env/redis-docker-compose.env
-      # - ../ml-playground-batch/env/solr-docker-compose.env
+      - ../ml-playground-batch/env/redis-docker-compose.env
+      - ../ml-playground-batch/env/solr-docker-compose.env
       - ../ml-playground-batch/env/tmdb.env
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.4.2
+  solr:
+    image: solr:8.7.0
+    ports:
+      - "8983:8983"
     volumes:
-      - ./elasticsearch/data:/usr/share/elasticsearch/data
-    ports:
-      - 9200:9200
-    expose:
-      - 9300
-    environment:
-      - discovery.type=single-node
-      - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms256m -Xmx256m"
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-      nofile:
-        soft: 65536
-        hard: 65536
-  kibana:
-    image: docker.elastic.co/kibana/kibana:7.4.2
-    ports:
-      - 5601:5601
+      - ./solr/data:/var/solr
+    entrypoint:
+      - docker-entrypoint.sh
+      - solr-precreate
+      - movies
   db:
     image: mysql:8.0
     ports:
       - "3306:3306"
     volumes:
       # 初期データを投入するSQLが格納されているdir
-      - ./rdb_v2/mysql_init:/docker-entrypoint-initdb.d
+      - ./rdb/mysql_init:/docker-entrypoint-initdb.d
       # 永続化するときにマウントするdir
-      - ./rdb_v2/mysql_data:/var/lib/mysql
+      - ./rdb/mysql_data:/var/lib/mysql
       # 設定ファイルをマウント
-      - ./rdb_v2/mysql_conf/:/etc/mysql/conf.d
+      - ./rdb/mysql_conf/:/etc/mysql/conf.d
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_USER: test
@@ -64,8 +51,8 @@ services:
     volumes:
       - ./redis/data:/data
     command: redis-server --appendonly yes
-  # ml-pipeline:
-  #   image: ml-pipeline
-  #   build: ../ml-playground-pipeline/movie-recommender-ml-pipeline
-  #   env_file:
-  #     - ./ml-pipeline/movie-recommender-ml-pipeline/.env
+  ml-pipeline:
+    image: ml-pipeline
+    build: ml-pipeline/movie-recommender-ml-pipeline
+    env_file:
+      - ./ml-pipeline/movie-recommender-ml-pipeline/.env
