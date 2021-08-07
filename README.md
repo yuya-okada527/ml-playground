@@ -16,9 +16,11 @@
 - コストパフォーマンス
 - エンド to エンドの評価
 
-## 全体構成(移行中)
+## 全体構成
 
-![全体構成](https://github.com/yuya-okada527/ml-playground/blob/develop/docs/as_is/images/AS_IS.png)
+![全体構成](https://github.com/yuya-okada527/ml-playground/blob/develop/docs/migration/images/AS_IS.png)
+
+現在、
 
 ## データ分析パイプライン
 
