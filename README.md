@@ -20,7 +20,7 @@
 
 ![全体構成](https://github.com/yuya-okada527/ml-playground/blob/develop/docs/migration/images/AS_IS.png)
 
-現在、[プラットフォームの移行を検討中](https://github.com/yuya-okada527/ml-playground/blob/develop/docs/migraion/migration.md)
+現在、[プラットフォームの移行を検討中](https://github.com/yuya-okada527/ml-playground/blob/develop/docs/migration/migration.md)
 
 ## データ分析パイプライン
 
